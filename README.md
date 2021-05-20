@@ -46,3 +46,11 @@ Memory board with 4 k EPROM (1702) and 4k SRAM. The jumper blocks are a paramter
 
 Memory board with 4 k EPROM (1702) and 4k SRAM.
 
+## Simulation in VHDL
+
+I started by creating VHDL models for the TTL ICs in the design and then wiring them up as the schematic. Each module then consists of a number of TTL modules from the library and is the connected together on the top level (to be) to simulate the backplane bus.
+
+While doing so I checked the actual operation of the MPU I card vs the simulation to understand if there are major differences.
+
+All this work was done in EDAplayground.com [on line](https://www.edaplayground.com/x/s4ef). 
+
