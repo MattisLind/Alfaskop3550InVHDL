@@ -22,7 +22,14 @@ end TTL74153;
 
 architecture logic of TTL74153 is
 begin 
-  pin7_1y <= (pin6_1c0 and not pin2_b and not pin14_a and not pin1_n1g) or (pin5_1c1 and not pin2_b and pin14_a and not pin1_n1g) or (pin4_1c2 and pin2_b and not pin14_a and not pin1_n1g) or (pin3_1c3 and pin2_b and pin14_a and not pin1_n1g);
-  pin9_2y <= (pin10_2c0 and not pin2_b and not pin14_a and not pin1_n1g) or (pin11_2c1 and not pin2_b and pin14_a and not pin1_n1g) or (pin12_2c2 and pin2_b and not pin14_a and not pin1_n1g) or (pin13_2c3 and pin2_b and pin14_a and not pin1_n1g);
+  pin7_1y <= (pin6_1c0 and not pin2_b and not pin14_a and not pin1_n1g) or 
+             (pin5_1c1 and not pin2_b and pin14_a and not pin1_n1g) or 
+             (pin4_1c2 and pin2_b and not pin14_a and not pin1_n1g) or 
+             (pin3_1c3 and pin2_b and pin14_a and not pin1_n1g);
+             
+  pin9_2y <= (pin10_2c0 and not pin2_b and not pin14_a and not pin15_n2g) or 
+             (pin11_2c1 and not pin2_b and pin14_a and not pin15_n2g) or 
+             (pin12_2c2 and pin2_b and not pin14_a and not pin15_n2g) or 
+             (pin13_2c3 and pin2_b and pin14_a and not pin15_n2g);
 end logic;
 

@@ -48,8 +48,8 @@ begin
     a <= 'X';
     n2g <= '1';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail qA not cleared" severity error;
-    assert (s2y = '0') report "Fail qB not cleared" severity error;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '0') report "Fail s2y not low" severity error;
 
     n1g <= '0';
     b <= '0';
@@ -64,8 +64,8 @@ begin
     a <= '0';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail qA not cleared" severity error;
-    assert (s2y = '0') report "Fail qB not cleared" severity error;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '0') report "Fail s2y not low" severity error;
 
     n1g <= '0';
     b <= '0';
@@ -80,8 +80,8 @@ begin
     a <= '0';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '1') report "Fail qA not cleared" severity error;
-    assert (s2y = '1') report "Fail qB not cleared" severity error;
+	assert (s1y = '1') report "Fail s1y not high" severity error;
+    assert (s2y = '1') report "Fail s2y not high" severity error;
 
     n1g <= '0';
     b <= '0';
@@ -96,8 +96,8 @@ begin
     a <= '1';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail qA not cleared" severity error;
-    assert (s2y = '0') report "Fail qB not cleared" severity error;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '0') report "Fail s2y not low" severity error;
 
     n1g <= '0';
     b <= '0';
@@ -112,8 +112,8 @@ begin
     a <= '1';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '1') report "Fail qA not cleared" severity error;
-    assert (s2y = '1') report "Fail qB not cleared" severity error;
+	assert (s1y = '1') report "Fail s1y not high" severity error;
+    assert (s2y = '1') report "Fail s2y not high" severity error;
 
     n1g <= '0';
     b <= '1';
@@ -128,8 +128,8 @@ begin
     a <= '0';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail qA not cleared" severity error;
-    assert (s2y = '0') report "Fail qB not cleared" severity error;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '0') report "Fail s2y not low" severity error;
 
     n1g <= '0';
     b <= '1';
@@ -144,8 +144,8 @@ begin
     a <= '0';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '1') report "Fail qA not cleared" severity error;
-    assert (s2y = '1') report "Fail qB not cleared" severity error;
+	assert (s1y = '1') report "Fail s1y not high" severity error;
+    assert (s2y = '1') report "Fail s2y not high" severity error;
 
     n1g <= '0';
     b <= '1';
@@ -160,8 +160,8 @@ begin
     a <= '1';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail qA not cleared" severity error;
-    assert (s2y = '0') report "Fail qB not cleared" severity error;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '0') report "Fail s2y not low" severity error;
 
     n1g <= '0';
     b <= '1';
@@ -176,8 +176,42 @@ begin
     a <= '1';
     n2g <= '0';
     wait for 100 ns;
-	assert (s1y = '1') report "Fail qA not cleared" severity error;
-    assert (s2y = '1') report "Fail qB not cleared" severity error;
+	assert (s1y = '1') report "Fail s1y not high" severity error;
+    assert (s2y = '1') report "Fail s2y not high" severity error;
+
+
+    n1g <= '0';
+    b <= '1';
+    s1c3 <= '1';
+    s1c2 <= 'X';
+    s1c1 <= 'X';
+    s1c0 <= 'X';
+    s2c0 <= 'X';
+    s2c1 <= 'X';
+    s2c2 <= 'X';
+    s2c3 <= '1';
+    a <= '1';
+    n2g <= '1';
+    wait for 100 ns;
+	assert (s1y = '1') report "Fail s1y not high" severity error;
+    assert (s2y = '0') report "Fail s2y not high" severity error;
+
+    n1g <= '1';
+    b <= '1';
+    s1c3 <= '1';
+    s1c2 <= 'X';
+    s1c1 <= 'X';
+    s1c0 <= 'X';
+    s2c0 <= 'X';
+    s2c1 <= 'X';
+    s2c2 <= 'X';
+    s2c3 <= '1';
+    a <= '1';
+    n2g <= '0';
+    wait for 100 ns;
+	assert (s1y = '0') report "Fail s1y not low" severity error;
+    assert (s2y = '1') report "Fail s2y not high" severity error;
+
 
 	assert false report "Test done." severity note;
     wait;
