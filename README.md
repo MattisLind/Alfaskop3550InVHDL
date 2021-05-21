@@ -54,3 +54,10 @@ While doing so I checked the actual operation of the MPU I card vs the simulatio
 
 All this work was done in EDAplayground.com [on line](https://www.edaplayground.com/x/s4ef). 
 
+Here is an example where the logic analyzer shows the same trace as the simulation.
+
+![Logic analyzer trace](https://i.imgur.com/Kpqluk4.jpg)
+
+
+![Simulator trace](https://i.imgur.com/G7g9kDE.png)
+
