@@ -41,3 +41,7 @@ This is how it connected.
 |   22       |    B1          |    5      |     A5         |
 |   23       |    A1          |    9      |     A1         |
 |   24       |    VCC         |   28      |     VCC        |
+
+
+The resulting files, 74181.BIN, which is 16384 bytes in size is then converted into test vectors using a small c program.
+
