@@ -1,4 +1,4 @@
--- Testbench for 74157 TTL multiplexor
+-- Testbench for DM8123 TTL multiplexor
 library IEEE;
 use IEEE.std_logic_1164.all;
  
@@ -10,7 +10,7 @@ architecture tb of testbench is
 
 -- DUT component
 
-component TTL74157 is
+component TTLDM8123 is
 port(
   pin1_select : in std_logic;
   pin2_1a: in std_logic;
@@ -32,7 +32,7 @@ signal sselect,s1a,s1b,s1y,s2a,s2b,s2y,s3y,s3b,s3a,s4y,s4b,s4a,strobe: std_logic
 begin
 
   -- Connect DUT
-  DUT: TTL74157 port map(sselect,s1a,s1b,s1y,s2a,s2b,s2y,s3y,s3b,s3a,s4y,s4b,s4a,strobe);
+  DUT: TTLDM8123 port map(sselect,s1a,s1b,s1y,s2a,s2b,s2y,s3y,s3b,s3a,s4y,s4b,s4a,strobe);
   process
   begin
     s1a <= 'X';
@@ -46,10 +46,10 @@ begin
     sselect <= 'X';
     strobe <= '1';
     wait for 100 ns;
-	assert (s1y = '0') report "Fail s1y not low" severity error;
-    assert (s2y = '0') report "Fail s2y not low" severity error;
-    assert (s3y = '0') report "Fail s3y not low" severity error;
-    assert (s4y = '0') report "Fail s4y not low" severity error;
+	assert (s1y = 'Z') report "Fail s1y not three-state" severity error;
+    assert (s2y = 'Z') report "Fail s2y not three-state" severity error;
+    assert (s3y = 'Z') report "Fail s3y not three-state" severity error;
+    assert (s4y = 'Z') report "Fail s4y not three-state" severity error;
     s1a <= '0';
     s1b <= 'X';
     s2a <= '0';
