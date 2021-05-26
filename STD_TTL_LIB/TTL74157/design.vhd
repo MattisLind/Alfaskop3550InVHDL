@@ -23,14 +23,15 @@ port(
   
 end TTL74157;
 
-architecture Behavioral of TTL74157 is
-begin  
-  process(pin2_1a,pin3_1b,pin5_2a,pin6_2b,pin11_3a,pin10_3b,pin14_4a,pin13_4b,pin1_select,pin15_strobe) is
-  begin
-  	pin4_1y <= (pin2_1a AND NOT pin1_select AND NOT pin15_strobe) OR (pin3_1b AND pin1_select AND NOT pin15_strobe);
-	pin7_2y <= (pin5_2a AND NOT pin1_select AND NOT pin15_strobe) OR (pin6_2b AND pin1_select AND NOT pin15_strobe);
-	pin9_3y <= (pin11_3a AND NOT pin1_select AND NOT pin15_strobe) OR (pin10_3b AND pin1_select AND NOT pin15_strobe);
-	pin12_4y <= (pin14_4a AND NOT pin1_select AND NOT pin15_strobe) OR (pin13_4b AND pin1_select AND NOT pin15_strobe);
-  end process;
-end Behavioral;
+architecture logic of TTL74157 is
+begin   
+  pin4_1y <=  (pin2_1a AND NOT pin1_select AND NOT pin15_strobe) OR 
+              (pin3_1b AND pin1_select AND NOT pin15_strobe);
+  pin7_2y <=  (pin5_2a AND NOT pin1_select AND NOT pin15_strobe) OR 
+              (pin6_2b AND pin1_select AND NOT pin15_strobe);
+  pin9_3y <=  (pin11_3a AND NOT pin1_select AND NOT pin15_strobe) OR 
+              (pin10_3b AND pin1_select AND NOT pin15_strobe);
+  pin12_4y <= (pin14_4a AND NOT pin1_select AND NOT pin15_strobe) OR 
+              (pin13_4b AND pin1_select AND NOT pin15_strobe);
+end logic;
 
