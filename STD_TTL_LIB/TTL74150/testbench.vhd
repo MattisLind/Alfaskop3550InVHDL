@@ -66,7 +66,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
     e7 <= 'X';
@@ -92,7 +92,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -119,7 +119,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -146,7 +146,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -173,7 +173,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -201,7 +201,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -228,7 +228,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -256,7 +256,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -283,7 +283,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -313,7 +313,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -340,7 +340,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -370,7 +370,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -397,9 +397,36 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
+
+
+
+    e7 <= 'X';
+    e6 <= '0';
+    e5 <= 'X';
+    e4 <= 'X';
+    e3 <= 'X';
+    e2 <= 'X';
+    e1 <= 'X';
+    e0 <= 'X';
+    ng <= '0';    
+    d <= '0';
+    c <= '1';
+    b <= '1';
+    a <= '0';
+    e15 <= 'X';
+    e14 <= 'X';
+    e13 <= 'X';
+    e12 <= 'X';
+    e11 <= 'X';
+    e10 <= 'X';
+    e9 <= 'X';
+    e8 <= 'X';
+    
+    wait for 100 ns;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -426,34 +453,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
-
-
-
-    e7 <= 'X';
-    e6 <= '1';
-    e5 <= 'X';
-    e4 <= 'X';
-    e3 <= 'X';
-    e2 <= 'X';
-    e1 <= 'X';
-    e0 <= 'X';
-    ng <= '0';    
-    d <= '0';
-    c <= '1';
-    b <= '1';
-    a <= '0';
-    e15 <= 'X';
-    e14 <= 'X';
-    e13 <= 'X';
-    e12 <= 'X';
-    e11 <= 'X';
-    e10 <= 'X';
-    e9 <= 'X';
-    e8 <= 'X';
-    
-    wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not set" severity error;
 
 
 
@@ -482,7 +482,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -509,7 +509,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -536,7 +536,7 @@ begin
     e8 <= '0';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -563,7 +563,7 @@ begin
     e8 <= '1';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -590,7 +590,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -617,7 +617,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -645,7 +645,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -672,7 +672,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -700,7 +700,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -727,7 +727,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -757,7 +757,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -784,7 +784,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -814,7 +814,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -841,7 +841,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -870,7 +870,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -897,7 +897,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 
@@ -926,7 +926,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '1') report "Fail qB not cleared" severity error;
+    assert (w = '1') report "Fail w not high" severity error;
 
 
 
@@ -953,7 +953,7 @@ begin
     e8 <= 'X';
     
     wait for 100 ns;
-    assert (w = '0') report "Fail qB not cleared" severity error;
+    assert (w = '0') report "Fail w not low" severity error;
 
 
 

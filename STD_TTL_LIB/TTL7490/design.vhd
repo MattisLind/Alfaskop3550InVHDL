@@ -34,7 +34,15 @@ end component;
 
 
 begin 
- FF1: JKFF_WITH_CLR_PRE port map(pin2_r01 and pin3_r02 ,'1','1',not pin14_a,pin6_r91 and pin7_r92,pin12_qa,open);
+  FF1: JKFF_WITH_CLR_PRE port map(
+    nclr => pin2_r01 and pin3_r02,
+    j => '1',
+    k => '1',
+    clk => not pin14_a,
+    npre => pin6_r91 and pin7_r92,
+    q => pin12_qa,
+    nq => open);
+  
  FF2: JKFF_WITH_CLR_PRE port map((pin2_r01 nand pin3_r02) nand (pin6_r91 nand pin7_r92),not pin11_qd,'1',not pin1_b,'0',pin9_qb,open);
  FF3: JKFF_WITH_CLR_PRE port map((pin2_r01 nand pin3_r02) nand (pin6_r91 nand pin7_r92),'1','1',not pin9_qb,'0',pin8_qc,open);
  FF4: JKFF_WITH_CLR_PRE port map(pin2_r01 and pin3_r02,pin9_qb and pin8_qc,pin11_qd,not pin1_b,pin6_r91 and pin7_r92,pin11_qd,open);	

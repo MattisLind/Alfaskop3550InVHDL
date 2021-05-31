@@ -15,14 +15,14 @@ port(
   pin1_strb  : in std_logic;
   pin2_d3  : in std_logic;
   pin3_d4  : in std_logic;
-  pin4_p0  : out std_logic;
+  pin4_p0  : in std_logic;
   pin5_p1  : out std_logic;
   pin6_y4  : out std_logic;
   pin8_y3  : out std_logic;
   pin9_y2  : out std_logic;
   pin10_y1  : out std_logic;
-  pin12_d1  : out std_logic;  
-  pin13_d2  : out std_logic);
+  pin12_d1  : in std_logic;  
+  pin13_d2  : in std_logic);
 end component;
 
 signal strb,d3,d4,p0,p1,y4,y3,y2,y1,d1,d2: std_logic;

@@ -50,7 +50,7 @@ int main () {
 
   while ((ch = fgetc(stdin))!= -1) {
     //printf ("%04X : %02X\n",i, ch);
-    printf ("\n--\n-- Testcase %d --- IN -> A:%1Xh B:%01Xh S:%01Xh Cin:%01X M:%01X   ---  OUT -> F:%01Xh A=B:%01X P:%01X Cout:%01X G:%01X\n--\n",i,i & 0xf, (i &0xf0) >> 4, (i&0xf00) >> 8, (i & 0x1000) >> 12, (i & 0x2000) >> 13, ch &0xf, (ch & 0x10) >> 4, (ch & 0x20) >> 5, (ch & 0x40) >> 6, (ch & 0x80) >> 7);
+    printf ("\n--\n-- Testcase %d --- IN -> A:%1Xh B:%01Xh S:%01Xh Cin:%01X M:%01X   ---  OUT -> F:%01Xh A=B:%01X P:%01X Cout:%01X G:%01X\n--\n",i,i & 0xf, (i &0xf0) >> 4, (i&0xf00) >> 8, (i & 0x2000) >> 13, (i & 0x1000) >> 12, ch &0xf, (ch & 0x10) >> 4, (ch & 0x20) >> 5, (ch & 0x40) >> 6, (ch & 0x80) >> 7);
 
     a0 = i & 0x1;
     a1 = (i & 0x2) >> 1; 
@@ -64,8 +64,9 @@ int main () {
     s1 = (i & 0x200) >> 9; 
     s2 = (i & 0x400) >> 10; 
     s3 = (i & 0x800) >> 11;
-    cn = (i & 0x1000) >> 13; 
-    m  = (i & 0x2000) >> 12;
+    cn = (i & 0x2000) >> 13; 
+    m  = (i & 0x1000) >> 12;
+
     
     f0 = ch & 0x1;
     f1 = (ch & 0x2) >> 1; 

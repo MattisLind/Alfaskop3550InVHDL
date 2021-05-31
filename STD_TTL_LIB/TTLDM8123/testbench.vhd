@@ -13,19 +13,19 @@ architecture tb of testbench is
 component TTLDM8123 is
 port(
   pin1_select : in std_logic;
-  pin2_1a: in std_logic;
-  pin3_1b  : in std_logic;
-  pin4_1y   : out std_logic;
-  pin5_2a: in std_logic;
-  pin6_2b: in std_logic;
-  pin7_2y   : out std_logic;
-  pin9_3y   : out std_logic;
-  pin10_3b  : in std_logic;
+  pin2_1a : in std_logic;
+  pin3_1b : in std_logic;
+  pin4_1y : out std_logic;
+  pin5_2a : in std_logic;
+  pin6_2b : in std_logic;
+  pin7_2y : out std_logic;
+  pin9_3y : out std_logic;
+  pin10_3b : in std_logic;
   pin11_3a : in std_logic;
-  pin12_4y   : out std_logic; 
-  pin13_4b  : in std_logic;
+  pin12_4y : out std_logic; 
+  pin13_4b : in std_logic;
   pin14_4a : in std_logic;
-  pin15_strobe  : in std_logic);
+  pin15_strobe : in std_logic);
 end component;
 
 signal sselect,s1a,s1b,s1y,s2a,s2b,s2y,s3y,s3b,s3a,s4y,s4b,s4a,strobe: std_logic;
