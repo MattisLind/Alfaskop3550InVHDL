@@ -65,8 +65,11 @@ Here is an example where the logic analyzer shows the same trace as the simulati
 
 Later on when working with the 74181 and generating the testbench for it I quickly hit the limit of 100k size of a source file in edaplayground.com. I decided to set up my own build system. The [GHDL](http://ghdl.free.fr/) compiler was just what I needed. Together with make it is now possibile to do a simple make and have everything built.
 
+Unfortunately this didn't solve the problem with the 13 Mbyte testbench file. GHDL gave an "exec error". Most likely due to an out of memory condition. Perhaps splitting up the testbench into many smaller files would help.
+
 TODO:
 
  * Fix so that INTEL HEX files are converted to appropriate VHDL ROM-files by som kind of generator.
+ * The testbench generator has to split the file into many small files. For example 16 files.
  
 
