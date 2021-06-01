@@ -9,16 +9,13 @@ port(
   k  : in std_logic;
   clk  : in std_logic;
   npre  : in std_logic;
-  port_q  : out std_logic;
-  port_nq  : out std_logic);
+  q  : out std_logic;
+  nq  : out std_logic);
 end JKFF_WITH_CLR_PRE;
 
 architecture logic of JKFF_WITH_CLR_PRE is
-signal q, nq : std_logic;
 
 begin
-  port_q <= q;
-  port_nq <= nq;
   process (nclr, j,k, clk, npre) 
     begin
     	if  (nclr = '1' and npre = '0') then

@@ -1,11 +1,12 @@
 
 
 all:
-	ghdl -a --std=08 ../jkff.vhd
+
 	ghdl -a --std=08 testbench.vhd
 	ghdl -a --std=08 design.vhd
-	ghdl -e testbench
-	ghdl -r testbench
+	ghdl -a --std=08 ../jkff.vhd
+	ghdl -e --std=08 testbench
+	ghdl -r --std=08 testbench
 
 clean:
 	rm -f testbench
