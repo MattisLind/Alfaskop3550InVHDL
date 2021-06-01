@@ -61,3 +61,12 @@ Here is an example where the logic analyzer shows the same trace as the simulati
 
 ![Simulator trace](https://i.imgur.com/G7g9kDE.png)
 
+## GHDL
+
+Later on when working with the 74181 and generating the testbench for it I quickly hit the limit of 100k size of a source file in edaplayground.com. I decided to set up my own build system. The [GHDL](http://ghdl.free.fr/) compiler was just what I needed. Together with make it is now possibile to do a simple make and have everything built.
+
+TODO:
+
+ * Fix so that INTEL HEX files are converted to appropriate VHDL ROM-files by som kind of generator.
+ 
+
