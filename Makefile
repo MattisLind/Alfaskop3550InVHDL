@@ -32,6 +32,7 @@ clean:
 	rm -f *.o
 	rm -f *.cf
 	rm -f $(symlinks)
+	rm -f testbench
 
 .PHONEY: clean all
 
