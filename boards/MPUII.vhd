@@ -60,7 +60,7 @@ port(
     
     P3_72_ARS0 : in std_logic;
     P3_73_ARS1 : in std_logic;
-	P1_66_nMEMO7 : in std_logic;
+    P1_66_nMEMO7 : in std_logic;
     P1_65_nMEMO6 : in std_logic;
     P1_64_nMEMO5 : in std_logic;
     P1_63_nMEMO4 : in std_logic;
@@ -83,9 +83,10 @@ port(
        
 
 
-	P1_28_ModCarry : in std_logic;
+    P1_28_ModCarry : in std_logic;
     P1_71_nCarry : in std_logic;
     P2_21_nCP0 : in std_logic;
+    P1_20_Mi7 : in std_logic;
     P1_35_Mia : in std_logic;
     P2_11_CP0 : in std_logic;
     P1_18_nGeneralReset : in std_logic;
@@ -94,16 +95,16 @@ port(
     P2_9_nInterruptAddress2 : in std_logic;
     P2_34_nInterruptAddress3 : in std_logic;
 
-	P1_7_IOData0 : out std_logic;
-	P1_8_IOData1 : out std_logic;
-	P1_9_IOData2 : out std_logic;
-	P1_10_IOData3 : out std_logic;
-	P1_11_IOData4 : out std_logic;
-	P1_12_IOData5 : out std_logic;
-	P1_13_IOData6 : out std_logic;
-	P1_14_IOData7 : out std_logic;
-	P1_15_IOData80 : out std_logic;
-	P1_16_IOData81 : out std_logic;
+    P1_7_IOData0 : out std_logic;
+    P1_8_IOData1 : out std_logic;
+    P1_9_IOData2 : out std_logic;
+    P1_10_IOData3 : out std_logic;
+    P1_11_IOData4 : out std_logic;
+    P1_12_IOData5 : out std_logic;
+    P1_13_IOData6 : out std_logic;
+    P1_14_IOData7 : out std_logic;
+    P1_15_IOData80 : out std_logic;
+    P1_16_IOData81 : out std_logic;
 
     P1_70_nARdata7 : out std_logic;
     P1_80_ARdata0 : out std_logic;
@@ -428,8 +429,8 @@ end component;
 signal IC67_16, ALUCarry, EnableIOdata : std_logic; 
 signal nMEMO, nARdata, Aleg, Bbus, ALUdata, IOData : std_logic_vector (7 downto 0);
 signal CONROM : std_logic_vector (15 downto 0);
-
-
+signal Mi : std_logic_vector (7 downto 0);
+signal nALUdata : std_logic_vector (7 downto 0);
 begin 
 
 
@@ -475,10 +476,10 @@ ALU_IC79: TTL74181 port map(
   pin6_s0 => CONROM(12),
   pin7_cn => IC67_16,
   pin8_m => CONROM(11),
-  pin9_f0 => ALUdata(4),
-  pin10_f1 => ALUdata(5),
-  pin11_f2 => ALUdata(6),  
-  pin13_f3 => ALUdata(7),
+  pin9_f0 => nALUdata(4),
+  pin10_f1 => nALUdata(5),
+  pin11_f2 => nALUdata(6),  
+  pin13_f3 => nALUdata(7),
   pin14_aeqb => open, -- TODO
   pin15_p => open,
   pin16_cn4 => ALUCarry,
@@ -499,10 +500,10 @@ ALU_IC67: TTL74181 port map(
   pin6_s0 => CONROM(12),
   pin7_cn => '0', -- TODO
   pin8_m => CONROM(11),
-  pin9_f0 => ALUdata(0),
-  pin10_f1 => ALUdata(1),
-  pin11_f2 => ALUdata(2),  
-  pin13_f3 => ALUdata(3),
+  pin9_f0 => nALUdata(0),
+  pin10_f1 => nALUdata(1),
+  pin11_f2 => nALUdata(2),  
+  pin13_f3 => nALUdata(3),
   pin14_aeqb => open, -- TODO
   pin15_p => open,
   pin16_cn4 => IC67_16,
@@ -604,5 +605,534 @@ IC78: TTL74151 port map (
   pin12_d7 => '1',
   pin13_d6 => P1_16_IOData81,
   pin14_d5 => '1',
-  pin15_d4 => ALUdata(6));
+  pin15_d4 => nALUdata(6));
+
+IC45: TTL7442 port map (
+  pin1_ny0 => open,
+  pin2_ny1 => open,
+  pin3_ny2 => open,
+  pin4_ny3 => open,
+  pin5_ny4 => ,
+  pin6_ny5 => ,
+  pin7_ny6 => ,
+  pin9_ny7 => ,
+  pin10_ny8 => open,
+  pin11_ny9 => open,
+  pin12_a3 => Mi(2),
+  pin13_a2 => Mi(7),
+  pin14_a1 => Mi(1),
+  pin15_a0 => Mi(0)
+  );
+
+
+Mi(0) <= P2_17_Mi0;
+Mi(1) <= P2_12_Mi1;
+Mi(2) <= P2_13_Mi2;
+Mi(3) <= P2_14_Mi3;
+Mi(5) <= P2_18_Mi5;
+Mi(6) <= P2_19_Mi6;
+Mi(7) <= P2_20_Mi7;
+
+STACKCOUNTER_IC22: TTL74193 port map (
+  pin1_b =>,
+  pin2_qB =>, 
+  pin3_qA =>,
+  pin4_down =>,
+  pin5_up =>,
+  pin6_qC =>,
+  pin7_qD =>,
+  pin9_d =>,
+  pin10_c =>,
+  pin11_nLoad =>,
+  pin12_nCO =>,
+  pin13_nBO =>,
+  pin14_clr =>,
+  pin15_a =>
+);
+
+STACKCOUNTER_IC10: TTL74193 port map (
+  pin1_b =>,
+  pin2_qB =>, 
+  pin3_qA =>,
+  pin4_down =>,
+  pin5_up =>,
+  pin6_qC =>,
+  pin7_qD =>,
+  pin9_d =>,
+  pin10_c =>,
+  pin11_nLoad =>,
+  pin12_nCO =>,
+  pin13_nBO =>,
+  pin14_clr =>,
+  pin15_a =>
+);
+
+IC58: TTL7442 port map (  pin1_ny0 => open,
+  pin2_ny1 => ,
+  pin3_ny2 => ,
+  pin4_ny3 => ,
+  pin5_ny4 => open,
+  pin6_ny5 => open,
+  pin7_ny6 => open,
+  pin9_ny7 => open,
+  pin10_ny8 => open,
+  pin11_ny9 => open,
+  pin12_a3 => ,
+  pin13_a2 => ,
+  pin14_a1 => ,
+  pin15_a0 => 
+                          );
+
+ALUdata(7) <= not nALUdata(7); -- IC43 4 / 3
+ALUdata(6) <= not nALUdata(6); -- IC43 6 / 5
+ALUdata(5) <= not nALUdata(5); -- IC43 10 / 11
+ALUdata(4) <= not nALUdata(4); -- IC44 3 / 1 2
+ALUdata(3) <= not nALUdata(3); -- IC44 8 / 9 10
+ALUdata(2) <= not nALUdata(2); -- IC44 6 / 4 5
+ALUdata(1) <= not nALUdata(1); -- IC43 12 / 13
+ALUdata(0) <= not nALUdata(0); -- IC43 8 / 9
+
+STACK_IC11: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(7),
+  pin5_nq0 => Bbus(7),
+  pin6_d1 => ALUdata(6),
+  pin7_nq1 => Bbus(6),
+  pin9_nq2 => Bbus(5),
+  pin10_d2 => ALUdata(5),
+  pin11_nq3 => Bbus(4),
+  pin12_d3 => ALUdata(4),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+  STACK_IC12: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(3),
+  pin5_nq0 => Bbus(3),
+  pin6_d1 => ALUdata(2),
+  pin7_nq1 => Bbus(2),
+  pin9_nq2 => Bbus(1),
+  pin10_d2 => ALUdata(1),
+  pin11_nq3 => Bbus(0),
+  pin12_d3 => ALUdata(0),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+  STACK_IC23: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(7),
+  pin5_nq0 => Bbus(7),
+  pin6_d1 => ALUdata(6),
+  pin7_nq1 => Bbus(6),
+  pin9_nq2 => Bbus(5),
+  pin10_d2 => ALUdata(5),
+  pin11_nq3 => Bbus(4),
+  pin12_d3 => ALUdata(4),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+STACK_IC24: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(3),
+  pin5_nq0 => Bbus(3),
+  pin6_d1 => ALUdata(2),
+  pin7_nq1 => Bbus(2),
+  pin9_nq2 => Bbus(1),
+  pin10_d2 => ALUdata(1),
+  pin11_nq3 => Bbus(0),
+  pin12_d3 => ALUdata(0),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+STACK_IC35: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(7),
+  pin5_nq0 => Bbus(7),
+  pin6_d1 => ALUdata(6),
+  pin7_nq1 => Bbus(6),
+  pin9_nq2 => Bbus(5),
+  pin10_d2 => ALUdata(5),
+  pin11_nq3 => Bbus(4),
+  pin12_d3 => ALUdata(4),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+STACK_IC36: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(3),
+  pin5_nq0 => Bbus(3),
+  pin6_d1 => ALUdata(2),
+  pin7_nq1 => Bbus(2),
+  pin9_nq2 => Bbus(1),
+  pin10_d2 => ALUdata(1),
+  pin11_nq3 => Bbus(0),
+  pin12_d3 => ALUdata(0),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+REGISTER_IC47: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(7),
+  pin5_nq0 => Bbus(7),
+  pin6_d1 => ALUdata(6),
+  pin7_nq1 => Bbus(6),
+  pin9_nq2 => Bbus(5),
+  pin10_d2 => ALUdata(5),
+  pin11_nq3 => Bbus(4),
+  pin12_d3 => ALUdata(4),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+REGISTER_IC48: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(3),
+  pin5_nq0 => Bbus(3),
+  pin6_d1 => ALUdata(2),
+  pin7_nq1 => Bbus(2),
+  pin9_nq2 => Bbus(1),
+  pin10_d2 => ALUdata(1),
+  pin11_nq3 => Bbus(0),
+  pin12_d3 => ALUdata(0),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+REGISTER_IC59: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(7),
+  pin5_nq0 => Bbus(7),
+  pin6_d1 => ALUdata(6),
+  pin7_nq1 => Bbus(6),
+  pin9_nq2 => Bbus(5),
+  pin10_d2 => ALUdata(5),
+  pin11_nq3 => Bbus(4),
+  pin12_d3 => ALUdata(4),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+REGISTER_IC60: TTL74189 port map(
+  pin1_a0 =>,
+  pin2_ncs =>,
+  pin3_nwe =>,
+  pin4_d0 => ALUdata(3),
+  pin5_nq0 => Bbus(3),
+  pin6_d1 => ALUdata(2),
+  pin7_nq1 => Bbus(2),
+  pin9_nq2 => Bbus(1),
+  pin10_d2 => ALUdata(1),
+  pin11_nq3 => Bbus(0),
+  pin12_d3 => ALUdata(0),
+  pin13_a3 =>,
+  pin14_a2 =>,
+  pin15_a1 =>,
+);
+BSELECTOR_IC51: TTLDM8214 port map(
+  pin1_n1g => IC34_1,
+  pin2_b => IC34_6,
+  pin3_1c3 => '1',
+  pin4_1c2 => '1',
+  pin5_1c1 => IC17_5,
+  pin6_1c0 => IC(7),
+  pin7_1y => Bbus(7),
+  pin9_2y => Bbus(6),
+  pin10_2c0 => IC(6),
+  pin11_2c1 => P1_71_nCarry,
+  pin12_2c2 => '1',
+  pin13_2c3 => '1',
+  pin14_a => IC34_3,
+  pin15_n2g => IC34_1);
+BSELECTOR_IC74: TTLDM8214 port map(
+  pin1_n1g => IC34_1,
+  pin2_b => IC34_6,
+  pin3_1c3 => '1',
+  pin4_1c2 => '1',
+  pin5_1c1 => P1_72_nZero,
+  pin6_1c0 => IC(5),
+  pin7_1y => Bbus(5),
+  pin9_2y => Bbus(4),
+  pin10_2c0 => IC(4),
+  pin11_2c1 => IC(12),
+  pin12_2c2 => NewIC12,
+  pin13_2c3 => '1',
+  pin14_a => IC34_3,
+  pin15_n2g => IC34_1);
+BSELECTOR_IC63: TTLDM8214 port map(
+  pin1_n1g => IC34_1,
+  pin2_b => IC34_6,
+  pin3_1c3 => ,
+  pin4_1c2 => ,
+  pin5_1c1 => IC(11),
+  pin6_1c0 => IC(3),
+  pin7_1y => Bbus(3),
+  pin9_2y => Bbus(2),
+  pin10_2c0 => IC(2),
+  pin11_2c1 => IC(10),
+  pin12_2c2 => ,
+  pin13_2c3 => ,
+  pin14_a => IC34_3,
+  pin15_n2g => IC34_1
+);
+BSELECTOR_IC40: TTLDM8214 port map(
+  pin1_n1g => IC34_1,
+  pin2_b => IC34_6,
+  pin3_1c3 => ,
+  pin4_1c2 => ,
+  pin5_1c1 => IC(9),
+  pin6_1c0 => IC(1),
+  pin7_1y => Bbus(1),
+  pin9_2y => Bbus(0),
+  pin10_2c0 => IC(0),
+  pin11_2c1 => IC(8),
+  pin12_2c2 => ,
+  pin13_2c3 => ,
+  pin14_a => IC34_3,
+  pin15_n2g => IC34_1
+);
+
+IC17: TTL7474 port map (
+  pin1_n1clr =>,
+  pin2_1d =>,
+  pin3_1clk =>,
+  pin4_n1pre =>,
+  pin5_1q =>,
+  pin6_n1q =>,
+  pin8_n2q =>,
+  pin9_2q =>,
+  pin10_n2pre =>,
+  pin11_2clk =>,
+  pin12_2d =>,
+  pin13_n2clr =>
+); 
+
+
+IC18: TTL7474 port map (
+  pin1_n1clr =>,
+  pin2_1d =>,
+  pin3_1clk =>,
+  pin4_n1pre =>,
+  pin5_1q =>,
+  pin6_n1q =>,
+  pin8_n2q =>,
+  pin9_2q =>,
+  pin10_n2pre =>,
+  pin11_2clk =>,
+  pin12_2d =>,
+  pin13_n2clr =>
+); 
+
+
+IC16: TTL7474 port map (
+  pin1_n1clr =>,
+  pin2_1d =>,
+  pin3_1clk =>,
+  pin4_n1pre =>,
+  pin5_1q =>,
+  pin6_n1q =>,
+  pin8_n2q =>,
+  pin9_2q =>,
+  pin10_n2pre =>,
+  pin11_2clk =>,
+  pin12_2d =>,
+  pin13_n2clr =>
+); 
+
+
+MARM_IC25: TTL74198 port map (
+  pin1_s0 => '1' ,
+  pin2_srsi => '1',
+  pin3_a => nALUdata(7),
+  pin4_qA => MAR(15) ,
+  pin5_b  => nALUdata(6),
+  pin6_qB => MAR(14) ,
+  pin7_c => nALUdata(5),
+  pin8_qC => MAR(13) ,
+  pin9_d => nALUdata(4),
+  pin10_qD => MAR(12) ,
+  pin11_clk => IC3_6,
+  pin13_clear => '1',
+  pin14_qE => MAR(11) ,
+  pin15_e => nALUdata(3),
+  pin16_qF => MAR(10) ,
+  pin17_f => nALUdata(2),
+  pin18_qG => MAR(9) ,
+  pin19_g => nALUdata(1),
+  pin20_qH => MAR(8) ,
+  pin21_h => nALUdata(0),
+  pin22_slsi => '1',
+  pin23_s1 => '1',
+);
+
+
+MARM_IC1: TTL74198 port map (
+  pin1_s0 => '1' ,
+  pin2_srsi => '1',
+  pin3_a => nALUdata(7),
+  pin4_qA => MAR(7) ,
+  pin5_b  => nALUdata(6),
+  pin6_qB => MAR(6) ,
+  pin7_c => nALUdata(5),
+  pin8_qC => MAR(5) ,
+  pin9_d => nALUdata(4),
+  pin10_qD => MAR(4) ,
+  pin11_clk => IC27_3,
+  pin13_clear => '1',
+  pin14_qE => MAR(3) ,
+  pin15_e => nALUdata(3),
+  pin16_qF => MAR(2) ,
+  pin17_f => nALUdata(2),
+  pin18_qG => MAR(1) ,
+  pin19_g => nALUdata(1),
+  pin20_qH => MAR(0) ,
+  pin21_h => nALUdata(0),
+  pin22_slsi => '1',
+  pin23_s1 => '1',
+);
+
+IC_IC26: TTL74193 port map (
+  pin1_b => nALUdata(1),
+  pin2_qB => IC(9), 
+  pin3_qA => IC(8),
+  pin4_down => IncrICM,
+  pin5_up => DecrICM,
+  pin6_qC => IC(10),
+  pin7_qD => IC(11),
+  pin9_d => nALUdata(3),
+  pin10_c => nALUdata(2),
+  pin11_nLoad => LoadICM,
+  pin12_nCO => open,
+  pin13_nBO => IC26_13,
+  pin14_clr => P2_33_nMie3,
+  pin15_a => nALUdata(0)
+);
+IC_IC14: TTL74193 port map (
+  pin1_b => nALUdata(5),
+  pin2_qB => IC(5), 
+  pin3_qA => IC(4),
+  pin4_down => IC2_14,
+  pin5_up => IC2_12,
+  pin6_qC => IC(6),
+  pin7_qD => IC(7),
+  pin9_d => nALUdata(7),
+  pin10_c => nALUdata(6),
+  pin11_nLoad => LoadICL,
+  pin12_nCO => open,
+  pin13_nBO => ICLcarry,
+  pin14_clr => '0',
+  pin15_a => nALUdata(4)
+
+);
+IC_IC2: TTL74193 port map (
+  pin1_b => nALUdata(1),
+  pin2_qB => IC(1), 
+  pin3_qA => IC(0),
+  pin4_down => IncrICL,
+  pin5_up => '1',
+  pin6_qC => IC(2),
+  pin7_qD => IC(3),
+  pin9_d => nALUdata(3),
+  pin10_c => nALUdata(2),
+  pin11_nLoad => LoadICL,
+  pin12_nCO => open,
+  pin13_nBO => IC26_13,
+  pin14_clr => '0',
+  pin15_a => nALUdata(0)
+
+);
+
+IC65_6 <= P2_39_MEMAfromdisplay nand IC65_11;
+IC65_11 <= IC65_6 nand not P2_39_MEMAfromdisplay;
+
+MEMA_SELECTOR_IC73: TTLDM8123 port map(
+  pin1_select => P2_29_SelectICMEMA,
+  pin2_1a => MAR(15),
+  pin3_1b => P2_29_SelectICMEMA,
+  pin4_1y => MEMA(15),
+  pin5_2a => MAR(14),
+  pin6_2b => P2_29_SelectICMEMA,
+  pin7_2y => MEMA(14),
+  pin9_3y => MEMA(13),
+  pin10_3b => P2_29_SelectICMEMA,
+  pin11_3a => MAR(13),
+  pin12_4y => MEMA(12), 
+  pin13_4b => IC(12),
+  pin14_4a => MAR(12),
+  pin15_strobe => IC65_6
+  );
+
+MEMA_SELECTOR_IC61: TTLDM8123 port map(
+  pin1_select => P2_29_SelectICMEMA,
+  pin2_1a => MAR(11),
+  pin3_1b => IC(11),
+  pin4_1y => MEMA(11),
+  pin5_2a => MAR(10),
+  pin6_2b => IC(10),
+  pin7_2y => MEMA(10),
+  pin9_3y => MEMA(9),
+  pin10_3b => IC(9),
+  pin11_3a => MAR(9),
+  pin12_4y => MEMA(8), 
+  pin13_4b => IC(8),
+  pin14_4a => MAR(8),
+  pin15_strobe => IC65_6
+
+);
+MEMA_SELECTOR_IC49: TTLDM8123 port map(
+  pin1_select => P2_29_SelectICMEMA,
+  pin2_1a => MAR(7),
+  pin3_1b => IC(7),
+  pin4_1y => MEMA(7),
+  pin5_2a => MAR(6),
+  pin6_2b => IC(6),
+  pin7_2y => MEMA(6),
+  pin9_3y => MEMA(5),
+  pin10_3b => IC(5),
+  pin11_3a => MAR(5),
+  pin12_4y => MEMA(4), 
+  pin13_4b => IC(4),
+  pin14_4a => MAR(4),
+  pin15_strobe => IC65_6
+
+);
+MEMA_SELECTOR_IC37: TTLDM8123 port map(
+  pin1_select => P2_29_SelectICMEMA,
+  pin2_1a => MAR(3),
+  pin3_1b => IC(3),
+  pin4_1y => MEMA(3),
+  pin5_2a => MAR(2),
+  pin6_2b => IC(2),
+  pin7_2y => MEMA(2),
+  pin9_3y => MEMA(1),
+  pin10_3b => IC(1),
+  pin11_3a => MAR(1),
+  pin12_4y => MEMA(0), 
+  pin13_4b => IC(0),
+  pin14_4a => MAR(0),
+  pin15_strobe => IC65_6
+
+);
 end logic;

@@ -233,9 +233,10 @@ port(
     P1_20_CONROM1 : in std_logic;
     P1_19_CONROM0 : in std_logic;
 
-	P1_28_ModCarry : in std_logic;
+    P1_28_ModCarry : in std_logic;
     P1_71_nCarry : in std_logic;
     P2_21_nCP0 : in std_logic;
+    P1_20_Mi7 : in std_logic;    
     P1_35_Mia : in std_logic;
     P2_11_CP0 : in std_logic;
     P1_18_nGeneralReset : in std_logic;
@@ -244,17 +245,17 @@ port(
     P2_9_nInterruptAddress2 : in std_logic;
     P2_34_nInterruptAddress3 : in std_logic;
 
-	P1_7_IOData0 : out std_logic;
-	P1_8_IOData1 : out std_logic;
-	P1_9_IOData2 : out std_logic;
-	P1_10_IOData3 : out std_logic;
-	P1_11_IOData4 : out std_logic;
-	P1_12_IOData5 : out std_logic;
-	P1_13_IOData6 : out std_logic;
-	P1_14_IOData7 : out std_logic;
-	P1_15_IOData80 : out std_logic;
-	P1_16_IOData81 : out std_logic;
-
+    P1_7_IOData0 : out std_logic;
+    P1_8_IOData1 : out std_logic;
+    P1_9_IOData2 : out std_logic;
+    P1_10_IOData3 : out std_logic;
+    P1_11_IOData4 : out std_logic;
+    P1_12_IOData5 : out std_logic;
+    P1_13_IOData6 : out std_logic;
+    P1_14_IOData7 : out std_logic;
+    P1_15_IOData80 : out std_logic;
+    P1_16_IOData81 : out std_logic;
+    
     P1_70_nARdata7 : out std_logic;
     P1_80_ARdata0 : out std_logic;
     P1_79_ARdata1 : out std_logic;
