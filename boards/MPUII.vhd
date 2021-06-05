@@ -1133,6 +1133,175 @@ MEMA_SELECTOR_IC37: TTLDM8123 port map(
   pin13_4b => IC(0),
   pin14_4a => MAR(0),
   pin15_strobe => IC65_6
-
 );
+
+MIE_DECODER_IC8: TTL74155 port map(
+  pin1_1c => '1', 
+  pin2_n1g => '0',
+  pin3_b => Mie,
+  pin4_1y3 => IC8_4,
+  pin5_1y2 => IC8_5,
+  pin6_1y1 => open,
+  pin7_1y0 => open,
+  pin9_2y0 => open,
+  pin10_2y1 => open,
+  pin11_2y2 => IC8_11,
+  pin12_2y3 => open,
+  pin13_a => Mi(5),
+  pin14_n2g => Mi(2),
+  pin15_n2c => Mi(1)
+);
+
+
+MIE_DECODER_IC41: TTL74157 port map(
+  pin1_select => Mi(3), 
+  pin2_1a => Mi(0),
+  pin3_1b => '0',
+  pin4_1y => IC41_4,
+  pin5_2a => '1',
+  pin6_2b => '0',
+  pin7_2y => P2_38_IRMC0,
+  pin9_3y => P1_39_IRMC1,
+  pin10_3b => nMi0,
+  pin11_3a => Mi(0),
+  pin12_4y => open,
+  pin13_4b => '0',
+  pin14_4a => '0',
+  pin15_strobe => IC8_11
+);
+
+MIE_DECODER_IC6: TTL74154 port map(
+  pin1_ny0 => open,
+  pin2_ny1 => Mie(1),
+  pin3_ny2 => Mie(2),
+  pin4_ny3 => Mie(3),
+  pin5_ny4 => Mie(4),
+  pin6_ny5 => Mie(5),
+  pin7_ny6 => Mie(6),
+  pin8_ny7 => Mie(7),
+  pin9_ny8 => Mie(8),
+  pin10_ny9 => Mie(9),
+  pin11_ny10 => Mie(10),
+  pin13_ny11 => Mie(11),
+  pin14_ny12 => Mie(12),
+  pin15_ny13 => Mie(13),
+  pin16_ny14 => Mie(14),
+  pin17_ny15 => Mie(15),
+  pin18_ne1 => nCP0,
+  pin19_ne2 => IC6_5,
+  pin20_a3 => Mi(3),
+  pin21_a2 => Mi(2),
+  pin22_a1 => Mi(1),
+  pin23_a0 => Mi(0)
+);
+
+MIE_DECODER_IC4: TTL74154 port map(
+  pin1_ny0 => open,
+  pin2_ny1 => Mie(16),
+  pin3_ny2 => Mie(17),
+  pin4_ny3 => Mie(18),
+  pin5_ny4 => Mie(19),
+  pin6_ny5 => Mie(20),
+  pin7_ny6 => Mie(21),
+  pin8_ny7 => Mie(22),
+  pin9_ny8 => Mie(23),
+  pin10_ny9 => Mie(24),
+  pin11_ny10 => Mie(25),
+  pin13_ny11 => Mie(26),
+  pin14_ny12 => Mie(27),
+  pin15_ny13 => Mie(28),
+  pin16_ny14 => Mie(29),
+  pin17_ny15 => Mie(30),
+  pin18_ne1 => nCP0,
+  pin19_ne2 => IC6_4,
+  pin20_a3 => Mi(3),
+  pin21_a2 => Mi(2),
+  pin22_a1 => Mi(1),
+  pin23_a0 => Mi(0)
+);
+
+
+
+MITD_DECODER_IC3: TTL7442 port map (
+  pin1_ny0 => Mitd(0),
+  pin2_ny1 => Mitd(1),
+  pin3_ny2 => Mitd(2),
+  pin4_ny3 => Mitd(3),
+  pin5_ny4 => Mitd(4),
+  pin6_ny5 => Mitd(5),
+  pin7_ny6 => open,
+  pin9_ny7 => open,
+  pin10_ny8 => open,
+  pin11_ny9 => open,
+  pin12_a3 => CPmit,
+  pin13_a2 => Mi(6),
+  pin14_a1 => Mi(5),
+  pin15_a0 => Mi(3)
+
+  );
+
+IC62: TTL74175 port map (
+  pin1_nclr => '1', 
+  pin2_1q => open,
+  pin3_n1q => open,
+  pin4_1d => '0',
+  pin5_2d => Aleg(7),
+  pin6_n2q => IC62_6,
+  pin7_2q => IC62_7,
+  pin9_clk => CP2,
+  pin10_3q => IC62_10,
+  pin11_n3q => IC62_11,
+  pin12_3d => ALUcarry,
+  pin13_4d => '0',
+  pin14_n4q => open,
+  pin15_4q => open
+  );
+
+-- IC31 
+P1_38_MEMAChanged <= not (P1_37_MEMOccupation); 
+
+-- IC15
+IC15_3 <= IC29_2 and Mie(2);
+IC15_6 <= 
+IC15_8 <= Mie(4) and 
+IC15_11 <= Mitd(1) and IC29_8;
+
+IncrICL <= IC15_3;
+
+-- IC27
+IC27_6 <= IC27_11 nand IC18_6;
+IC27_8 <= 
+IC27_11 <= 
+-- IC29
+IC29_3 <= P2_32_interrupt or Mie(1);
+IC29_6 <= ICMcarry or IC30_11;
+IC29_8 <= nCP0 or AddToIC;
+IC29_11 <= IC30_3 or IC30_3;
+
+-- IC30
+
+IC30_3 <= IC64_8 and Mitd(0);
+IC30_6 <=
+IC30_8 <= IC45_9 and IC30_3;
+IC30_11 <=
+
+
+-- IC33
+
+IC33_3 <= IC17_6 nand IC33_6;
+IC33_6 <= IC32_6 nand IC45_7;
+IC33_8 <=
+IC33_11 <= IC33_6 nand IC17_5;
+
+-- IC39
+IC39_3  <= IC29_8 or IC50_6;
+IC39_6 <= IC21_12 or Arg(3); 
+IC39_8 <= IC15_11 or IC15_11;
+IC39_11 <= IC29_8 or IC50_8;
+LoadICL <= IC39_8;
+DecrICM <= IC39_3;
+
+-- IC50
+IC50_8 <= IC62_7 nand IC62_10;
+IC50_6 <= IC62_6 nand IC62_11;
 end logic;
