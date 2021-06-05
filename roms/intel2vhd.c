@@ -14,6 +14,8 @@
 #define TYPE_6330 2
 #define TYPE_1702 3
 
+#define WIDTH_8BIT 1
+#define WIDTH_4BIT 2
 
 int print6300Prolog(char * entity) {
   printf("-- Standard Bipolar 256 x 4 bit PROM \n");
@@ -37,7 +39,7 @@ int print6300Prolog(char * entity) {
   printf("  pin13_g1  : in std_logic;\n");
   printf("  pin14_g2  : in std_logic;\n");
   printf("  pin15_a7  : in std_logic);\n");
-  printf("end IC28_PROM256x4;\n");
+  printf("end %s;\n", entity);
   printf("\n");
   printf("architecture logic of %s is\n",entity);
   printf("signal address : std_logic_vector (7 downto 0);\n");
@@ -48,6 +50,7 @@ int print6300Prolog(char * entity) {
 }
 
 int print6300Epilog() {
+  printf (");\n");
   printf("\n");
   printf("begin\n"); 
   printf("address(7) <= pin15_a7;\n");
@@ -102,6 +105,7 @@ int print6330Prolog(char * entity) {
 }
 
 int print6330Epilog() {
+  printf (");\n");
   printf ("\n");
   printf ("begin\n"); 
   printf ("\n");
@@ -125,13 +129,16 @@ int print6330Epilog() {
 }
 
 
-void handle_type (int * type) {
+void handle_type (int * type, int * width) {
   if (strncasecmp("6330",optarg,32)==0) { // 32x8
-    *type = TYPE_6330;;
+    *type = TYPE_6330;
+    *width = WIDTH_8BIT;
   } else if (strncasecmp("6300",optarg,32)==0) {  //256x4
     *type = TYPE_6300;
+    *width = WIDTH_4BIT;
   } else if (strncasecmp("1702",optarg,32)==0) {  //256x8
     *type = TYPE_1702;
+    *width = WIDTH_8BIT;
   }
 
 }
@@ -147,6 +154,7 @@ int main (int argc, char **argv) {
   int digit_optind = 0;
   char entity [32];
   int type=0;
+  int width = 0;
   
   while (1) {
     int this_option_optind = optind ? optind : 1;
@@ -169,7 +177,7 @@ int main (int argc, char **argv) {
 	strncpy(entity, optarg,32);
 	break;
       case 1: // type
-	handle_type(&type);
+	handle_type(&type, &width);
 	break;
       }
       break;
@@ -179,7 +187,7 @@ int main (int argc, char **argv) {
       break;
       
     case 't':
-      handle_type(&type);
+      handle_type(&type, &width);
       break;
       
     default:
@@ -267,7 +275,11 @@ int main (int argc, char **argv) {
 	state = CHECKSUM;
 	tmp[2] = 0;
 	databyte = strtol(tmp,NULL,16);
-	printf ("x\"%02X\"",databyte);	  
+	if (width == WIDTH_8BIT) {
+	  printf ("x\"%02X\"",databyte);
+	} else {
+	  printf ("x\"%01X\"",databyte);
+	}
 	index = 0;
       } else {
 	//printf ("BB index %% 2=%d", index%2);
@@ -275,7 +287,11 @@ int main (int argc, char **argv) {
 	if ((index % 2) == 1) {
 	  tmp[2] = 0;
 	  databyte = strtol(tmp,NULL,16);
-	  printf ("x\"%02X\",",databyte);	  
+	  if (width == WIDTH_8BIT) {
+	    printf ("x\"%02X\",",databyte);
+	  } else {
+	     printf ("x\"%01X\",",databyte);
+	  }
 	}
 	if ((index%16) == 0) {
 	  printf("\n");
