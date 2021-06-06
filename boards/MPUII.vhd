@@ -58,8 +58,8 @@ port(
     P2_75_nMEMA14 : out std_logic;
     P2_74_nMEMA15 : out std_logic;
     
-    P3_72_ARS0 : in std_logic;
-    P3_73_ARS1 : in std_logic;
+    P1_72_ARS0 : in std_logic;
+    P1_73_ARS1 : in std_logic;
     P1_66_nMEMO7 : in std_logic;
     P1_65_nMEMO6 : in std_logic;
     P1_64_nMEMO5 : in std_logic;
@@ -974,7 +974,7 @@ MARM_IC25: TTL74198 port map (
   pin9_d => nALUdata(4),
   pin10_qD => MAR(12) ,
   pin11_clk => IC3_6,
-  pin13_clear => '1',
+  pin13_clear => IC27_8,
   pin14_qE => MAR(11) ,
   pin15_e => nALUdata(3),
   pin16_qF => MAR(10) ,
@@ -1000,7 +1000,7 @@ MARM_IC1: TTL74198 port map (
   pin9_d => nALUdata(4),
   pin10_qD => MAR(4) ,
   pin11_clk => IC27_3,
-  pin13_clear => '1',
+  pin13_clear => IC27_8,
   pin14_qE => MAR(3) ,
   pin15_e => nALUdata(3),
   pin16_qF => MAR(2) ,
@@ -1041,7 +1041,7 @@ IC_IC14: TTL74193 port map (
   pin10_c => nALUdata(6),
   pin11_nLoad => LoadICL,
   pin12_nCO => open,
-  pin13_nBO => ICLcarry,
+  pin13_nBO => nICLcarry,
   pin14_clr => '0',
   pin15_a => nALUdata(4)
 
@@ -1162,7 +1162,7 @@ MIE_DECODER_IC41: TTL74157 port map(
   pin6_2b => '0',
   pin7_2y => P2_38_IRMC0,
   pin9_3y => P1_39_IRMC1,
-  pin10_3b => nMi0,
+  pin10_3b => P2_16_nMi0,
   pin11_3a => Mi(0),
   pin12_4y => open,
   pin13_4b => '0',
@@ -1257,43 +1257,118 @@ IC62: TTL74175 port map (
   pin15_4q => open
   );
 
--- IC31 
-P1_38_MEMAChanged <= not (P1_37_MEMOccupation); 
 
--- IC15
+AR_IC55: TTL74198 port map (
+  pin1_s0 => P1_72_ARS0 ,
+  pin2_srsi => IC38_8,
+  pin3_a => nALUdata(7),
+  pin4_qA => nARdata(7) ,
+  pin5_b  => nALUdata(6),
+  pin6_qB => nARdata(6) ,
+  pin7_c => nALUdata(5),
+  pin8_qC => nARdata(5) ,
+  pin9_d => nALUdata(4),
+  pin10_qD => nARdata(4) ,
+  pin11_clk => nCP0,
+  pin13_clear => IC27_8,
+  pin14_qE => nARdata(3) ,
+  pin15_e => nALUdata(3),
+  pin16_qF => nARdata(2) ,
+  pin17_f => nALUdata(2),
+  pin18_qG => nARdata(1) ,
+  pin19_g => nALUdata(1),
+  pin20_qH => nARdata(0) ,
+  pin21_h => nALUdata(0),
+  pin22_slsi => IC38_8,
+  pin23_s1 => P1_73_ARS1,
+);
+
+
+-- IC9 7400 QUAD NAND
+IC9_3 <=
+IC9_6 <= P2_10_nEnd nand IC21_12; 
+IC9_8 <=  IC9_11 nand Mie(14);
+IC9_11 <= IC9_8 nand P2_10_nEnd; 
+
+
+-- IC15 7408 QUAD AND
 IC15_3 <= IC29_2 and Mie(2);
-IC15_6 <= 
-IC15_8 <= Mie(4) and 
+IC15_6 <= Mitd(2) and Mitd(3);
+IC15_8 <= Mie(3) and IC27_8; 
 IC15_11 <= Mitd(1) and IC29_8;
 
 IncrICL <= IC15_3;
+P2_33_nMie3 <= IC15_8;
 
--- IC27
+
+-- IC19 7400 QUAD NAND
+IC19_3 <=
+IC19_6 <= Mie(16) nand IC32_8;
+IC19_8 <=
+IC19_11 <=
+
+-- IC20 7400 QUAD NAND
+IC20_3 <=
+IC20_6 <=
+IC20_8 <= MEMToBMia(1) nand Mia;
+IC20_11 <=
+
+-- IC21 7410 TRIPLE 3-INPUT NAND
+
+IC21_ <=
+IC21_ <=
+IC21_ <= not (IC9_6 and Mie(24) and Mie(24));
+
+-- IC27 74S00 QUAD 2-INPUT NAND
+IC27_3 <= Mitd(4) nand IC15_11;
 IC27_6 <= IC27_11 nand IC18_6;
-IC27_8 <= 
-IC27_11 <= 
--- IC29
+IC27_8 <= '0' nand '0';
+IC27_11 <= IC18_8 nand Arg(0);
+
+-- IC28 7451 AND - NOR GATES
+IC28_8 <= (CP2 and P1_35_Mia )  nor (CP0 and P1_35_Mia)
+
+-- IC29 7432 QUAD 2-INPUT OR
 IC29_3 <= P2_32_interrupt or Mie(1);
 IC29_6 <= ICMcarry or IC30_11;
 IC29_8 <= nCP0 or AddToIC;
 IC29_11 <= IC30_3 or IC30_3;
 
--- IC30
+-- IC30 7408 QUAD 2-INPUT AND
 
 IC30_3 <= IC64_8 and Mitd(0);
-IC30_6 <=
+IC30_6 <= IC30_11 and Mie(13);
 IC30_8 <= IC45_9 and IC30_3;
-IC30_11 <=
+IC30_11 <= IC39_11 and nICLcarry;
 
+-- IC31 7430 8-INPUT NAND
+P1_38_MEMAChanged <= not (P1_37_MEMOccupation and IC15_11 and Mie(13) and IC15_6 and Mitd(4) and Mitd(5) and IncrICL and Mie(12)); 
 
--- IC33
+-- IC32 7410 TRIPLE 3-INPUT NAND
+IC32_12 <= not (MEMToBMia(1) and IC45_6 and IC45_5); 
+IC32_6 <= not (MEMToBMia(1) and Mia and IC65_3);
+IC32_8 <= not (P1_18_nGeneralReset and Mie(17)  and IC19_3 ); 
+-- IC33 7400 QUAD 2-INPUT NAND
 
 IC33_3 <= IC17_6 nand IC33_6;
 IC33_6 <= IC32_6 nand IC45_7;
 IC33_8 <=
 IC33_11 <= IC33_6 nand IC17_5;
 
--- IC39
+-- IC34 7408 QUAD 2-INPUT AND
+IC34_3 <= IC65_3 and Mi(0);
+IC34_6 <= IC65_3 and Mi(1);
+IC34_8 <= Mie(12) and P1_18_nGeneralReset;
+IC34_11 <= IC65_3 and IC44_11;
+P1_29_nSetICMEMAFF <= IC34_8
+
+-- IC38 7408 HEX INVERTER
+IC38_8 <= not IC76_8;
+IC38_10 <= not IC28_8;
+IC38_12 <= not IC15_8;
+P2_37_Mie3 <= IC38_12;
+-- IC39 7432 QUAD 2-INPUT OR
+
 IC39_3  <= IC29_8 or IC50_6;
 IC39_6 <= IC21_12 or Arg(3); 
 IC39_8 <= IC15_11 or IC15_11;
@@ -1301,7 +1376,65 @@ IC39_11 <= IC29_8 or IC50_8;
 LoadICL <= IC39_8;
 DecrICM <= IC39_3;
 
--- IC50
-IC50_8 <= IC62_7 nand IC62_10;
+-- IC43 7404 HEX INVERTER
+IC43_2 <= not IC32_12;
+-- IC43_4 <=
+-- IC43_6 <=
+-- IC43_8 <=
+-- IC43_10 <=
+-- IC43_12 <=
+
+-- IC44 7400 QUAD 2-INPUT NAND
+-- IC44_3 <=
+-- IC44_6 <=
+-- IC44_8 <=
+IC44_11 <= Mi(2) nand Mi(7);
+
+-- IC46 74S20 DUAL 4-INPUT NAND
+IC46_8 <= not (Mie(7) and IC20_8 and IC45_6 and IC65_3);
+IC46_6 <= not (Mia and P2_16_nMi0 and CONROM(7) and CONROM(7));
+-- IC50 7400 QUAD 2-INPUT NAND
+IC50_3 <= 
 IC50_6 <= IC62_6 nand IC62_11;
+IC50_8 <= IC62_7 nand IC62_10;
+IC50_11 <= ALUCarry nand ALUCarry;
+
+-- IC64 74H10 TRIPLE 3-INPUT NAND
+IC64_8 <= not (CONROM(0) and Mia and IC38_10 );
+IC64_6 <= not (Mie(16) and IC16_8 and IC32_8);
+
+-- IC65 7400 QUAD 2-INPUT NAND
+IC65_3 <= Mia nand CONROM(7);
+IC65_6 <=
+IC65_8 <= Mi(6) nand Mi(6);
+IC65_11 <=
+
+-- IC70 7437 QUAD 2-INPUT NAND
+IC70_3 <= ARdata(0) nand ARdata(0);
+IC70_6 <= ARdata(1) nand ARdata(1);
+IC70_8 <= ARdata(2) nand ARdata(2);
+IC70_11 <= ARdata(3) nand ARdata(3); 
+
+
+-- IC76 7451 AND NOR GATE
+IC76_8 <=  (P1_28_ModCarry and P1_28_ModCarry ) nor (MarkCarry and P1_71_nCarry);
+
+-- IC77 7400 QUAD 2-INPUT NAND GATE
+IC77_3 <= Mi(6) nand AeqB; 
+IC77_6 <= IC77_3 nand IC77_11;
+IC77_8 <= CONROM(6) nand IC65_8;
+IC77_11 <= IC65_8 nand nALUdata(5);
+
+
+-- IC82 7437 QUAD 2-INPUT NAND BUFFER
+IC82_3 <= nARdata(4) nand nARdata(4);
+IC82_6 <= nARdata(5) nand nARdata(5);
+IC82_8 <= nARdata(6) nand nARdata(6);
+IC82_11 <= nARdata(7) nand nARdata(7);
+
+
+-- Wire OR A=B outputs from 74181 ALU since those are OC
+
+AeqB <= IC79_14 and IC67_14;
+
 end logic;
