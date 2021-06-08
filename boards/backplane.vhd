@@ -211,8 +211,8 @@ port(
     P2_75_nMEMA14 : out std_logic;
     P2_74_nMEMA15 : out std_logic;
     
-    P3_72_ARS0 : in std_logic;
-    P3_73_ARS1 : in std_logic;
+    P2_72_ARS0 : in std_logic;
+    P2_73_ARS1 : in std_logic;
 	P1_66_nMEMO7 : in std_logic;
     P1_65_nMEMO6 : in std_logic;
     P1_64_nMEMO5 : in std_logic;
@@ -236,11 +236,11 @@ port(
     P1_28_ModCarry : in std_logic;
     P1_71_nCarry : in std_logic;
     P2_21_nCP0 : in std_logic;
-    P1_20_Mi7 : in std_logic;    
+    P2_20_Mi7 : in std_logic;    
     P1_35_Mia : in std_logic;
     P2_11_CP0 : in std_logic;
     P1_18_nGeneralReset : in std_logic;
-    P1_71_nZero : in std_logic;
+    P1_72_nZero : in std_logic;
     P2_6_nInterruptAddress1 : in std_logic;
     P2_9_nInterruptAddress2 : in std_logic;
     P2_34_nInterruptAddress3 : in std_logic;
@@ -447,6 +447,7 @@ begin
     P2_14_Mi3 => Mi(3),
     P2_18_Mi5 => Mi(5),
     P2_19_Mi6 => Mi(6),
+    P2_20_Mi7 => Mi(7),
     P2_16_nMi0 => nMi0,
     P2_10_nEnd => nEnd,
     P2_15_nCPmit => nCPmit,
@@ -491,8 +492,8 @@ begin
     P2_75_nMEMA14 => open,
     P2_74_nMEMA15 => open,
     
-    P3_72_ARS0 => ARS0,
-    P3_73_ARS1 => ARS1,
+    P2_72_ARS0 => ARS0,
+    P2_73_ARS1 => ARS1,
 	P1_66_nMEMO7 => nMEMO(7),
     P1_65_nMEMO6 => nMEMO(6),
     P1_64_nMEMO5 => nMEMO(5),
@@ -520,7 +521,7 @@ begin
     P1_35_Mia => Mia,
     P2_11_CP0 => CP0,
     P1_18_nGeneralReset => nGeneralReset, 
-    P1_71_nZero => nZero,
+    P1_72_nZero => nZero,
     P2_6_nInterruptAddress1 => nInterruptAddress(0),
     P2_9_nInterruptAddress2 => nInterruptAddress(1),
     P2_34_nInterruptAddress3 => nInterruptAddress(2),
