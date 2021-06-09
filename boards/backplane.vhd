@@ -8,10 +8,10 @@ entity Alfaskop3550 is
 port(
 
 -- Internal
-    Int_nCP1 : out std_logic;
 -- Clk is to be generated externally    
-    clkInput : in std_logic;
-    nReset : in std_logic);
+    clk : in std_logic;
+    nReset : in std_logic;
+    nMEMO :  in std_logic_vector (7 downto 0));
 end Alfaskop3550;
 
 
@@ -21,8 +21,7 @@ architecture logic of Alfaskop3550 is
 component MPUI is
 port(
 
--- Internal
-    Int_nCP1 : out std_logic;
+
 -- Clk is to be generated externally    
     clkInput : in std_logic;
     nReset : in std_logic;
@@ -40,7 +39,7 @@ port(
     P2_84_IRecReady : in std_logic;
     P1_18_nGeneralReset : out std_logic;
     P2_35_nDisableInterrupt : in std_logic;
-    P2_33_Mie3 : in std_logic;
+    P2_33_nMie3 : in std_logic;
     P2_70_DZeroFF : in std_logic;
     P2_71_ALUAeqB : in std_logic;
     P2_72_ARMCO : out std_logic;
@@ -59,10 +58,10 @@ port(
     P1_10_9600Hz : out std_logic;
     P1_80_1200Hz : out std_logic;
     P1_79_300Hz : out std_logic;
-    P1_74_0_3Hz : out std_logic;
+    P1_74_0_6Hz : out std_logic;
     P1_13_2_3Hz : out std_logic;
     P1_58_4_6Hz : out std_logic;
-    P1_57_9_6Hz : out std_logic;
+    P1_57_9_2Hz : out std_logic;
     P1_78_IOAddress00Group : out std_logic;
     P1_77_IOAddress04Group : out std_logic;
     P1_76_IOAddress08Group : out std_logic;
@@ -90,7 +89,7 @@ port(
     P1_6_MieReset : in std_logic;
     P1_11_ResetButton : in std_logic;    
     
-    P1_38_IRMCI : in std_logic;
+    P2_38_IRMCI : in std_logic;
     P1_39_IRMCO : in std_logic;
     P1_59_nMEMO0 : in std_logic;
     P1_60_nMEMO1 : in std_logic;
@@ -144,7 +143,7 @@ port(
     
     P2_10_nEnd : out std_logic;
     
-    P2_nMijStart : out std_logic;
+    P2_28_nMijStart : out std_logic;
     
     P2_17_Mi0 : out std_logic;
     P2_12_Mi1 : out std_logic;
@@ -287,7 +286,6 @@ end component;
 
 
 
-signal nMEMO : std_logic_vector (7 downto 0);
 signal Mie, nMi0,nEnd,nCPmit,CP2,nMie3,Mie3nDisableInterrupt,SelectICMEMA,IRMC1,IRMC0 : std_logic;
 signal IODataFromMPU,nIODataToMPU,nOut,Mark,nMieReset,nMieRespri,MieResZero,MieResCarry : std_logic;
 signal MEMAChanged,nMitd5,nSetICMEMAFF,Interrupt,ARS0,ARS1,ModCarry,nCarry,nCP0 : std_logic;
@@ -297,13 +295,11 @@ signal IOData, ARdata, Mi : std_logic_vector (7 downto 0);
 signal nArg: std_logic_vector (3 downto 0);
 signal nInterruptAddress : std_logic_vector (2 downto 0);
 signal CONROM: std_logic_vector (15 downto 0);
-signal clk, nDisableInterrupt, Mie3, nMieResCarry, nMieResZero, nSelectICMEMA, nModCarry   : std_logic;
+signal nDisableInterrupt, Mie3, nMieResCarry, nMieResZero, nSelectICMEMA, nModCarry   : std_logic;
 begin
 
   MPUIBoard: MPUI port map (
   
--- Internal
-    Int_nCP1 => open,
 -- Clk is to be generated externally    
     clkInput => clk,
     nReset => nReset,
@@ -321,7 +317,7 @@ begin
     P2_84_IRecReady => '1',
     P1_18_nGeneralReset => nGeneralReset,
     P2_35_nDisableInterrupt  => nDisableInterrupt,
-    P2_33_Mie3 => Mie3,
+    P2_33_nMie3 => Mie3,
     P2_70_DZeroFF => DZeroFF,
     P2_71_ALUAeqB => ALUAeqB,
     P2_72_ARMCO => ARS0,
@@ -340,10 +336,10 @@ begin
     P1_10_9600Hz => open,
     P1_80_1200Hz => open,
     P1_79_300Hz => open,
-    P1_74_0_3Hz => open,
+    P1_74_0_6Hz => open,
     P1_13_2_3Hz => open,
     P1_58_4_6Hz => open,
-    P1_57_9_6Hz => open,
+    P1_57_9_2Hz => open,
     P1_78_IOAddress00Group => open,
     P1_77_IOAddress04Group => open,
     P1_76_IOAddress08Group => open,
@@ -371,7 +367,7 @@ begin
     P1_6_MieReset => MieReset,
     P1_11_ResetButton => '1',  
     
-    P1_38_IRMCI => IRMC1,
+    P2_38_IRMCI => IRMC1,
     P1_39_IRMCO => IRMC0,
     P1_59_nMEMO0 => nMEMO(0),
     P1_60_nMEMO1 => nMEMO(1),
@@ -425,7 +421,7 @@ begin
     
     P2_10_nEnd => nEnd,
     
-    P2_nMijStart => nMijStart,
+    P2_28_nMijStart => nMijStart,
     
     P2_17_Mi0 => Mi(0),
     P2_12_Mi1 => Mi(1),

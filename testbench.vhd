@@ -13,13 +13,10 @@ architecture tb of testbench is
 component Alfaskop3550 is
 port(
 
--- Internal
-    Int_nCP1 : out std_logic;
-    
 -- Clk is to be generated externally    
-    clkInput : in std_logic;
-    nReset : in std_logic
-    
+    clk : in std_logic;
+    nReset : in std_logic;
+    nMEMO :  std_logic_vector (7 downto 0)
 
 );
 end component;
@@ -31,13 +28,11 @@ begin
 
   -- Connect DUT
   DUT: Alfaskop3550 port map(
--- Internal
-    Int_nCP1 => nCP1,
-    
 -- Clk is to be generated externally    
-    clkInput => clkInput,
-    nReset => nReset
+    clk => clkInput,
+    nReset => nReset,
 -- Signals from the connector
+    nMEMO => nMEMO
 );
   process
   begin

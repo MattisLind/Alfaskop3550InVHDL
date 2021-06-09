@@ -6,8 +6,6 @@ use IEEE.std_logic_1164.all;
 entity MPUI is
 port(
 
--- Internal
-    Int_nCP1 : out std_logic;
 -- Clk is to be generated externally    
     clkInput : in std_logic;
     nReset : in std_logic;
@@ -25,7 +23,7 @@ port(
     P2_84_IRecReady : in std_logic;
     P1_18_nGeneralReset : out std_logic;
     P2_35_nDisableInterrupt : in std_logic;
-    P2_33_Mie3 : in std_logic;
+    P2_33_nMie3 : in std_logic;
     P2_70_DZeroFF : in std_logic;
     P2_71_ALUAeqB : in std_logic;
     P2_72_ARMCO : out std_logic;
@@ -44,10 +42,10 @@ port(
     P1_10_9600Hz : out std_logic;
     P1_80_1200Hz : out std_logic;
     P1_79_300Hz : out std_logic;
-    P1_74_0_3Hz : out std_logic;
+    P1_74_0_6Hz : out std_logic;
     P1_13_2_3Hz : out std_logic;
     P1_58_4_6Hz : out std_logic;
-    P1_57_9_6Hz : out std_logic;
+    P1_57_9_2Hz : out std_logic;
     P1_78_IOAddress00Group : out std_logic;
     P1_77_IOAddress04Group : out std_logic;
     P1_76_IOAddress08Group : out std_logic;
@@ -75,7 +73,7 @@ port(
     P1_6_MieReset : in std_logic;
     P1_11_ResetButton : in std_logic;    
     
-    P1_38_IRMCI : in std_logic;
+    P2_38_IRMCI : in std_logic;
     P1_39_IRMCO : in std_logic;
     P1_59_nMEMO0 : in std_logic;
     P1_60_nMEMO1 : in std_logic;
@@ -129,7 +127,7 @@ port(
     
     P2_10_nEnd : out std_logic;
     
-    P2_nMijStart : out std_logic;
+    P2_28_nMijStart : out std_logic;
     
     P2_17_Mi0 : out std_logic;
     P2_12_Mi1 : out std_logic;
@@ -523,9 +521,30 @@ port(
   pin15_g  : in std_logic);
 end component;
 
+
+component TTL74155 is
+port(
+  pin1_1c  : in std_logic;
+  pin2_n1g  : in std_logic;
+  pin3_b  : in std_logic;
+  pin4_1y3  : out std_logic;
+  pin5_1y2  : out std_logic;
+  pin6_1y1  : out std_logic;
+  pin7_1y0  : out std_logic;
+  pin9_2y0  : out std_logic;
+  pin10_2y1  : out std_logic;
+  pin11_2y2  : out std_logic;  
+  pin12_2y3  : out std_logic;
+  pin13_a  : in std_logic;
+  pin14_n2g  : in std_logic;
+  pin15_n2c  : in std_logic);
+end component;
+
+
+
 signal MEMO : std_logic_vector (7 downto 0);
-signal Arg : std_logic_vector (3 downto 0);
-signal Op : std_logic_vector (3 downto 0);
+signal nArg : std_logic_vector (3 downto 0);
+signal OP : std_logic_vector (3 downto 0);
 signal CP0, nCP0,IRMCO,IRMCI : std_logic;
 signal CONROMAddress : std_logic_vector (3 downto 0);
 signal CONROM : std_logic_vector(15 downto 0);
@@ -555,16 +574,20 @@ signal nInterruptAddress : std_logic_vector (3 downto 1);
 signal Interrupt, nInterrupt : std_logic;
 
 signal IC50_5, IC50_6,IC50_8, IC50_9, IC76_11, IC53_6 , IC3_6 :std_logic;
-signal IC3_8, CPend, IC63_5,conditionOutput,nZero,nCarry : std_logic;
-signal nARCParity,Mie,Clk6144MHz, CP1, nCP1,CP2, CK_10T, CK_4T, CK_80T, CK_76kHz, CK_1280T : std_logic;
+signal IC3_8, CPend, IC63_6,conditionOutput,nZero,nCarry : std_logic;
+signal nARCParity,Clk6144MHz, CP1, nCP1,CP2, CK_10T, CK_4T, CK_80T, CK_76kHz, CK_1280T : std_logic;
 signal IC35_12, CK_1200Hz, IC35_11, CK_300Hz, CK37Hz, CK_4_8Hz, CK_9_2Hz, CK_2_3Hz, CK_1_2Hz, CK_0_6Hz : std_logic;
 signal IC48_9, IC77_12, IC77_4, IC79_9, IC48_8, Mia, IC71_14, IC71_6, IC71_3 : std_logic;
 signal IC72_12, IC47_13 : std_logic;
-signal IC61_1, IC61_4, IC38_11 : std_logic; 
-
+signal IC61_1, IC61_4, IC38_11 : std_logic;
+signal IC57_6 : std_logic;
+signal IC82_3, IC82_6, IC29_13, IC76_6 : std_logic;
 
 
 begin 
+
+P1_18_nGeneralReset <= nReset;
+P2_28_nMijStart <= MijStart;
 -- IC53 B
 IC53_6 <= mi(3) and mi(2) and mi(1);   
 -- IC76 D
@@ -584,31 +607,31 @@ IC3_8 <= nReset nand ( nCP0 or IC3_6 );
 -- IC52 D
 CPend <= not IC3_8; 
 P2_10_nEnd <= IC3_6;
-IRMCO <= P1_38_IRMCI;
+IRMCO <= P2_38_IRMCI;
 IRMCI <= P1_39_IRMCO;
 
  IR_IC42: TTL74198 port map(
  	pin1_s0 =>IRMCO,
- 	pin2_srsi => Arg(0),
+ 	pin2_srsi => nArg(0),
     pin3_a => MEMO(7),
-    pin4_qA => Op(3),
+    pin4_qA => OP(3),
     pin5_b => MEMO(3),
-    pin6_qB => Arg(3),
+    pin6_qB => nArg(3),
     pin7_c => MEMO(6),
-    pin8_qC => Op(2),
+    pin8_qC => OP(2),
     pin9_d => MEMO(2),
-    pin10_qD => Arg(2),
+    pin10_qD => nArg(2),
     pin11_clk => nCP0,
     pin13_clear => nReset,
-    pin14_qE => Op(1),
+    pin14_qE => OP(1),
     pin15_e => MEMO(5),
-    pin16_qF => Arg(1),
+    pin16_qF => nArg(1),
     pin17_f => MEMO(1),
-    pin18_qG => Op(0),
+    pin18_qG => OP(0),
     pin19_g => MEMO(4),
-    pin20_qH => Arg(0),
+    pin20_qH => nArg(0),
     pin21_h => MEMO(0),
-    pin22_slsi => Op(3),
+    pin22_slsi => OP(3),
     pin23_s1 => IRMCI);
 
 MEMO(0) <= P1_59_nMEMO0;
@@ -619,21 +642,28 @@ MEMO(4) <= P1_63_nMEMO4;
 MEMO(5) <= P1_64_nMEMO5;
 MEMO(6) <= P1_65_nMEMO6;
 MEMO(7) <= P1_66_nMEMO7;
+P2_23_nArg0 <= nArg(0);
+P2_24_nArg1 <= nArg(1);
+P2_25_nArg2 <= nArg(2);
+P2_26_nArg3 <= nArg(3);
+
+P2_62_OP3 <= OP(3);
+P2_63_OP2 <= OP(2);
 
 
  SEL1_IC30: TTL74157 port map(
  	pin1_select => SelectOP,
  	pin2_1a =>  not Mi(3),
- 	pin3_1b => Op(3),
+ 	pin3_1b => OP(3),
     pin4_1y => CONROMAddress(3),
     pin5_2a =>  not Mi(2),
-    pin6_2b => Op(2),
+    pin6_2b => OP(2),
     pin7_2y => CONROMAddress(2),
     pin9_3y => CONROMAddress(1),
-    pin10_3b => Op(1),
+    pin10_3b => OP(1),
     pin11_3a =>  not Mi(1),
     pin12_4y => CONROMAddress(0),
-    pin13_4b => Op(0),
+    pin13_4b => OP(0),
     pin14_4a =>  not Mi(0),
     pin15_strobe => Mi(7));
 
@@ -641,16 +671,16 @@ MEMO(7) <= P1_66_nMEMO7;
 SEL1_IC54: TTL74157 port map(  
 	pin1_select => Mij,
   	pin2_1a => Mir nor mi(1),
-  	pin3_1b => Arg(3),
+  	pin3_1b => nArg(3),
   	pin4_1y => AdderInc(3),
   	pin5_2a => Mir nor Mi(0),
-  	pin6_2b => Arg(2),
+  	pin6_2b => nArg(2),
   	pin7_2y => AdderInc(2),
   	pin9_3y => AdderInc(1),
-  	pin10_3b => Arg(1),
+  	pin10_3b => nArg(1),
   	pin11_3a => '0',
   	pin12_4y => AdderInc(0), 
-  	pin13_4b => Arg(0),
+  	pin13_4b => nArg(0),
   	pin14_4a => Mis,
   	pin15_strobe => MijStartDis);
     
@@ -681,7 +711,7 @@ ADDER_IC66: TTL7483 port map(
   pin8_a2 => Mic(1),
   pin9_s1 => AdderOut(0),
   pin10_a1 => Mic(0),
-  pin11_b1 => IC63_5,
+  pin11_b1 => IC63_6,
   pin13_c0 => AdderInc(0),
   pin14_c4 => lowAdderCarry,
   pin15_s4 => AdderOut(3),
@@ -846,19 +876,31 @@ MICROM2_IC27: IC27_PROM256x4 port map (
     pin14_4a => Mi(0),
     pin15_strobe => '0');    
 
+P2_17_Mi0 <= Mi(0);
+P2_12_Mi1 <= Mi(1);
+P2_13_Mi2 <= Mi(2);
+P2_14_Mi3 <= Mi(3);
+P2_18_Mi5 <= Mi(5);
+P2_19_Mi6 <= Mi(6);
+P2_20_Mi7 <= Mi(7);
+    
+
+
+
+
 Selector_IC63: TTL74151 port map(  
   pin1_d3 => CF,
   pin2_d2 => not CF,
-  pin3_d1 => Arg(0) or Arg(1) or Arg(2) or Arg(3),
+  pin3_d1 => nArg(0) or nArg(1) or nArg(2) or nArg(3),
   pin4_d0 => Zero,
   pin5_y => open, 
-  pin6_w => IC63_5,
+  pin6_w => IC63_6,
   pin7_ng => not Mis,
   pin9_c => Mi(2),
   pin10_b => Mi(1),
   pin11_a => Mi(0),
   pin12_d7 => '1',
-  pin13_d6 => Mark,
+  pin13_d6 => P1_27_Mark,
   pin14_d5 => OP(3),
   pin15_d4 => Carry
 );
@@ -875,10 +917,10 @@ ConditionSelector_IC74: TTL74150 port map (
   pin8_e0 => '0',
   pin9_ng => '0',
   pin10_w => conditionOutput,
-  pin11_d => Arg(3),
-  pin13_c => Arg(2),
-  pin14_b => Arg(1),
-  pin15_a => Arg(0),
+  pin11_d => nArg(3),
+  pin13_c => nArg(2),
+  pin14_b => nArg(1),
+  pin15_a => nArg(0),
   pin16_e15 => nZero,
   pin17_e14 => nCarry,
   pin18_e13 => P1_71_nARData7,
@@ -896,8 +938,8 @@ TypeDecoder_IC39: TTL74278 port map (
   pin5_p1 => Mir, 
   pin6_y4 => Mis,
   pin8_y3 => Mij,
-  pin9_y2 => Mia,
-  pin10_y1 => Mie,
+  pin9_y2 => P1_35_Mia,
+  pin10_y1 => P2_22_Mie,
   pin12_d1 => MicROM(6), 
   pin13_d2 => MicROM(5)
 );
@@ -941,7 +983,6 @@ DFF_IC70: TTL7474 port map (
 
 P2_11_CP0 <= CP0;
 P2_21_nCP0 <= nCP0;
-Int_nCP1 <= nCP1;
 
 DFF_IC59: TTL7474 port map (
   pin1_n1clr => P2_7_nCOPHalt,
@@ -972,13 +1013,14 @@ MemoryTiming_IC46: TTL74193 port map (
   pin7_qD => memoryTimingStartCount,
   pin9_d => '1',
   pin10_c => memoryTimingStartCount,
-  pin11_nLoad => memoryTimingLoad,  
+  pin11_nLoad => IC57_6,  
   pin12_nCO => memoryTimingCarry,
   pin13_nBO => open,
   pin14_clr => not nReset,
   pin15_a => '0'
 );
 
+IC57_6 <= P1_38_MEMAChanged nand P1_38_MEMAChanged;
 
 DFF_IC51: TTL7474 port map (
   pin1_n1clr => '1',
@@ -1007,6 +1049,8 @@ FreqDivider_IC11: TTL7490 port map(
   pin12_qa => CK_4T,  
   pin14_a => Clk6144MHz);
 
+P1_8_3_07MHz <= not CK_4T; -- IC10
+
 FreqDivider_IC12: TTL7493 port map(
   pin1_ncp1 => CK_10T,
   pin2_mr1 => not nReset,
@@ -1017,6 +1061,7 @@ FreqDivider_IC12: TTL7493 port map(
   pin12_q0 => open,
   pin14_ncp0 => '1');
 
+P1_9_153_6kHz <= not CK_80T;
 
 FreqDivider_IC24: TTL7493 port map(
   pin1_ncp1 => CK_76kHz,
@@ -1038,6 +1083,9 @@ FreqDivider_IC35: TTL7493 port map(
   pin12_q0 => IC35_12 ,
   pin14_ncp0 => CK_1280T);
   
+P1_10_9600Hz <= not CK_1280T;
+P1_80_1200Hz <= not CK_1200Hz;
+
 FreqDivider_IC36: TTL7493 port map(
   pin1_ncp1 => CK_300Hz,
   pin2_mr1 => not nReset,
@@ -1047,7 +1095,13 @@ FreqDivider_IC36: TTL7493 port map(
   pin11_q3 =>CK37Hz,
   pin12_q0 =>CK_300Hz,
   pin14_ncp0 =>IC35_11);
-  
+
+P1_79_300Hz <= CK_300Hz;
+P1_74_0_6Hz <= CK_0_6Hz;
+P1_13_2_3Hz <= CK_2_3Hz;
+P1_58_4_6Hz <= CK_4_8Hz;
+P1_57_9_2Hz <= CK_9_2Hz;
+
 FreqDivider_IC72: TTL7493 port map(
   pin1_ncp1 => IC72_12,
   pin2_mr1 => not nReset,
@@ -1081,7 +1135,7 @@ Decoder_IC37: TTL7442 port map(
   pin9_ny7 => InterruptClear(7),
   pin10_ny8 => open,
   pin11_ny9 => open,
-  pin12_a3 => P2_37_Mie3,
+  pin12_a3 => P2_33_nMie3,
   pin13_a2 => nInterruptAddress(3),
   pin14_a1 => nInterruptAddress(2),
   pin15_a0 => nInterruptAddress(1)
@@ -1211,9 +1265,9 @@ DFF_IC26: TTL7474 port map (
     
     
 SEL_IC77: TTL74157 port map(
- 	pin1_select => Mia,
- 	pin2_1a => Mi(3),
- 	pin3_1b => CONROM(4),
+    pin1_select => Mia,
+    pin2_1a => Mi(3),
+    pin3_1b => CONROM(4),
     pin4_1y => IC77_4,
     pin5_2a => Mi(6),
     pin6_2b => CONROM(3),
@@ -1327,6 +1381,40 @@ CONROM_IC19: IC19_32x8_PROM port map(
   pin15_g  => '0'
 );
 
+P1_35_Mia <= Mia;
 
+IOADDRESS_DECODER_IC83: TTL74155 port map(
+  pin1_1c => OP(3),
+  pin2_n1g => OP(2),
+  pin3_b => nArg(3),
+  pin4_1y3 => P1_17_IOAddressMUXGroup,
+  pin5_1y2 => P1_16_IOAddressEBAGroup,
+  pin6_1y1 => P1_15_IOAddressMCAGroup,
+  pin7_1y0 => P1_14_IOAddressGEAGroup,
+  pin9_2y0 => P1_75_IOAddress0CGroup,
+  pin10_2y1 => P1_76_IOAddress08Group,
+  pin11_2y2 => P1_77_IOAddress04Group,
+  pin12_2y3 => P1_78_IOAddress00Group,
+  pin13_a => nArg(2),
+  pin14_n2g => OP(3),
+  pin15_n2c => OP(2)
+);
+
+IC82_3 <= nArg(1) nand nArg(1);
+IC82_6 <= nArg(0) nand nArg(0);
+
+P1_67_IOAddressA0Group <= IC82_3;
+P1_68_IOAddressA1Group <= IC82_6;
+
+-- IC29 7402 
+
+IC29_13 <= CONROM(10) nor P1_27_Mark;
+P1_28_nModCarry <= IC29_13;
+
+IC76_6 <= Mi(7) nand CP0;
+
+P2_15_nCPMit <= IC76_6;
+
+P2_16_nMi0 <= not Mi(0);
 
 end logic;
