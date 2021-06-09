@@ -86,7 +86,7 @@ port(
     P2_6_InterruptAddress1 : out std_logic;
     P2_8_InterruptAddress2 : out std_logic;
     P2_34_InterruptAddress3 : out std_logic;
-    P1_6_MieReset : in std_logic;
+    P1_6_nMieReset : in std_logic;
     P1_11_ResetButton : in std_logic;    
     
     P2_38_IRMCI : in std_logic;
@@ -289,7 +289,7 @@ end component;
 signal Mie, nMi0,nEnd,nCPmit,CP2,nMie3,Mie3nDisableInterrupt,SelectICMEMA,IRMC1,IRMC0 : std_logic;
 signal IODataFromMPU,nIODataToMPU,nOut,Mark,nMieReset,nMieRespri,MieResZero,MieResCarry : std_logic;
 signal MEMAChanged,nMitd5,nSetICMEMAFF,Interrupt,ARS0,ARS1,ModCarry,nCarry,nCP0 : std_logic;
-signal Mia,CP0,nGeneralReset,nZero,IOData80,IOData81,nARdata7,ALUAeqB,DZeroFF, MieReset,nMijStart  : std_logic;
+signal Mia,CP0,nGeneralReset,nZero,IOData80,IOData81,nARdata7,ALUAeqB,DZeroFF,nMijStart  : std_logic;
 signal AREvenParity,AROddParity,DCarryFF,ReadMEMO : std_logic;
 signal IOData, ARdata, Mi : std_logic_vector (7 downto 0);
 signal nArg: std_logic_vector (3 downto 0);
@@ -305,7 +305,7 @@ begin
     nReset => nReset,
     
 -- Signals from the connector
-    P1_38_MEMAChanged => MEMAChanged,
+    P1_38_MEMAChanged => '1', -- MEMAChanged,
     P1_69_ReadMEMO => ReadMEMO,
     P2_9_StopCPCounter => '1',
     P2_7_nCOPHalt => '1',
@@ -364,8 +364,8 @@ begin
     P2_6_InterruptAddress1 => nInterruptAddress(0),
     P2_8_InterruptAddress2 => nInterruptAddress(1),
     P2_34_InterruptAddress3 => nInterruptAddress(2),
-    P1_6_MieReset => MieReset,
-    P1_11_ResetButton => '1',  
+    P1_6_nMieReset => nMieReset,
+    P1_11_ResetButton => nReset,  
     
     P2_38_IRMCI => IRMC1,
     P1_39_IRMCO => IRMC0,
@@ -556,6 +556,6 @@ begin
     P2_26_nArg3 => nArg(3)
   );
 
-
+  
 end logic;
 

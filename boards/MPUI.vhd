@@ -70,7 +70,7 @@ port(
     P2_6_InterruptAddress1 : out std_logic;
     P2_8_InterruptAddress2 : out std_logic;
     P2_34_InterruptAddress3 : out std_logic;
-    P1_6_MieReset : in std_logic;
+    P1_6_nMieReset : in std_logic;
     P1_11_ResetButton : in std_logic;    
     
     P2_38_IRMCI : in std_logic;
@@ -938,7 +938,7 @@ TypeDecoder_IC39: TTL74278 port map (
   pin5_p1 => Mir, 
   pin6_y4 => Mis,
   pin8_y3 => Mij,
-  pin9_y2 => P1_35_Mia,
+  pin9_y2 => Mia,
   pin10_y1 => P2_22_Mie,
   pin12_d1 => MicROM(6), 
   pin13_d2 => MicROM(5)
@@ -1297,7 +1297,7 @@ InhibitTimeout_IC47: TTL74164 port map(
 );
 
 QFF_IC71: TTL74175 port map(
-  pin1_nclr => P1_11_ResetButton and P1_6_MieReset, -- IC58 C
+  pin1_nclr => P1_11_ResetButton and P1_6_nMieReset, -- IC58 C
   pin2_1q => open,
   pin3_n1q => IC71_3,
   pin4_1d => IC71_14,
