@@ -157,7 +157,10 @@ port(
 end component;
 
 component MPUII is
-port(
+  port(
+
+    nReset : in std_logic;
+    
   -- Signals from the connector
     P2_22_Mie : in std_logic;
     P2_17_Mi0 : in std_logic;
@@ -305,7 +308,7 @@ begin
     nReset => nReset,
     
 -- Signals from the connector
-    P1_38_MEMAChanged => '1', -- MEMAChanged,
+    P1_38_MEMAChanged =>  MEMAChanged,
     P1_69_ReadMEMO => ReadMEMO,
     P2_9_StopCPCounter => '1',
     P2_7_nCOPHalt => '1',
@@ -435,6 +438,7 @@ begin
   );
 
   MPUIIboard: MPUII port map (
+    nReset => nReset,
   -- Signals from the connector
     P2_22_Mie => Mie,
     P2_17_Mi0 => Mi(0),

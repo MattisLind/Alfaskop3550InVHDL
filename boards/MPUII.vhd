@@ -4,7 +4,9 @@ use IEEE.std_logic_1164.all;
 
 
 entity MPUII is
-port(
+  port(
+
+    nReset : in std_logic;
 
 -- Signals from the connector
     P2_22_Mie : in std_logic;
@@ -435,7 +437,7 @@ signal IC34_6, IC34_3 : std_logic;
 signal NewIC12, IC17_5, IC17_6, IC17_8, IC18_6, IC18_8 : std_logic;
 signal IC16_5, IC16_6, IC16_8, IC16_9, IC3_3, IC3_6 : std_logic;
 signal IncrICM, DecrICM,LoadICM, IC26_13, IC2_14, IC2_12, LoadICL, nICLcarry : std_logic;
-signal IncrICL, IC65_6, IC8_4, IC8_5, IC8_11, IC41_4, IC6_5, IC6_4: std_logic;
+signal IncrICL, IC65_6, IC8_4, IC8_5, IC8_11, IC41_4 : std_logic;
 
 signal IC62_6, IC62_7, IC62_10, IC62_11, ALUcarry, IC38_8 : std_logic;
 signal IC : std_logic_vector (12 downto 0);
@@ -1326,7 +1328,7 @@ MIE_DECODER_IC6: TTL74154 port map(
   pin16_ny14 => Mie(14),
   pin17_ny15 => Mie(15),
   pin18_ne1 => nCP0,
-  pin19_ne2 => IC6_5,
+  pin19_ne2 => IC8_5,
   pin20_a3 => Mi(3),
   pin21_a2 => Mi(2),
   pin22_a1 => Mi(1),
@@ -1358,7 +1360,7 @@ MIE_DECODER_IC4: TTL74154 port map(
   pin16_ny14 => Mie(29),
   pin17_ny15 => Mie(30),
   pin18_ne1 => nCP0,
-  pin19_ne2 => IC6_4,
+  pin19_ne2 => IC8_4,
   pin20_a3 => Mi(3),
   pin21_a2 => Mi(2),
   pin22_a1 => Mi(1),
@@ -1437,7 +1439,8 @@ P1_70_nARdata7 <= nARdata(7);
 IC9_3 <= IC21_6 nand Mie(29);
 IC9_6 <= P2_10_nEnd nand IC21_12; 
 IC9_8 <=  IC9_11 nand Mie(14);
-IC9_11 <= IC9_8 nand P2_10_nEnd; 
+IC9_11 <= not (IC9_8 and P2_10_nEnd and nReset);  -- Added a global reset to
+                                                  -- have it to a valid state. 
 
 MEMToBMia(1) <= IC9_11;
 MEMToBMia(2) <= IC9_8;

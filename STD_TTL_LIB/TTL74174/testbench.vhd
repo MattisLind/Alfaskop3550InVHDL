@@ -22,8 +22,8 @@ port(
   pin9_clk  : in std_logic;
   pin10_4q  : out std_logic;
   pin11_4d  : in std_logic;
-  pin12_5d  : in std_logic;  
-  pin13_5q  : out std_logic;
+  pin12_5q  : out std_logic;  
+  pin13_5d  : in std_logic;
   pin14_6d  : in std_logic;
   pin15_6q  : out std_logic);
 end component;
@@ -32,7 +32,7 @@ signal nclr,s1q,s1d,s2d,s2q,s3d,s3q,clk,s4q,s4d,s5d,s5q,s6d,s6q : std_logic;
 begin
 
   -- Connect DUT
-  DUT: TTL74174 port map(nclr,s1q,s1d,s2d,s2q,s3d,s3q,clk,s4q,s4d,s5d,s5q,s6d,s6q);
+  DUT: TTL74174 port map(nclr,s1q,s1d,s2d,s2q,s3d,s3q,clk,s4q,s4d,s5q,s5d,s6d,s6q);
   process
   begin
     clk <= 'X';

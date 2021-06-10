@@ -15,8 +15,8 @@ port(
   pin9_clk  : in std_logic;
   pin10_4q  : out std_logic;
   pin11_4d  : in std_logic;
-  pin12_5d  : in std_logic;  
-  pin13_5q  : out std_logic;
+  pin12_5q  : out std_logic;  
+  pin13_5d  : in std_logic;
   pin14_6d  : in std_logic;
   pin15_6q  : out std_logic);
 end TTL74174;
@@ -41,7 +41,7 @@ begin
  FF2: DFF_WITH_CLR_PRE port map(pin1_nclr,pin4_2d,pin9_clk,'1',pin5_2q,open);
  FF3: DFF_WITH_CLR_PRE port map(pin1_nclr,pin6_3d,pin9_clk,'1',pin7_3q,open);
  FF4: DFF_WITH_CLR_PRE port map(pin1_nclr,pin11_4d,pin9_clk,'1',pin10_4q,open);
- FF5: DFF_WITH_CLR_PRE port map(pin1_nclr,pin12_5d,pin9_clk,'1',pin13_5q,open);
+ FF5: DFF_WITH_CLR_PRE port map(pin1_nclr,pin13_5d,pin9_clk,'1',pin12_5q,open);
  FF6: DFF_WITH_CLR_PRE port map(pin1_nclr,pin14_6d,pin9_clk,'1',pin15_6q,open);
 end logic;
 

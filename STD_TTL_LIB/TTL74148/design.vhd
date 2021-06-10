@@ -21,72 +21,22 @@ port(
 end TTL74148;
 
 architecture logic of TTL74148 is
-signal input : std_logic_vector (7 downto 0);
+signal eo,and1,and2,and3,and4,quad_nor : std_logic;
 begin 
-input(7) <= pin4_i7;
-input(6) <= pin3_i6;
-input(5) <= pin2_i5;
-input(4) <= pin1_i4;
-input(3) <= pin13_i3;
-input(2) <= pin12_i2;
-input(1) <= pin11_i1;
-input(0) <= pin10_i0;
+  pin6_a2 <= not ( (not pin5_ei and not pin4_i7)  or (not pin5_ei and not pin3_i6) or (not pin5_ei and not pin2_i5) or (not pin5_ei and not pin1_i4) );
 
-pin15_eo <= '1'   when pin5_ei = '1' else
-            '0'   when pin5_ei = '0' and input="11111111" else
-            '1'   when pin5_ei = '0' and input="XXXXXXX0" else 
-            '1'   when pin5_ei = '0' and input="XXXXXX01" else 
-            '1'   when pin5_ei = '0' and input="XXXXX011" else 
-            '1'   when pin5_ei = '0' and input="XXXX0111" else
-            '1'   when pin5_ei = '0' and input="XXX01111" else
-            '1'   when pin5_ei = '0' and input="XX011111" else
-            '1'   when pin5_ei = '0' and input="X0111111" else        
-			'1'   when pin5_ei = '0' and input="01111111";
+  and1 <= not pin5_ei and not pin4_i7;
+  and2 <= not pin5_ei and not pin3_i6;
+  and3 <= not pin5_ei and pin2_i5 and pin1_i4 and not pin13_i3;
+  and4 <= not pin5_ei and pin2_i5 and pin1_i4 and not pin12_i2;
+  quad_nor <= not ( and1 or and2 or and3 or and4);
+  
+  pin7_a1 <= quad_nor;
 
-pin14_gs <= '1'   when pin5_ei = '1' else
-            '1'   when pin5_ei = '0' and input="11111111" else
-            '0'   when pin5_ei = '0' and input="XXXXXXX0" else 
-            '0'   when pin5_ei = '0' and input="XXXXXX01" else 
-            '0'   when pin5_ei = '0' and input="XXXXX011" else 
-            '0'   when pin5_ei = '0' and input="XXXX0111" else
-            '0'   when pin5_ei = '0' and input="XXX01111" else
-            '0'   when pin5_ei = '0' and input="XX011111" else
-            '0'   when pin5_ei = '0' and input="X0111111" else        
-			'0'   when pin5_ei = '0' and input="01111111";
+  pin9_a0 <= not ( (not pin5_ei and not pin4_i7)  or (not pin5_ei and pin3_i6 and not pin2_i5 ) or (not pin5_ei and pin3_i6 and pin1_i4 and not pin13_i3) or (not pin5_ei and pin3_i6 and pin1_i4 and pin12_i2 and not pin11_i1 ) );
 
-pin9_a0 <=  '1'   when pin5_ei = '1' else
-            '1'   when pin5_ei = '0' and input="11111111" else
-            '0'   when pin5_ei = '0' and input="XXXXXXX0" else 
-            '1'   when pin5_ei = '0' and input="XXXXXX01" else 
-            '0'   when pin5_ei = '0' and input="XXXXX011" else 
-            '1'   when pin5_ei = '0' and input="XXXX0111" else
-            '0'   when pin5_ei = '0' and input="XXX01111" else
-            '1'   when pin5_ei = '0' and input="XX011111" else
-            '0'   when pin5_ei = '0' and input="X0111111" else        
-			'1'   when pin5_ei = '0' and input="01111111";
-
-pin7_a1 <=  '1'   when pin5_ei = '1' else
-            '1'   when pin5_ei = '0' and input="11111111" else
-            '0'   when pin5_ei = '0' and input="XXXXXXX0" else 
-            '0'   when pin5_ei = '0' and input="XXXXXX01" else 
-            '1'   when pin5_ei = '0' and input="XXXXX011" else 
-            '1'   when pin5_ei = '0' and input="XXXX0111" else
-            '0'   when pin5_ei = '0' and input="XXX01111" else
-            '0'   when pin5_ei = '0' and input="XX011111" else
-            '1'   when pin5_ei = '0' and input="X0111111" else        
-			'1'   when pin5_ei = '0' and input="01111111";
-
-pin6_a2 <=  '1'   when pin5_ei = '1' else
-            '1'   when pin5_ei = '0' and input="11111111" else
-            '0'   when pin5_ei = '0' and input="XXXXXXX0" else 
-            '0'   when pin5_ei = '0' and input="XXXXXX01" else 
-            '0'   when pin5_ei = '0' and input="XXXXX011" else 
-            '0'   when pin5_ei = '0' and input="XXXX0111" else
-            '1'   when pin5_ei = '0' and input="XXX01111" else
-            '1'   when pin5_ei = '0' and input="XX011111" else
-            '1'   when pin5_ei = '0' and input="X0111111" else        
-			'1'   when pin5_ei = '0' and input="01111111";
-
-
+  eo <= not (not pin5_ei and pin10_i0 and pin11_i1 and pin12_i2 and pin13_i3 and pin1_i4 and pin2_i5 and pin3_i6 and pin4_i7);
+  pin14_gs <= eo nand not pin5_ei;
+  pin15_eo <= eo;
 end logic;
 

@@ -387,8 +387,8 @@ port(
   pin9_clk  : in std_logic;
   pin10_4q  : out std_logic;
   pin11_4d  : in std_logic;
-  pin12_5d  : in std_logic;  
-  pin13_5q  : out std_logic;
+  pin12_5q  : out std_logic;  
+  pin13_5d  : in std_logic;
   pin14_6d  : in std_logic;
   pin15_6q  : out std_logic);
 end component;
@@ -564,7 +564,6 @@ signal IC59_9 : std_logic;
 signal memoryTimingStartCount, memoryTimingCarry,memoryTimingLoad : std_logic;
 signal IntRegOut: std_logic_vector (7 downto 0);
 signal nIntRegOut : std_logic_vector (7 downto 0);
-signal InterruptReqRegOut : std_logic_vector (7 downto 0);
 
 signal GRIntern: std_logic;
 
@@ -580,13 +579,29 @@ signal IC35_12, CK_1200Hz, IC35_11, CK_300Hz, CK37Hz, CK_4_8Hz, CK_9_2Hz, CK_2_3
 signal IC48_9, IC77_12, IC77_4, IC79_9, IC48_8, Mia, IC71_14, IC71_6, IC71_3 : std_logic;
 signal IC72_12, IC47_13 : std_logic;
 signal IC61_1, IC61_4, IC38_11 : std_logic;
-signal IC57_6 : std_logic;
+signal IC57_6, IC25_3, IC1_11 : std_logic;
 signal IC82_3, IC82_6, IC29_13, IC76_6 : std_logic;
-
+signal IC2_10, IC2_7, IC2_5, IC48_5, IC2_15, IC2_12, IC26_9, IC2_2 : std_logic;
 
 begin 
 
-P1_18_nGeneralReset <= nReset;
+
+P1_19_CONROM0 <= CONROM(0);
+P1_20_CONROM1 <= CONROM(1);
+P1_21_CONROM2 <= CONROM(2);
+P1_22_CONROM3 <= CONROM(3);
+P1_23_CONROM4 <= CONROM(4);
+P1_24_CONROM5 <= CONROM(5);
+P1_25_CONROM6 <= CONROM(6);
+P1_26_CONROM7 <= CONROM(7);
+P1_30_CONROMB <= CONROM(11);
+P1_31_CONROMC <= CONROM(12);
+P1_32_CONROMD <= CONROM(13);
+P1_33_CONROME <= CONROM(14);
+P1_34_CONROMF <= CONROM(15);
+
+
+  
 P2_28_nMijStart <= MijStart;
 -- IC53 B
 IC53_6 <= mi(3) and mi(2) and mi(1);   
@@ -1144,18 +1159,18 @@ Decoder_IC37: TTL7442 port map(
 
 
 PriEncoder_IC14: TTL74148 port map (
-  pin1_i4  => InterruptReqRegOut(3),
-  pin2_i5  => InterruptReqRegOut(2),
-  pin3_i6 => InterruptReqRegOut(1),
-  pin4_i7 => InterruptReqRegOut(0),
+  pin1_i4  => IC2_10,
+  pin2_i5  => IC2_7,
+  pin3_i6 => IC2_5,
+  pin4_i7 => IC2_2,
   pin5_ei => P2_35_nDisableInterrupt,
   pin6_a2 => nInterruptAddress(3),
   pin7_a1 => nInterruptAddress(2),
   pin9_a0 => nInterruptAddress(1),
-  pin10_i0  => InterruptReqRegOut(7),
-  pin11_i1 => InterruptReqRegOut(6),
-  pin12_i2 => InterruptReqRegOut(5),
-  pin13_i3 => InterruptReqRegOut(4),
+  pin10_i0  => IC48_5,
+  pin11_i1 => IC2_15,
+  pin12_i2 => IC2_12,
+  pin13_i3 => IC26_9,
   pin14_gs => InterruptRequest,
   pin15_eo => open);
   
@@ -1168,19 +1183,19 @@ P2_34_InterruptAddress3 <= not nInterruptAddress(3);
 
 InterruptReqReg_IC2: TTL74174 port map(
   pin1_nclr => nReset,
-  pin2_1q => InterruptReqRegOut(0),
+  pin2_1q => IC2_2,
   pin3_1d => nIntRegOut(0),
   pin4_2d => nIntRegOut(1),
-  pin5_2q => InterruptReqRegOut(1),
+  pin5_2q => IC2_5,
   pin6_3d => nIntRegOut(2),
-  pin7_3q => InterruptReqRegOut(2),
+  pin7_3q => IC2_7,
   pin9_clk => CPend,
-  pin10_4q => InterruptReqRegOut(3),
+  pin10_4q => IC2_10,
   pin11_4d => nIntRegOut(3),
-  pin12_5d => nIntRegOut(5),  
-  pin13_5q => InterruptReqRegOut(5),
+  pin12_5q => IC2_12,
+  pin13_5d => nIntRegOut(5),  
   pin14_6d => nIntRegOut(6),
-  pin15_6q => InterruptReqRegOut(6)
+  pin15_6q => IC2_15
 );
 
 
@@ -1189,7 +1204,7 @@ DFF_IC48: TTL7474 port map (
   pin2_1d => nIntRegOut(7),
   pin3_1clk => CPend, 
   pin4_n1pre => '1',
-  pin5_1q => InterruptReqRegOut(7),
+  pin5_1q => IC48_5,
   pin6_n1q => open,
   pin8_n2q => open,
   pin9_2q => IC48_9,
@@ -1204,14 +1219,14 @@ DFF_IC48: TTL7474 port map (
 DFF_IC50: TTL7474 port map (
   pin1_n1clr => P2_37_Mie3 nand ( IC50_6 nor nInterruptAddress(3) ) , --IC38 A and IC61 A
   pin2_1d => GRintern,
-  pin3_1clk => P2_31_nMieResPri, 
+  pin3_1clk => '0', --P2_31_nMieResPri, 
   pin4_n1pre => GRintern,
   pin5_1q => IC50_5,
   pin6_n1q => IC50_6 ,
   pin8_n2q => IC50_8,
   pin9_2q => IC50_9,
   pin10_n2pre => GRintern,
-  pin11_2clk => P2_31_nMieResPri ,
+  pin11_2clk => '0', --P2_31_nMieResPri ,
   pin12_2d => IC50_8 nand IC50_6, -- IC38 B
   pin13_n2clr => nInterruptAddress(3) nand P2_37_Mie3 -- IC38 C
 );
@@ -1255,7 +1270,7 @@ DFF_IC26: TTL7474 port map (
   pin5_1q => open,
   pin6_n1q => open,
   pin8_n2q => open ,
-  pin9_2q => InterruptReqRegOut(3) ,
+  pin9_2q => IC26_9,
   pin10_n2pre => '1',
   pin11_2clk => CPend ,
   pin12_2d => IC48_8, 
@@ -1304,7 +1319,7 @@ QFF_IC71: TTL74175 port map(
   pin5_2d => IC71_3,
   pin6_n2q => IC71_6,
   pin7_2q => open,
-  pin9_clk => CK_9_2Hz,
+  pin9_clk => CK_10T, --CK_9_2Hz,
   pin10_3q => open,
   pin11_n3q => open,
   pin12_3d => '1',  
@@ -1317,9 +1332,14 @@ QFF_IC71: TTL74175 port map(
 GRintern <= IC71_6 nand IC71_3;
 
 -- IC25 A
-IntRegOut(0) <= not ( nIntRegOut(0) and GRIntern); 
+IC25_3 <= IC1_11 nand GRIntern;
+IC1_11 <= IC25_3 nand InterruptClear(0);
+--IntRegOut(0) <= not ( nIntRegOut(0) and GRIntern); 
 -- IC1 D
-nIntRegOut(0) <= not ( IntRegOut(0) and InterruptClear(0));
+--nIntRegOut(0) <= not ( IntRegOut(0) and InterruptClear(0));
+IntRegOut(0) <= IC25_3;
+P1_18_nGeneralReset <= not IntRegOut(0);
+nIntRegOut(0) <= not IntRegOut(0); 
 -- IC25 B
 IntRegOut(1) <= not ( nIntRegOut(1) and P2_84_IRecReady); 
 -- IC49 A
