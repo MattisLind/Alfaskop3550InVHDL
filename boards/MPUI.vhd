@@ -1014,6 +1014,20 @@ DFF_IC59: TTL7474 port map (
   pin13_n2clr => nReset
 );
 
+DFF_IC51: TTL7474 port map (
+  pin1_n1clr => '1',
+  pin2_1d => '1',
+  pin3_1clk => nReset,
+  pin4_n1pre => '1', -- NOT USED??
+  pin5_1q => open,
+  pin6_n1q => open,
+  pin8_n2q => open,
+  pin9_2q => memoryTimingLoad,
+  pin10_n2pre => nReset,
+  pin11_2clk => memoryTimingCarry nand Clk6144MHz,
+  pin12_2d => '1',
+  pin13_n2clr => IC57_6
+);
 
 
 
@@ -1023,13 +1037,14 @@ MemoryTiming_IC46: TTL74193 port map (
   pin2_qB => open,
   pin3_qA => open,
   pin4_down => '1',
-  pin5_up => memoryTimingCarry nand Clk6144MHz,
+  pin5_up => not Clk6144MHz, -- should have been a nand with memoryTimingCarry
+                             -- but it gives a strange glitch 
   pin6_qC => open,
   pin7_qD => memoryTimingStartCount,
   pin9_d => '1',
   pin10_c => memoryTimingStartCount,
-  pin11_nLoad => IC57_6,  
-  pin12_nCO => memoryTimingCarry,
+  pin11_nLoad => memoryTimingLoad,  
+  pin12_nCO => memoryTimingCarry, 
   pin13_nBO => open,
   pin14_clr => not nReset,
   pin15_a => '0'
@@ -1037,20 +1052,6 @@ MemoryTiming_IC46: TTL74193 port map (
 
 IC57_6 <= P1_38_MEMAChanged nand P1_38_MEMAChanged;
 
-DFF_IC51: TTL7474 port map (
-  pin1_n1clr => '1',
-  pin2_1d => '1',
-  pin3_1clk => nReset,
-  pin4_n1pre => '1', -- NOT USED??
-  pin5_1q => open,
-  pin6_n1q => open ,
-  pin8_n2q => open,
-  pin9_2q => memoryTimingLoad,
-  pin10_n2pre => '1',
-  pin11_2clk => memoryTimingCarry nand Clk6144MHz,
-  pin12_2d => '1',
-  pin13_n2clr => nReset
-);
 
 FreqDivider_IC11: TTL7490 port map(
   pin1_b => Clk6144MHz,
