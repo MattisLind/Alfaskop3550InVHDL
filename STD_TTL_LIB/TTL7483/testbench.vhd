@@ -35,6 +35,25 @@ begin
   DUT: TTL7483 port map(a4,s3,a3,b3,s2,b2,a2,s1,a1,b1,c0,c4,s4,b4);
   process
   begin
+
+    b4 <= '0';
+    b3 <= '0';
+    b2 <= '0';
+    b1 <= '1';
+    a4 <= '1';
+    a3 <= '1';
+    a2 <= '1';
+    a1 <= '1';
+    c0 <= '1';
+    wait for 100 ns;
+    assert (c4 = '1') report "Fail qB not cleared" severity error;
+    assert (s4 = '0') report "Fail qB not cleared" severity error;
+    assert (s3 = '0') report "Fail qB not cleared" severity error;
+    assert (s2 = '0') report "Fail qB not cleared" severity error;
+    assert (s1 = '1') report "Fail qB not cleared" severity error;
+
+
+
     b4 <= '0';
     b3 <= '0';
     b2 <= '0';

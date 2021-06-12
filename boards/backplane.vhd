@@ -457,7 +457,7 @@ begin
     P2_37_Mie3 => Mie3,
     P2_35_nDisableInterrupt => nDisableInterrupt,
     P2_39_MEMAfromdisplay => '1',
-    P2_29_SelectICMEMA => SelectICMEMA,
+    P2_29_SelectICMEMA => nSelectICMEMA,
     
     P2_38_IRMC1 => IRMC1,
     P1_39_IRMC0 => IRMC0,

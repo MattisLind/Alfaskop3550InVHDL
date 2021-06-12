@@ -712,7 +712,7 @@ ADDER_IC45: TTL7483 port map(
   pin10_a1 => lowAdderCarry,
   pin11_b1 => Mic(4),
   pin13_c0 => Mi(2) nor Mir,
-  pin14_c4 => lowAdderCarry,
+  pin14_c4 => open,
   pin15_s4 => AdderOut(7),
   pin16_b4 => Mic(7)); 
 

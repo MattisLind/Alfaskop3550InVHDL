@@ -36,7 +36,7 @@ begin
 );
   process
   begin
-    nMEMO <= x"FF";
+    nMEMO <= x"c4";
     nReset <= '0';
     wait for 200 ns;
     nReset <= '1';
