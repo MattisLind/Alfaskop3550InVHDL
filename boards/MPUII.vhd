@@ -36,8 +36,8 @@ entity MPUII is
     P1_6_nMieReset : out std_logic;
     P2_31_nMieRespri : out std_logic;
 
-    P2_65_MieResZero : out std_logic;
-    P2_64_MieResCarry : out std_logic;
+    P2_65_nMieResZero : out std_logic;
+    P2_64_nMieResCarry : out std_logic;
     P1_37_nMEMoccupation : in std_logic;
     P1_38_MEMAChanged : out std_logic;
     P1_36_nMitd5 : out std_logic;
@@ -1339,8 +1339,8 @@ MIE_DECODER_IC6: TTL74154 port map(
 
 P1_6_nMieReset <= Mie(9);
 P2_31_nMieRespri <= Mie(18); 
-P2_65_MieResZero <= Mie(27);
-P2_64_MieResCarry <= Mie(28);
+P2_65_nMieResZero <= Mie(27);
+P2_64_nMieResCarry <= Mie(28);
 
 
 MIE_DECODER_IC4: TTL74154 port map(

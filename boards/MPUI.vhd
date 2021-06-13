@@ -557,7 +557,7 @@ signal AdderOut : std_logic_vector (7 downto 0);
 signal MicROM : std_logic_vector (7 downto 0);
 signal MicWord : std_logic_vector (7 downto 0);
 signal MicIn : std_logic_vector (7 downto 0);
-signal lowAdderCarry, CF, Carry, Zero, Mark : std_logic;
+signal lowAdderCarry, CF, Mark : std_logic;
 signal clkToggle : std_logic;
 signal IC59_6 : std_logic;
 signal IC59_9 : std_logic;
@@ -573,7 +573,7 @@ signal nInterruptAddress : std_logic_vector (3 downto 1);
 signal Interrupt, nInterrupt : std_logic;
 
 signal IC50_5, IC50_6,IC50_8, IC50_9, IC76_11, IC53_6 , IC3_6 :std_logic;
-signal IC3_8, CPend, IC63_6,conditionOutput,nZero,nCarry : std_logic;
+signal IC3_8, CPend, IC63_6,nZero,nCarry : std_logic;
 signal nARCParity,Clk6144MHz, CP1, nCP1,CP2, CK_10T, CK_4T, CK_80T, CK_76kHz, CK_1280T : std_logic;
 signal IC35_12, CK_1200Hz, IC35_11, CK_300Hz, CK37Hz, CK_4_8Hz, CK_9_2Hz, CK_2_3Hz, CK_1_2Hz, CK_0_6Hz : std_logic;
 signal IC48_9, IC77_12, IC77_4, IC79_9, IC48_8, Mia, IC71_14, IC71_6, IC71_3 : std_logic;
@@ -907,7 +907,7 @@ Selector_IC63: TTL74151 port map(
   pin1_d3 => CF,
   pin2_d2 => not CF,
   pin3_d1 => nArg(0) or nArg(1) or nArg(2) or nArg(3),
-  pin4_d0 => Zero,
+  pin4_d0 => nZero,
   pin5_y => open, 
   pin6_w => IC63_6,
   pin7_ng => not Mis,
@@ -917,7 +917,7 @@ Selector_IC63: TTL74151 port map(
   pin12_d7 => '1',
   pin13_d6 => P1_27_Mark,
   pin14_d5 => OP(3),
-  pin15_d4 => Carry
+  pin15_d4 => nCarry
 );
   
 
@@ -931,7 +931,7 @@ ConditionSelector_IC74: TTL74150 port map (
   pin7_e1 => P2_79_Spare,
   pin8_e0 => '0',
   pin9_ng => '0',
-  pin10_w => conditionOutput,
+  pin10_w => CF,
   pin11_d => nArg(3),
   pin13_c => nArg(2),
   pin14_b => nArg(1),

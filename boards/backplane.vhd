@@ -11,7 +11,9 @@ port(
 -- Clk is to be generated externally    
     clk : in std_logic;
     nReset : in std_logic;
-    nMEMO :  in std_logic_vector (7 downto 0));
+    nMEMO :  in std_logic_vector (7 downto 0);
+    cp_end : out std_logic
+    );
 end Alfaskop3550;
 
 
@@ -189,8 +191,8 @@ component MPUII is
     P1_6_nMieReset : out std_logic;
     P2_31_nMieRespri : out std_logic;
     
-    P2_65_MieResZero : out std_logic;
-    P2_64_MieResCarry : out std_logic;
+    P2_65_nMieResZero : out std_logic;
+    P2_64_nMieResCarry : out std_logic;
     P1_37_nMEMoccupation : in std_logic;
     P1_38_MEMAChanged : out std_logic;
     P1_36_nMitd5 : out std_logic;
@@ -290,7 +292,7 @@ end component;
 
 
 signal Mie, nMi0,nEnd,nCPmit,CP2,nMie3,Mie3nDisableInterrupt,SelectICMEMA,IRMC1,IRMC0 : std_logic;
-signal IODataFromMPU,nIODataToMPU,nOut,Mark,nMieReset,nMieRespri,MieResZero,MieResCarry : std_logic;
+signal IODataFromMPU,nIODataToMPU,nOut,Mark,nMieReset,nMieRespri : std_logic;
 signal MEMAChanged,nMitd5,nSetICMEMAFF,Interrupt,ARS0,ARS1,ModCarry,nCarry,nCP0 : std_logic;
 signal Mia,CP0,nGeneralReset,nZero,IOData80,IOData81,nARdata7,ALUAeqB,DZeroFF,nMijStart  : std_logic;
 signal AREvenParity,AROddParity,DCarryFF,ReadMEMO : std_logic;
@@ -468,8 +470,8 @@ begin
     P1_6_nMieReset => nMieReset,
     P2_31_nMieRespri => nMieRespri,
     
-    P2_65_MieResZero => MieResZero,
-    P2_64_MieResCarry => MieResCarry,
+    P2_65_nMieResZero => nMieResZero,
+    P2_64_nMieResCarry => nMieResCarry,
     P1_37_nMEMoccupation => '1',
     P1_38_MEMAChanged => MEMAChanged,
     P1_36_nMitd5 => nMitd5,
@@ -560,6 +562,6 @@ begin
     P2_26_nArg3 => nArg(3)
   );
 
-  
+  cp_end <= nEnd;
 end logic;
 
