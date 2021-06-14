@@ -85,7 +85,7 @@ entity MPUII is
        
 
 
-    P1_28_ModCarry : in std_logic;
+    P1_28_nModCarry : in std_logic;
     P1_71_nCarry : in std_logic;
     P2_21_nCP0 : in std_logic;
     P2_20_Mi7 : in std_logic;
@@ -479,7 +479,7 @@ CP0 <= P2_11_CP0;
 
 
 ASELECTOR_IC81: TTL74157 port map(
-  pin1_select => '1', -- TODO
+  pin1_select => IC46_6, 
   pin2_1a => nMEMO(7),
   pin3_1b => nARdata(7),
   pin4_1y => Aleg(7),
@@ -492,10 +492,10 @@ ASELECTOR_IC81: TTL74157 port map(
   pin12_4y => Aleg(4), 
   pin13_4b => nARdata(4),
   pin14_4a => nMEMO(4),
-  pin15_strobe => '1'); -- TODO
+  pin15_strobe => '0');
 
 ASELECTOR_IC69: TTL74157 port map(
-  pin1_select => '1', -- TODO
+  pin1_select => IC46_6,
   pin2_1a => nMEMO(3),
   pin3_1b => nARdata(3),
   pin4_1y => Aleg(3),
@@ -508,7 +508,7 @@ ASELECTOR_IC69: TTL74157 port map(
   pin12_4y => Aleg(0), 
   pin13_4b => nARdata(0),
   pin14_4a => nMEMO(0),
-  pin15_strobe => '1'); -- TODO
+  pin15_strobe => '0');
 
 
 nMEMO(7) <= P1_66_nMEMO7;
@@ -535,7 +535,7 @@ ALU_IC79: TTL74181 port map(
   pin10_f1 => nALUdata(5),
   pin11_f2 => nALUdata(6),  
   pin13_f3 => nALUdata(7),
-  pin14_aeqb => open, -- TODO
+  pin14_aeqb => IC79_14,
   pin15_p => open,
   pin16_cn4 => ALUCarry,
   pin17_g => open,  
@@ -556,13 +556,13 @@ ALU_IC67: TTL74181 port map(
   pin4_s2 => CONROM(14),
   pin5_s1 => CONROM(13),
   pin6_s0 => CONROM(12),
-  pin7_cn => '0', -- TODO
+  pin7_cn => IC76_8,
   pin8_m => CONROM(11),
   pin9_f0 => nALUdata(0),
   pin10_f1 => nALUdata(1),
   pin11_f2 => nALUdata(2),  
   pin13_f3 => nALUdata(3),
-  pin14_aeqb => IC67_14, -- TODO
+  pin14_aeqb => IC67_14,
   pin15_p => open,
   pin16_cn4 => IC67_16,
   pin17_g => open,  
@@ -1585,7 +1585,7 @@ IC50_11 <= ALUCarry nand ALUCarry;
 -- IC64 74H10 TRIPLE 3-INPUT NAND
 IC64_8 <= not (CONROM(0) and P1_35_Mia and IC38_10 );
 IC64_6 <= not (Mie(16) and IC16_8 and IC32_8);
-
+IC64_12 <= not ( P1_35_Mia  and P2_11_CP0 and CONROM(1));
 P2_35_nDisableInterrupt <= IC64_6;
 
 -- IC65 7400 QUAD 2-INPUT NAND
@@ -1603,12 +1603,12 @@ IC70_8 <= ARdata(2) nand ARdata(2);
 IC70_11 <= ARdata(3) nand ARdata(3); 
 
 -- IC76 7451 AND NOR GATE
-IC76_8 <=  (P1_28_ModCarry and P1_28_ModCarry ) nor (MarkCarry and P1_71_nCarry);
+IC76_8 <=  (P1_28_nModCarry and P1_28_nModCarry ) nor (MarkCarry and P1_71_nCarry);
 -- IC77 7400 QUAD 2-INPUT NAND GATE
 IC77_3 <= Mi(6) nand AeqB; 
 IC77_6 <= IC77_3 nand IC77_11;
 IC77_8 <= CONROM(6) nand IC65_8;
-IC77_11 <= IC65_8 nand nALUdata(5);
+IC77_11 <= IC65_8 nand ALUdata(5);
 
 P2_70_DZeroFF <= IC77_6;
 

@@ -237,7 +237,7 @@ component MPUII is
     P1_20_CONROM1 : in std_logic;
     P1_19_CONROM0 : in std_logic;
 
-    P1_28_ModCarry : in std_logic;
+    P1_28_nModCarry : in std_logic;
     P1_71_nCarry : in std_logic;
     P2_21_nCP0 : in std_logic;
     P2_20_Mi7 : in std_logic;    
@@ -322,7 +322,7 @@ begin
     P2_84_IRecReady => '1',
     P1_18_nGeneralReset => nGeneralReset,
     P2_35_nDisableInterrupt  => nDisableInterrupt,
-    P2_33_nMie3 => Mie3,
+    P2_33_nMie3 => nMie3,
     P2_70_DZeroFF => DZeroFF,
     P2_71_ALUAeqB => ALUAeqB,
     P2_72_ARMCO => ARS0,
@@ -517,7 +517,7 @@ begin
     P1_19_CONROM0  => CONROM(0),
 
 
-	P1_28_ModCarry => ModCarry,
+    P1_28_nModCarry => nModCarry,
     P1_71_nCarry => nCarry,
     P2_21_nCP0 => nCP0,
     P1_35_Mia => Mia,

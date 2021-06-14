@@ -41,7 +41,7 @@ begin
     wait for 200 ns;
     nReset <= '1';
     wait for 200 ns;
-    for i in 1 to 10000 loop
+    for i in 1 to 50000 loop
       clkInput <= '0'; 
       wait for 81.4 ns;
       clkInput <= '1';
