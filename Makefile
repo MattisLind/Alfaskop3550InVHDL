@@ -1,7 +1,12 @@
 
 
 ttls := $(subst STD_TTL_LIB/TTL,,$(wildcard STD_TTL_LIB/TTL*))
+
+specials := $(subst SPECIAL_PURPOSE/,,$(wildcard SPECIAL_PURPOSE/S_*))
+
 symlinks := $(foreach ttl,$(ttls),STD_TTL_LIB/$(ttl).vhd)
+
+specialsymlinks := $(foreach special,$(specials),SPECIAL_PURPOSE/$(special).vhd)
 
 all: ttllib alfaskop
 
@@ -28,10 +33,16 @@ MPUI/IC28_256x4_PROM.vhd: MPUI/IC27_11_MMI6300.hex
 ttllib:
 	$(MAKE) -C STD_TTL_LIB all
 
+special:
+	$(MAKE) -C SPECIAL_PURPOSE all
+
 $(symlinks): 
 	ln -sf TTL$(subst .vhd,,$(subst STD_TTL_LIB/,,$@))/design.vhd $@
 
-createsymlinks: $(symlinks)
+$(specialsymlinks):
+	ln -sf $(subst .vhd,,$(subst SPECIAL_PURPOSE/,,$@))/design.vhd $@
+
+createsymlinks: $(symlinks) $(specialsymlinks)
 
 alfaskop: createsymlinks $(vhds)
 	ghdl -a --std=08  testbench.vhd
@@ -39,6 +50,7 @@ alfaskop: createsymlinks $(vhds)
 	ghdl -a --std=08  boards/MPUI.vhd
 	ghdl -a --std=08  boards/MPUII.vhd
 	ghdl -a --std=08  $(symlinks)
+	ghdl -a --std=08  $(specialsymlinks)
 	ghdl -a --std=08  $(vhds)
 	ghdl -a --std=08  STD_TTL_LIB/jkff.vhd
 	ghdl -a --std=08  STD_TTL_LIB/dff.vhd
