@@ -42,6 +42,7 @@ alfaskop: createsymlinks $(vhds)
 	ghdl -a --std=08  $(vhds)
 	ghdl -a --std=08  STD_TTL_LIB/jkff.vhd
 	ghdl -a --std=08  STD_TTL_LIB/dff.vhd
+#	ghdl -a --std=08  boards/registerFile.vhd
 	ghdl -e --std=08  testbench
 	ghdl -r --std=08  testbench
 

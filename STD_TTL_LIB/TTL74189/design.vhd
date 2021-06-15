@@ -22,7 +22,7 @@ port(
 end TTL74189;
 
 architecture rtl of TTL74189 is
-signal address : std_logic_vector (7 downto 0);
+signal address : std_logic_vector (3 downto 0);
 signal data, data_out : std_logic_vector (3 downto 0);
 signal q : std_logic_vector (3 downto 0);
 type RAM is array (0 to 15) of std_logic_vector (3 downto 0);

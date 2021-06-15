@@ -278,6 +278,17 @@ port(
   );
 end component;
 
+-- component REGISTER_FILE is
+--   port(
+--     a : in std_logic_vector (4 downto 0);
+--     d : in std_logic_vector (7 downto 0);
+--    nq : out std_logic_vector (7 downto 0);
+--    ncs  : in std_logic;
+--    nwe  : in std_logic);
+-- end component;
+
+
+
 component TTL74189 is
 port(
   pin1_a0  : in std_logic;
@@ -470,7 +481,7 @@ signal StackAddress : std_logic_vector (3 downto 0);
 signal IC10_6, IC10_2, IC10_3, IC10_7, CP0, nCP0 : std_logic;
 signal Arg : std_logic_vector (3 downto 0);
 signal MEMToBMia : std_logic_vector (2 downto 1);
-
+signal registerFileAddress : std_logic_vector (4 downto 0);
 
 begin 
 
@@ -860,6 +871,7 @@ STACK_IC35: TTL74189 port map(
   pin14_a2 => StackAddress(2),
   pin15_a1 => StackAddress(1)
 );
+
 STACK_IC36: TTL74189 port map(
   pin1_a0 => StackAddress(0),
   pin2_ncs => IC58_3,
@@ -883,6 +895,23 @@ Arg(1) <= P2_24_nArg1;
 Arg(2) <= P2_25_nArg2;
 Arg(3) <= P2_26_nArg3;
 
+
+
+--registerFileAddress(4) <= IC17_5;
+--registerFileAddress(3) <= IC39_6;
+--registerFileAddress(2) <= Arg(2);
+--registerFileAddress(1) <= Arg(1);
+--registerFileAddress(0) <= IC27_6;
+
+
+
+--RF: REGISTER_FILE port map(
+--  a => registerFileAddress,
+--  ncs => IC33_6,
+--  nwe => IC64_12,
+--  d => ALUdata,
+--  nq => Bbus
+--);
 
 
 REGISTER_IC47: TTL74189 port map(
@@ -949,6 +978,8 @@ REGISTER_IC60: TTL74189 port map(
   pin14_a2 => Arg(2),
   pin15_a1 => Arg(1)
 );
+
+
 BSELECTOR_IC51: TTLDM8214 port map(
   pin1_n1g => IC34_11,
   pin2_b => IC34_6,
@@ -1572,7 +1603,7 @@ IC44_11 <= Mi(2) nand Mi(7);
 
 
 -- IC46 74S20 DUAL 4-INPUT NAND
-IC46_8 <= not (Mie(7) and IC20_8 and IC45_6 and AddToIC);
+IC46_8 <= not (IC33_8 and IC20_8 and IC45_6 and AddToIC);
 IC46_6 <= not (P1_35_Mia and P2_16_nMi0 and CONROM(7) and CONROM(7));
 
 P1_68_ReadMEMO <= IC46_8;
