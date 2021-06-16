@@ -71,7 +71,7 @@ pin10_f1 <= f1;
 pin11_f2 <= f2;
 pin13_f3 <= f3;
 
-pin14_aeqb <= f0 and f1 and f2 and f3;
+pin14_aeqb <= 'Z' when (f0='1' and f1='1' and f2='1' and f3='1') else '0';
 
  
 

@@ -1,10 +1,10 @@
 
 
-all: testbench.vhd
-#	ghdl -a testbench.vhd
-#	ghdl -a design.vhd
-#	ghdl -e testbench
-#	ghdl -r testbench
+all: #testbench.vhd
+	ghdl -a testbench.vhd
+	ghdl -a design.vhd
+	ghdl -e testbench
+	ghdl -r testbench
 
 clean:
 	rm -f testbench
