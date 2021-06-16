@@ -249,14 +249,14 @@ component MPUII is
     P2_9_nInterruptAddress2 : in std_logic;
     P2_34_nInterruptAddress3 : in std_logic;
 
-    P1_7_IOData0 : out std_logic;
-    P1_8_IOData1 : out std_logic;
-    P1_9_IOData2 : out std_logic;
-    P1_10_IOData3 : out std_logic;
-    P1_11_IOData4 : out std_logic;
-    P1_12_IOData5 : out std_logic;
-    P1_13_IOData6 : out std_logic;
-    P1_14_IOData7 : out std_logic;
+    P1_7_IOData0 : inout std_logic;
+    P1_8_IOData1 : inout std_logic;
+    P1_9_IOData2 : inout std_logic;
+    P1_10_IOData3 : inout std_logic;
+    P1_11_IOData4 : inout std_logic;
+    P1_12_IOData5 : inout std_logic;
+    P1_13_IOData6 : inout std_logic;
+    P1_14_IOData7 : inout std_logic;
     P1_15_IOData80 : out std_logic;
     P1_16_IOData81 : out std_logic;
     
@@ -563,5 +563,6 @@ begin
   );
 
   cp_end <= nEnd;
+--  IOData <= "HHHHHHHH";
 end logic;
 

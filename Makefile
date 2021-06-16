@@ -2,7 +2,7 @@
 
 ttls := $(subst STD_TTL_LIB/TTL,,$(wildcard STD_TTL_LIB/TTL*))
 
-specials := $(subst SPECIAL_PURPOSE/,,$(wildcard SPECIAL_PURPOSE/S_*))
+specials := $(subst SPECIAL_PURPOSE/S_,,$(wildcard SPECIAL_PURPOSE/S_*))
 
 symlinks := $(foreach ttl,$(ttls),STD_TTL_LIB/$(ttl).vhd)
 
@@ -40,7 +40,7 @@ $(symlinks):
 	ln -sf TTL$(subst .vhd,,$(subst STD_TTL_LIB/,,$@))/design.vhd $@
 
 $(specialsymlinks):
-	ln -sf $(subst .vhd,,$(subst SPECIAL_PURPOSE/,,$@))/design.vhd $@
+	ln -sf S_$(subst .vhd,,$(subst SPECIAL_PURPOSE/,,$@))/design.vhd $@
 
 createsymlinks: $(symlinks) $(specialsymlinks)
 
