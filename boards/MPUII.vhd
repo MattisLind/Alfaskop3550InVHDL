@@ -482,7 +482,8 @@ signal IC10_6, IC10_2, IC10_3, IC10_7, CP0, nCP0 : std_logic;
 signal Arg : std_logic_vector (3 downto 0);
 signal MEMToBMia : std_logic_vector (2 downto 1);
 signal registerFileAddress : std_logic_vector (4 downto 0);
-
+signal ALUCode : std_logic_vector (3 downto 0);
+signal M, cn : std_logic;
 begin 
 
 nCP0 <= P2_21_nCP0;
@@ -557,7 +558,12 @@ ALU_IC79: TTL74181 port map(
   pin22_b1 => Bbus(5),
   pin23_a1 => Aleg(5));
 
-
+ALUcode (3) <= CONROM(15);
+ALUcode (2) <= CONROM(14);
+ALUcode (1) <= CONROM(13);
+ALUcode (0) <= CONROM(12);
+M <= CONROM(11);
+cn <= IC76_8;
 
 
 ALU_IC67: TTL74181 port map(
