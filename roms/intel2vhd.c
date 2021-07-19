@@ -129,6 +129,68 @@ int print6330Epilog() {
 }
 
 
+int print1702Prolog (char * entity) {
+  printf("-- Standard 1702 256 x 8 bit EPROM \n");
+  printf("library IEEE;\n");
+  printf("use IEEE.std_logic_1164.all;\n");
+  printf("use ieee.numeric_std.all;\n");
+  printf("\n");
+  printf("entity %s is\n", entity);
+  printf("port(\n");
+  printf("  pin1_a2  : out std_logic;\n");
+  printf("  pin2_a1  : out std_logic;\n");
+  printf("  pin3_a0  : out std_logic;\n");
+  printf("  pin4_d0  : out std_logic;\n");
+  printf("  pin5_d1  : out std_logic;\n");
+  printf("  pin6_d2  : out std_logic;\n");
+  printf("  pin7_d3  : out std_logic;\n");
+  printf("  pin8_d4  : out std_logic;\n");
+  printf("  pin9_d5  : out std_logic;\n");
+  printf("  pin10_d6  : in std_logic;\n");
+  printf("  pin11_d7  : in std_logic;\n");
+  printf("  pin14_nce : in std_logic;\n");
+  printf("  pin17_a7  : in std_logic;\n");
+  printf("  pin18_a6  : in std_logic;\n");
+  printf("  pin19_a5  : in std_logic;\n");
+  printf("  pin20_a4  : in std_logic;\n");
+  printf("  pin21_a3  : in std_logic);\n");  
+  printf("end %s;\n", entity);
+  printf("\n");
+  printf("architecture logic of %s is\n",entity);
+  printf("signal address : std_logic_vector (7 downto 0);\n");
+  printf("signal data : std_logic_vector (7 downto 0);\n");
+  printf("type rom_type is array (0 to 256) of std_logic_vector(7 downto 0); \n");
+  printf("signal rom : rom_type := ( \n");  
+}
+
+int print1702Epilog () {
+  printf (");\n");
+  printf ("\n");
+  printf ("begin\n"); 
+  printf ("\n");
+  printf ("address(7) <= pin17_a4;\n");
+  printf ("address(6) <= pin18_a3;\n");
+  printf ("address(5) <= pin19_a2;\n");
+  printf ("address(4) <= pin20_a4;\n");
+  printf ("address(3) <= pin21_a3;\n");
+  printf ("address(2) <= pin1_a2;\n");
+  printf ("address(1) <= pin2_a1;\n");
+  printf ("address(0) <= pin3_a0;\n");
+  printf ("\n");
+  printf ("pin4_d0 <= data(0);\n");
+  printf ("pin5_d1 <= data(1);\n");
+  printf ("pin6_d2 <= data(2);\n");
+  printf ("pin7_d3 <= data(3);\n");
+  printf ("pin8_d4 <= data(4);\n");
+  printf ("pin9_d5 <= data(5);\n");
+  printf ("pin10_d6 <= data(6);\n");
+  printf ("pin11_d7 <= data(7);\n");
+  printf ("data <= rom(to_integer(unsigned(address)))  when pin14_nce = '0' else x\"FF\"; \n");
+  printf ("\n");
+  printf ("end logic;\n");  
+}
+
+
 void handle_type (int * type, int * width) {
   if (strncasecmp("6330",optarg,32)==0) { // 32x8
     *type = TYPE_6330;
@@ -208,8 +270,10 @@ int main (int argc, char **argv) {
   }
   if (type == TYPE_6330) {
     print6330Prolog(entity);
-  } else if (type = TYPE_6300) {
+  } else if (type == TYPE_6300) {
     print6300Prolog(entity);
+  } else if (type == TYPE_1702) {
+    print1702Prolog(entity);
   }
   do {
     c = getchar();
@@ -318,8 +382,10 @@ int main (int argc, char **argv) {
 
   if (type == TYPE_6330) {
     print6330Epilog();
-  } else if (type = TYPE_6300) {
+  } else if (type == TYPE_6300) {
     print6300Epilog();
+  } else if (type == TYPE_1702) {
+     print1702Epilog();
   }
 
 }
