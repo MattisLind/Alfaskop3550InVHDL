@@ -146,8 +146,8 @@ int print1702Prolog (char * entity) {
   printf("  pin7_d3  : out std_logic;\n");
   printf("  pin8_d4  : out std_logic;\n");
   printf("  pin9_d5  : out std_logic;\n");
-  printf("  pin10_d6  : in std_logic;\n");
-  printf("  pin11_d7  : in std_logic;\n");
+  printf("  pin10_d6  : out std_logic;\n");
+  printf("  pin11_d7  : out std_logic;\n");
   printf("  pin14_nce : in std_logic;\n");
   printf("  pin17_a7  : in std_logic;\n");
   printf("  pin18_a6  : in std_logic;\n");
@@ -159,7 +159,7 @@ int print1702Prolog (char * entity) {
   printf("architecture logic of %s is\n",entity);
   printf("signal address : std_logic_vector (7 downto 0);\n");
   printf("signal data : std_logic_vector (7 downto 0);\n");
-  printf("type rom_type is array (0 to 256) of std_logic_vector(7 downto 0); \n");
+  printf("type rom_type is array (0 to 255) of std_logic_vector(7 downto 0); \n");
   printf("signal rom : rom_type := ( \n");  
 }
 
@@ -168,9 +168,9 @@ int print1702Epilog () {
   printf ("\n");
   printf ("begin\n"); 
   printf ("\n");
-  printf ("address(7) <= pin17_a4;\n");
-  printf ("address(6) <= pin18_a3;\n");
-  printf ("address(5) <= pin19_a2;\n");
+  printf ("address(7) <= pin17_a7;\n");
+  printf ("address(6) <= pin18_a6;\n");
+  printf ("address(5) <= pin19_a5;\n");
   printf ("address(4) <= pin20_a4;\n");
   printf ("address(3) <= pin21_a3;\n");
   printf ("address(2) <= pin1_a2;\n");

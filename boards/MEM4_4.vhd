@@ -247,12 +247,32 @@ port(
 end component;
 
 
-signal nMEMA,  : std_logic_vector (15 downto 0);
+signal nMEMA, MEMA  : std_logic_vector (15 downto 0);
 signal nMEMO, ARdata, ROMaddress, RWMdata, ROMdata, RWMDataIn : std_logic_vector (7 downto 0);
-signal nCOPdata : std_logic_vector (7 downto 0);
-signal nCOMbyteIO : std_logic_vector (7 downto 0);
+signal nCOPdata, nDIMO : std_logic_vector (7 downto 0);
+signal nCOMbyteIO ,ROMDataOut, RWMDataOut : std_logic_vector (7 downto 0);
 signal RWMaddress : std_logic_vector (9 downto 0);
-
+signal IC38_1, IC38_2, IC38_3, IC38_5, IC38_6, IC38_7, IC38_9, IC51_6, IC51_8, IC78_10: std_logic;
+signal IC38_4, IC66_6, IC37_1, IC37_2, IC37_3, IC37_4, IC37_5, IC37_6, IC37_9 : std_logic;
+signal IC62_1, IC66_3, I61_16, IC61_15, IC61_14 : std_logic;
+signal IC61_4, IC59_8, IC59_10, IC59_12, IC61_7, IC61_1, IC61_3 : std_logic;
+signal IC61_11, IC62_7, IC63_1, IC63_2, IC63_3, IC63_6, IC62_16, IC62_15 : std_logic;
+signal IC63_16, IC63_15, IC63_14, IC59_4, IC63_11, IC63_10, IC63_7 : std_logic;
+signal IC39_6, IC36_11, IC36_3 : std_logic;
+signal IC41_10, IC41_4, IC41_1, IC39_8 : std_logic;
+signal IC46_6, IC46_3, IC46_11, IC46_8 : std_logic;
+signal IC52_3, IC65_6, IC65_8, IC52_8, IC52_6, IC78_8 : std_logic;
+signal IC59_2, IC52_11, IC41_13, IC78_4, IC78_2, IC72_4, IC72_7, IC72_12 : std_logic;
+signal IC67_3, IC66_11, IC77_11, IC59_6, IC77_8, IC77_3, IC39_3 : std_logic;
+signal IC36_8, IC36_6, I62_14, IC62_11, IC62_10, IC62_6, IC62_3, IC62_2 : std_logic;
+signal IC62_14, IC61_16, IC61_6, IC61_2, IC61_10 : std_logic;
+signal IC66_8 : std_logic;
+signal IC37_7, IC54_5, IC54_6, IC54_7, IC54_9 : std_logic;
+signal IC78_12, IC80_6, IC60_6, IC60_3 : std_logic;
+signal IC80_8, IC80_10, IC80_12, IC80_2, IC80_4, IC78_6, IC77_6 : std_logic;
+signal IC67_6, IC67_11, IC67_8, IC79_7, IC79_9, IC60_16, IC60_15 : std_logic;
+signal IC60_10, IC60_11, IC60_7, IC60_2, IC60_1, IC60_14 : std_logic;
+signal PCBPositionInfo1, PCBPositionInfo2, COPReadORder : std_logic;
 begin 
 
   ARdata(0) <=  P1_30_ARdata0;
@@ -374,19 +394,21 @@ CE_SEL_RWM_IC54: TTL7442 port map (
   pin15_a0 => IC78_10
   );
 
-  P2_62_PCBPositionInfo <= 'H';
-  P2_63_PCBPositionInfo <= 'H';
 
+  PCBPositionInfo1 <= P2_62_PCBPositionInfo;
+  PCBPositionInfo1 <= 'H';
+  PCBPositionInfo2 <= P2_63_PCBPositionInfo;
+  PCBPositionInfo2 <= 'H';
 
 AddressModified_IC79: TTL74153 port map (
   pin1_n1g => '0',
   pin2_b  => nMEMA(13),
   pin3_1c3 => IC80_6,
-  pin4_1c2 => P2_62_PCBPositionInfo,
+  pin4_1c2 => PCBPositionInfo1,
   pin5_1c1 => IC80_6,
-  pin6_1c0  => P2_62_PCBPositionInfo,
-  pin7_1y => MicIn(7),
-  pin9_2y  =>MicIn(6),
+  pin6_1c0  => PCBPositionInfo1,
+  pin7_1y => IC79_7,
+  pin9_2y  => IC79_9,
   pin10_2c0 => '1',
   pin11_2c1  =>'1',
   pin12_2c2  => '0',
@@ -428,10 +450,10 @@ RWM_ROM_DATA_SEL_IC40: TTLDM8123 port map(
 
 OS_CONTROL_CIRCUI_IC72: TTL74157 port map(
   pin1_select => IC77_6, 
-  pin2_1a => Mi(0),
+  pin2_1a => nMEMA(3),
   pin3_1b => '0',
   pin4_1y => IC72_4,
-  pin5_2a => '1',
+  pin5_2a => nMEMA(2),
   pin6_2b => '0',
   pin7_2y => IC72_7,
   pin9_3y => open,
@@ -439,7 +461,7 @@ OS_CONTROL_CIRCUI_IC72: TTL74157 port map(
   pin11_3a => '0',
   pin12_4y => IC72_12,
   pin13_4b => '1',
-  pin14_4a => '0',
+  pin14_4a => nMEMA(1),
   pin15_strobe => IC59_8
 );
 
@@ -667,7 +689,7 @@ IC63: PARAM1 port map (
   IC41_13 <= ARdata(1) nor ARdata(1);
 
   RWMDataIn(0) <= IC41_4;
-  RWMDataIn(1) <= IC41_13
+  RWMDataIn(1) <= IC41_13;
   RWMDataIn(2) <= IC41_10;
   
 -- IC46 7438 quad 2 input nand oc output
@@ -683,7 +705,7 @@ IC63: PARAM1 port map (
   
 --IC51 7420 dual 4 input nand
 
-  IC51_6 <= not (IC65_8 and IC65_6 and IC78_8 and );
+  IC51_6 <= not (IC65_8 and IC65_6 and IC78_8 and IC39_8);
   IC51_8 <= not (nMEMA(11) and IC65_6 and IC65_8 and IC39_8);            
 -- IC52 7437 quad 2 input nand
 
@@ -700,16 +722,16 @@ IC63: PARAM1 port map (
 -- IC59 7404 hex inverter
   IC59_2 <= not nMEMA(14);
   IC59_4 <= not IC46_11;
-  IC59_6 <= not P2_65_COPReadOrder;
+  IC59_6 <= not COPReadOrder;
   IC59_8 <= not IC72_12;
   IC59_10 <= not IC72_7;
   IC59_12 <= not IC72_4;
 
-  P2_65_COPReadOrder <= 'H';
-  
+  COPReadOrder <= 'H';
+  COPReadOrder <= P2_65_COPReadOrder;
 -- IC65 7451 dual and-or
-  IC65_6 <= (IC78_2 and P2_63_PCBPositionInfo) nor ( IC77_11 and IC79_9 );
-  IC65_8 <= (IC78_4 and P2_63_PCBPositionInfo) nor ( IC77_11 and IC79_7 );
+  IC65_6 <= (IC78_2 and PCBPositionInfo2) nor ( IC77_11 and IC79_9 );
+  IC65_8 <= (IC78_4 and PCBPositionInfo2) nor ( IC77_11 and IC79_7 );
 
 -- IC66 7437 quad 2 input nand
   IC66_3 <= nMEMA(8) nand '1';
@@ -734,7 +756,7 @@ IC63: PARAM1 port map (
   IC77_3 <= IC65_8 nand IC41_1;
   IC77_6 <= IC59_2 nand IC78_6;
   IC77_8 <= IC39_8 nand IC39_8;
-  IC77_11 <= P2_63_PCBPositionInfo nand P2_63_PCBPositionInfo;
+  IC77_11 <= PCBPositionInfo2 nand PCBPositionInfo2;
 
 -- IC78 7404 hex inverter
   
@@ -748,15 +770,15 @@ IC63: PARAM1 port map (
 -- IC80 7404 hex inverter
   IC80_2 <= not ARdata(4);
   IC80_4 <= not ARdata(3);
-  IC80_6 <= not P2_62_PCBPositionInfo;
+  IC80_6 <= not PCBPositionInfo1;
   IC80_8 <= not ARdata(7);
   IC80_10 <= not ARdata(6);
   IC80_12 <= not ARdata(5);
 
   RWMDataIn(3) <= IC80_4;
-  RWMDataIn(4) <= IC80_2
+  RWMDataIn(4) <= IC80_2;
   RWMDataIn(5) <= IC80_12;
-  RWMDataIn(6) <= IC80_10
+  RWMDataIn(6) <= IC80_10;
   RWMDataIn(7) <= IC80_8;
 
   

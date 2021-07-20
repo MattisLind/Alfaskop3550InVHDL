@@ -13,21 +13,28 @@ all: ttllib alfaskop
 
 vhds:=roms/MPUI/IC18_32x8_PROM.vhd roms/MPUI/IC19_32x8_PROM.vhd roms/MPUI/IC27_256x4_PROM.vhd roms/MPUI/IC28_256x4_PROM.vhd
 
+memroms := $(subst .hex,.vhd,$(wildcard roms/MEM1/*.hex)) $(subst .hex,.vhd,$(wildcard roms/MEM2/*.hex))
 
-intel2vhd: intel2vhd.c
-	$(CC) intel2vhd.c -o intel2vhd
+intel2vhd: roms/intel2vhd.c
+	$(CC) roms/intel2vhd.c -o intel2vhd
 
-MPUI/IC18_32x8_PROM.vhd: MPUI/IC18_EMPTY_MMI6330.hex intel2vhd
-	./intel2vhd --type 6330 --entity IC18_32x8_PROM< MPUI/IC18_EMPTY_MMI6330.hex > MPUI/IC18_32x8_PROM.vhd
+MEMROMS: $(memroms) intel2vhd
 
-MPUI/IC19_32x8_PROM.vhd: MPUI/IC19_MPU_B01_04_01_MMI6330.hex
-	./intel2vhd --type 6330 --entity IC19_32x8_PROM < MPUI/IC19_MPU_B01_04_01_MMI6330.hex  > MPUI/IC19_32x8_PROM.vhd
+%.vhd: %.hex
+	./intel2vhd --type 1702 --entity $(shell echo $< | sed 's/^.*\(IC[0-9]*\).*/\1/')_1702 < $<  > $@
 
-MPUI/IC27_256x4_PROM.vhd: MPUI/IC27_11_MMI6300.hex
-	./intel2vhd --type 6300 --entity IC28_PROM256x4 < MPUI/IC27_11_MMI6300.hex  > MPUI/IC27_256x4_PROM.vhd
 
-MPUI/IC28_256x4_PROM.vhd: MPUI/IC27_11_MMI6300.hex
-	./intel2vhd --type 6300 --entity IC27_PROM256x4 < MPUI/IC28_10_MMI6300.hex  > MPUI/IC28_256x4_PROM.vhd
+roms/MPUI/IC18_32x8_PROM.vhd: roms/MPUI/IC18_EMPTY_MMI6330.hex intel2vhd
+	./intel2vhd --type 6330 --entity IC18_32x8_PROM< roms/MPUI/IC18_EMPTY_MMI6330.hex > roms/MPUI/IC18_32x8_PROM.vhd
+
+roms/MPUI/IC19_32x8_PROM.vhd: roms/MPUI/IC19_MPU_B01_04_01_MMI6330.hex
+	./intel2vhd --type 6330 --entity IC19_32x8_PROM < roms/MPUI/IC19_MPU_B01_04_01_MMI6330.hex  > roms/MPUI/IC19_32x8_PROM.vhd
+
+roms/MPUI/IC27_256x4_PROM.vhd: roms/MPUI/IC27_11_MMI6300.hex
+	./intel2vhd --type 6300 --entity IC28_PROM256x4 < roms/MPUI/IC27_11_MMI6300.hex  > roms/MPUI/IC27_256x4_PROM.vhd
+
+roms/MPUI/IC28_256x4_PROM.vhd: roms/MPUI/IC27_11_MMI6300.hex
+	./intel2vhd --type 6300 --entity IC27_PROM256x4 < roms/MPUI/IC28_10_MMI6300.hex  > roms/MPUI/IC28_256x4_PROM.vhd
 
 
 ttllib:
@@ -44,14 +51,16 @@ $(specialsymlinks):
 
 createsymlinks: $(symlinks) $(specialsymlinks)
 
-alfaskop: createsymlinks $(vhds)
+alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  testbench.vhd
 	ghdl -a --std=08  boards/backplane.vhd
 	ghdl -a --std=08  boards/MPUI.vhd
 	ghdl -a --std=08  boards/MPUII.vhd
+	ghdl -a --std=08  boards/MEM4_4.vhd
 	ghdl -a --std=08  $(symlinks)
 	ghdl -a --std=08  $(specialsymlinks)
 	ghdl -a --std=08  $(vhds)
+	ghdl -a --std=08  $(memroms)
 	ghdl -a --std=08  STD_TTL_LIB/jkff.vhd
 	ghdl -a --std=08  STD_TTL_LIB/dff.vhd
 #	ghdl -a --std=08  boards/registerFile.vhd
@@ -64,6 +73,7 @@ clean:
 	rm -f *.cf
 	rm -f $(symlinks)
 	rm -f testbench
+	rm -f $(memroms)
 
 .PHONEY: clean all
 
