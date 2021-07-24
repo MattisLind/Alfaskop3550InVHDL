@@ -21,7 +21,7 @@ intel2vhd: roms/intel2vhd.c
 MEMROMS: $(memroms) intel2vhd
 
 %.vhd: %.hex
-	./intel2vhd --type 1702 --entity $(shell echo $< | sed 's/^.*\(IC[0-9]*\).*/\1/')_1702 < $<  > $@
+	./intel2vhd --type 1702 --entity $(word 2,$(subst /, ,$(dir $<)))_$(shell echo $< | sed 's/^.*\(IC[0-9]*\).*/\1/')_1702 < $<  > $@
 
 
 roms/MPUI/IC18_32x8_PROM.vhd: roms/MPUI/IC18_EMPTY_MMI6330.hex intel2vhd
@@ -49,7 +49,9 @@ $(symlinks):
 $(specialsymlinks):
 	ln -sf S_$(subst .vhd,,$(subst SPECIAL_PURPOSE/,,$@))/design.vhd $@
 
+
 createsymlinks: $(symlinks) $(specialsymlinks)
+	ln -sf STD_TTL_LIB/RAM2102/design.vhd RAM2102.vhd	
 
 alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  testbench.vhd
@@ -57,15 +59,19 @@ alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  boards/MPUI.vhd
 	ghdl -a --std=08  boards/MPUII.vhd
 	ghdl -a --std=08  boards/MEM4_4.vhd
+	ghdl -a --std=08  RAM2102.vhd
 	ghdl -a --std=08  $(symlinks)
 	ghdl -a --std=08  $(specialsymlinks)
 	ghdl -a --std=08  $(vhds)
 	ghdl -a --std=08  $(memroms)
 	ghdl -a --std=08  STD_TTL_LIB/jkff.vhd
 	ghdl -a --std=08  STD_TTL_LIB/dff.vhd
-#	ghdl -a --std=08  boards/registerFile.vhd
+	ghdl -a --std=08  roms/MEM1/PARAM1.vhd
+	ghdl -a --std=08  roms/MEM1/PARAM2.vhd
+	ghdl -a --std=08  roms/MEM1/PARAM3.vhd
+	ghdl -a --std=08  roms/MEM1/PARAM4.vhd
 	ghdl -e --std=08  testbench
-	ghdl -r --std=08  testbench
+#	ghdl -r --std=08  testbench
 
 clean:
 	$(MAKE) -C STD_TTL_LIB clean
@@ -74,6 +80,7 @@ clean:
 	rm -f $(symlinks)
 	rm -f testbench
 	rm -f $(memroms)
+	rm -f RAM2102.vhd
 
 .PHONEY: clean all
 

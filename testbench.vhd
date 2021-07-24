@@ -16,13 +16,11 @@ port(
 -- Clk is to be generated externally    
     clk : in std_logic;
     nReset : in std_logic;
-    nMEMO : in  std_logic_vector (7 downto 0);
     cp_end : out std_logic
 );
 end component;
 
 signal clkInput, nCP0, CP0, CP2, nCP1, nReset : std_logic;
-signal nMEMO : std_logic_vector (7 downto 0);
 signal cp_end : std_logic;
 begin
 
@@ -32,7 +30,6 @@ begin
     clk => clkInput,
     nReset => nReset,
 -- Signals from the connector
-    nMEMO => nMEMO,
     cp_end => cp_end
 );
   process
@@ -51,21 +48,6 @@ begin
 	assert (CP0 = '0') report "Fail CP0 not cleared" severity error;
 	assert false report "Test done." severity note;
     wait;
-  end process;
-
-  process (cp_end,clkInput) is
-     variable inst : integer range 0 to 255 := 0;
-  begin
-
-    if (falling_edge(cp_end)) then
-      if (nMEMO = "11111111") then 
-        inst := 0;
-      else
-        inst := inst + 1;
-      end if;  
-    end if;
-    nMEMO <= std_logic_vector(to_unsigned(inst, 8));
-    report "nMEMO = " & to_hstring(nMEMO);
   end process;
   
 end tb;

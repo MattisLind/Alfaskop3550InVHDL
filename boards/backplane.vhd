@@ -11,7 +11,7 @@ port(
 -- Clk is to be generated externally    
     clk : in std_logic;
     nReset : in std_logic;
-    nMEMO :  in std_logic_vector (7 downto 0);
+
     cp_end : out std_logic
     );
 end Alfaskop3550;
@@ -284,25 +284,90 @@ component MPUII is
 );
 end component;
 
---component MEM is
---port(
---);
---end component;
+component MEM4_4 is
+port(
+
+-- Signals from the connector
+    P1_31_nWriteMEM : in std_logic;
+    P1_30_ARData0 : in std_logic;
+    P1_29_ARData1 : in std_logic;
+    P1_28_ARData2 : in std_logic;
+    P1_27_ARData3 : in std_logic;
+    P1_26_ARData4 : in std_logic;
+    P1_25_ARData5 : in std_logic;
+    P1_24_ARData6 : in std_logic;
+    P1_23_ARData7 : in std_logic;
+    P2_39_nMEMA0 : in std_logic;
+    P2_38_nMEMA1 : in std_logic;
+    P2_37_nMEMA2 : in std_logic;
+    P2_36_nMEMA3 : in std_logic;
+    P2_35_nMEMA4 : in std_logic;
+    P2_34_nMEMA5 : in std_logic;
+    P2_33_nMEMA6 : in std_logic;
+    P2_32_nMEMA7 : in std_logic;
+    P2_31_nMEMA8 : in std_logic;
+    P2_30_nMEMA9 : in std_logic;
+    P2_29_nMEMA10 : in std_logic;
+    P2_28_nMEMA11 : in std_logic;
+    P2_27_nMEMA12 : in std_logic;
+    P2_26_nMEMA13 : in std_logic;
+    P2_25_nMEMA14 : in std_logic;
+    P2_24_nMEMA15 : in std_logic;
+    P2_62_PCBPositionInfo : in std_logic;
+    P2_63_PCBPositionInfo : in std_logic;
+    P2_65_COPReadOrder : in std_logic;
+    P2_14_nCOMbyteIO0 : in std_logic;
+    P2_13_nCOMbyteIO1 : in std_logic;
+    P2_12_nCOMbyteIO2 : in std_logic;
+    P2_11_nCOMbyteIO3 : in std_logic;
+    P2_10_nCOMbyteIO4 : in std_logic;
+    P2_9_nCOMbyteIO5 : in std_logic;
+    P2_8_nCOMbyteIO6 : in std_logic;
+    P2_7_nCOMbyteIO7 : in std_logic;
+    P2_73_nCOPdata0 : in std_logic;
+    P2_72_nCOPdata1 : in std_logic;
+    P2_71_nCOPdata2 : in std_logic;
+    P2_70_nCOPdata3 : in std_logic;
+    P2_69_nCOPdata4 : in std_logic;
+    P2_68_nCOPdata5 : in std_logic;
+    P2_67_nCOPdata6 : in std_logic;
+    P2_66_nCOPdata7 : in std_logic;
+    P2_23_nMEMO0 : out std_logic;
+    P2_22_nMEMO1 : out std_logic;
+    P2_21_nMEMO2 : out std_logic;
+    P2_20_nMEMO3 : out std_logic;
+    P2_19_nMEMO4 : out std_logic;
+    P2_18_nMEMO5 : out std_logic;
+    P2_17_nMEMO6 : out std_logic;
+    P2_31_nMEMO7 : out std_logic;
+    P1_89_DIMO0 : inout std_logic;
+    P1_88_DIMO1 : inout std_logic;
+    P1_87_DIMO2 : inout std_logic;
+    P1_86_DIMO3 : inout std_logic;
+    P1_85_DIMO4 : inout std_logic;
+    P1_84_DIMO5 : inout std_logic;
+    P1_83_DIMO6 : inout std_logic;
+    P1_82_DIMO7 : inout std_logic);
+end component;
 
 
 
-signal Mie, nMi0,nEnd,nCPmit,CP2,nMie3,Mie3nDisableInterrupt,SelectICMEMA,IRMC1,IRMC0 : std_logic;
+signal nWriteMEM, Mie, nMi0,nEnd,nCPmit,CP2,nMie3,Mie3nDisableInterrupt,SelectICMEMA,IRMC1,IRMC0 : std_logic;
 signal IODataFromMPU,nIODataToMPU,nOut,Mark,nMieReset,nMieRespri : std_logic;
 signal MEMAChanged,nMitd5,nSetICMEMAFF,Interrupt,ARS0,ARS1,ModCarry,nCarry,nCP0 : std_logic;
 signal Mia,CP0,nGeneralReset,nZero,IOData80,IOData81,nARdata7,ALUAeqB,DZeroFF,nMijStart  : std_logic;
 signal AREvenParity,AROddParity,DCarryFF,ReadMEMO : std_logic;
-signal IOData, ARdata, Mi : std_logic_vector (7 downto 0);
+signal IOData, ARdata, Mi, nCOMByte : std_logic_vector (7 downto 0);
 signal nArg: std_logic_vector (3 downto 0);
 signal nInterruptAddress : std_logic_vector (2 downto 0);
-signal CONROM: std_logic_vector (15 downto 0);
+signal CONROM, nMEMA: std_logic_vector (15 downto 0);
 signal nDisableInterrupt, Mie3, nMieResCarry, nMieResZero, nSelectICMEMA, nModCarry   : std_logic;
+signal nMEMO : std_logic_vector (7 downto 0);
 begin
 
+  nCOMByte <= "01000100";
+
+  
   MPUIBoard: MPUI port map (
   
 -- Clk is to be generated externally    
@@ -453,7 +518,7 @@ begin
     P2_16_nMi0 => nMi0,
     P2_10_nEnd => nEnd,
     P2_15_nCPmit => nCPmit,
-    P1_81_nWriteMEM => open,
+    P1_81_nWriteMEM => nWriteMEM,
     P2_30_CP2 => CP2,
     P2_33_nMie3 => nMie3,
     P2_37_Mie3 => Mie3,
@@ -477,22 +542,22 @@ begin
     P1_36_nMitd5 => nMitd5,
     P1_29_nSetICMEMAFF => nSetICMEMAFF,
     P2_32_Interrupt => Interrupt,
-    P2_89_nMEMA0 => open,
-    P2_88_nMEMA1 => open,
-    P2_87_nMEMA2 => open,
-    P2_86_nMEMA3 => open,
-    P2_85_nMEMA4 => open,
-    P2_84_nMEMA5 => open,
-    P2_83_nMEMA6 => open,
-    P2_82_nMEMA7 => open,
-    P2_81_nMEMA8 => open,
-    P2_80_nMEMA9 => open,
-    P2_79_nMEMA10 => open,
-    P2_78_nMEMA11 => open,
-    P2_77_nMEMA12 => open,
-    P2_76_nMEMA13 => open,
-    P2_75_nMEMA14 => open,
-    P2_74_nMEMA15 => open,
+    P2_89_nMEMA0 => nMEMA(0),
+    P2_88_nMEMA1 => nMEMA(1),
+    P2_87_nMEMA2 => nMEMA(2),
+    P2_86_nMEMA3 => nMEMA(3),
+    P2_85_nMEMA4 => nMEMA(4),
+    P2_84_nMEMA5 => nMEMA(5),
+    P2_83_nMEMA6 => nMEMA(6),
+    P2_82_nMEMA7 => nMEMA(7),
+    P2_81_nMEMA8 => nMEMA(8),
+    P2_80_nMEMA9 => nMEMA(9),
+    P2_79_nMEMA10 => nMEMA(10),
+    P2_78_nMEMA11 => nMEMA(11),
+    P2_77_nMEMA12 => nMEMA(12),
+    P2_76_nMEMA13 => nMEMA(13),
+    P2_75_nMEMA14 => nMEMA(14),
+    P2_74_nMEMA15 => nMEMA(15),
     
     P2_72_ARS0 => ARS0,
     P2_73_ARS1 => ARS1,
@@ -562,6 +627,69 @@ begin
     P2_26_nArg3 => nArg(3)
   );
 
+MEM1board: MEM4_4 port map (
+-- Signals from the connector
+    P1_31_nWriteMEM => nWriteMEM,
+    P1_30_ARData0 => ARdata(0),
+    P1_29_ARData1 => ARdata(1),
+    P1_28_ARData2 => ARdata(2),
+    P1_27_ARData3 => ARdata(3),
+    P1_26_ARData4 => ARdata(4),
+    P1_25_ARData5 => ARdata(5),
+    P1_24_ARData6 => ARdata(6),
+    P1_23_ARData7 => ARdata(7),
+    P2_39_nMEMA0 => nMEMA(0),
+    P2_38_nMEMA1 => nMEMA(1),
+    P2_37_nMEMA2 => nMEMA(2),
+    P2_36_nMEMA3 => nMEMA(3),
+    P2_35_nMEMA4 => nMEMA(4),
+    P2_34_nMEMA5 => nMEMA(5),
+    P2_33_nMEMA6 => nMEMA(6),
+    P2_32_nMEMA7 => nMEMA(7),
+    P2_31_nMEMA8 => nMEMA(8),
+    P2_30_nMEMA9 => nMEMA(9),
+    P2_29_nMEMA10 => nMEMA(10),
+    P2_28_nMEMA11 => nMEMA(11),
+    P2_27_nMEMA12 => nMEMA(12),
+    P2_26_nMEMA13 => nMEMA(13),
+    P2_25_nMEMA14 => nMEMA(14),
+    P2_24_nMEMA15 => nMEMA(15),
+    P2_62_PCBPositionInfo => '1', 
+    P2_63_PCBPositionInfo => '1',
+    P2_65_COPReadOrder => '1',
+    P2_14_nCOMbyteIO0 => nCOMByte(0),
+    P2_13_nCOMbyteIO1 => nCOMByte(1),
+    P2_12_nCOMbyteIO2 => nCOMByte(2),
+    P2_11_nCOMbyteIO3 => nCOMByte(3),
+    P2_10_nCOMbyteIO4 => nCOMByte(4),
+    P2_9_nCOMbyteIO5 => nCOMByte(5),
+    P2_8_nCOMbyteIO6 => nCOMByte(6),
+    P2_7_nCOMbyteIO7 => nCOMByte(7),
+    P2_73_nCOPdata0 => '1',
+    P2_72_nCOPdata1 => '1',
+    P2_71_nCOPdata2 => '1',
+    P2_70_nCOPdata3 => '1',
+    P2_69_nCOPdata4 => '1',
+    P2_68_nCOPdata5 => '1',
+    P2_67_nCOPdata6 => '1',
+    P2_66_nCOPdata7 => '1',
+    P2_23_nMEMO0 => nMEMO(0),
+    P2_22_nMEMO1 => nMEMO(0),
+    P2_21_nMEMO2 => nMEMO(0),
+    P2_20_nMEMO3 => nMEMO(0),
+    P2_19_nMEMO4 => nMEMO(0),
+    P2_18_nMEMO5 => nMEMO(0),
+    P2_17_nMEMO6 => nMEMO(0),
+    P2_31_nMEMO7 => nMEMO(0),
+    P1_89_DIMO0 => open,
+    P1_88_DIMO1 => open,
+    P1_87_DIMO2 => open,
+    P1_86_DIMO3 => open,
+    P1_85_DIMO4 => open,
+    P1_84_DIMO5 => open,
+    P1_83_DIMO6 => open,
+    P1_82_DIMO7 => open);
+  
   cp_end <= nEnd;
 --  IOData <= "HHHHHHHH";
 end logic;

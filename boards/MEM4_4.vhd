@@ -5,21 +5,16 @@ use IEEE.std_logic_1164.all;
 
 entity MEM4_4 is
 port(
-
--- Clk is to be generated externally    
-    clkInput : in std_logic;
-    nReset : in std_logic;
-    
 -- Signals from the connector
     P1_31_nWriteMEM : in std_logic;
-    P1_30_ARdata0 : in std_logic;
-    P1_29_ARdata1 : in std_logic;
-    P1_28_ARdata2 : in std_logic;
-    P1_27_ARdata3 : in std_logic;
-    P1_26_ARdata4 : in std_logic;
-    P1_25_ARdata5 : in std_logic;
-    P1_24_ARdata6 : in std_logic;
-    P1_23_ARdata7 : in std_logic;
+    P1_30_ARData0 : in std_logic;
+    P1_29_ARData1 : in std_logic;
+    P1_28_ARData2 : in std_logic;
+    P1_27_ARData3 : in std_logic;
+    P1_26_ARData4 : in std_logic;
+    P1_25_ARData5 : in std_logic;
+    P1_24_ARData6 : in std_logic;
+    P1_23_ARData7 : in std_logic;
     P2_39_nMEMA0 : in std_logic;
     P2_38_nMEMA1 : in std_logic;
     P2_37_nMEMA2 : in std_logic;
@@ -79,6 +74,26 @@ end MEM4_4;
 
 architecture logic of MEM4_4 is
 
+component RAM2102 is
+port(
+  pin1_a6  : in std_logic;
+  pin2_a5  : in std_logic;
+  pin3_nw  : in std_logic;
+  pin4_a1  : in std_logic;
+  pin5_a2  : in std_logic;
+  pin6_a3  : in std_logic;
+  pin7_a4  : in std_logic;
+  pin8_a0 : in std_logic;
+  pin11_d  : in std_logic;
+  pin12_x  : out std_logic;    
+  pin13_nce  : in std_logic;
+  pin14_a9  : in std_logic;
+  pin15_a8  : in std_logic;
+  pin16_a7  : in std_logic);
+end component;
+  
+
+  
 
 component TTL74157 is
 port(
@@ -246,11 +261,332 @@ port(
   pin16_o10 : out std_logic);
 end component;
 
+component MEM1_IC1_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
 
-signal nMEMA, MEMA  : std_logic_vector (15 downto 0);
-signal nMEMO, ARdata, ROMaddress, RWMdata, ROMdata, RWMDataIn : std_logic_vector (7 downto 0);
-signal nCOPdata, nDIMO : std_logic_vector (7 downto 0);
-signal nCOMbyteIO ,ROMDataOut, RWMDataOut : std_logic_vector (7 downto 0);
+component MEM1_IC2_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC3_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC4_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC9_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC10_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC11_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC12_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC17_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC18_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC19_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC20_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC25_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC26_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC27_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+component MEM1_IC28_1702 is
+port(
+  pin1_a2  : out std_logic;
+  pin2_a1  : out std_logic;
+  pin3_a0  : out std_logic;
+  pin4_d0  : out std_logic;
+  pin5_d1  : out std_logic;
+  pin6_d2  : out std_logic;
+  pin7_d3  : out std_logic;
+  pin8_d4  : out std_logic;
+  pin9_d5  : out std_logic;
+  pin10_d6  : out std_logic;
+  pin11_d7  : out std_logic;
+  pin14_nce : in std_logic;
+  pin17_a7  : in std_logic;
+  pin18_a6  : in std_logic;
+  pin19_a5  : in std_logic;
+  pin20_a4  : in std_logic;
+  pin21_a3  : in std_logic);
+end component;
+
+signal nMEMA  : std_logic_vector (15 downto 0);
+signal nMEMO, ARData, ROMAddress, RWMDataOut, ROMData, RWMDataIn : std_logic_vector (7 downto 0);
+signal nCOPData, nDIMO : std_logic_vector (7 downto 0);
+signal nCOMByteIO ,ROMDataOut : std_logic_vector (7 downto 0);
 signal RWMaddress : std_logic_vector (9 downto 0);
 signal IC38_1, IC38_2, IC38_3, IC38_5, IC38_6, IC38_7, IC38_9, IC51_6, IC51_8, IC78_10: std_logic;
 signal IC38_4, IC66_6, IC37_1, IC37_2, IC37_3, IC37_4, IC37_5, IC37_6, IC37_9 : std_logic;
@@ -275,14 +611,14 @@ signal IC60_10, IC60_11, IC60_7, IC60_2, IC60_1, IC60_14 : std_logic;
 signal PCBPositionInfo1, PCBPositionInfo2, COPReadORder : std_logic;
 begin 
 
-  ARdata(0) <=  P1_30_ARdata0;
-  ARdata(1) <=  P1_29_ARdata1;
-  ARdata(2) <=  P1_28_ARdata2;
-  ARdata(3) <=  P1_27_ARdata3;
-  ARdata(4) <=  P1_26_ARdata4;
-  ARdata(5) <=  P1_25_ARdata5;
-  ARdata(6) <=  P1_24_ARdata6;
-  ARdata(7) <=  P1_23_ARdata7;
+  ARData(0) <=  P1_30_ARData0;
+  ARData(1) <=  P1_29_ARData1;
+  ARData(2) <=  P1_28_ARData2;
+  ARData(3) <=  P1_27_ARData3;
+  ARData(4) <=  P1_26_ARData4;
+  ARData(5) <=  P1_25_ARData5;
+  ARData(6) <=  P1_24_ARData6;
+  ARData(7) <=  P1_23_ARData7;
 
 
   nMEMA(0) <=   P2_39_nMEMA0;
@@ -323,23 +659,23 @@ nDIMO(5) <= P1_84_DIMO5;
 nDIMO(6) <= P1_83_DIMO6;
 nDIMO(7) <= P1_82_DIMO7;
 
-nCOMbyteIO(0) <= P2_14_nCOMbyteIO0;
-nCOMbyteIO(1) <= P2_13_nCOMbyteIO1;
-nCOMbyteIO(2) <= P2_12_nCOMbyteIO2;
-nCOMbyteIO(3) <= P2_11_nCOMbyteIO3;
-nCOMbyteIO(4) <= P2_10_nCOMbyteIO4;
-nCOMbyteIO(5) <= P2_9_nCOMbyteIO5;
-nCOMbyteIO(6) <= P2_8_nCOMbyteIO6;
-nCOMbyteIO(7) <= P2_7_nCOMbyteIO7;
+nCOMByteIO(0) <= P2_14_nCOMByteIO0;
+nCOMByteIO(1) <= P2_13_nCOMByteIO1;
+nCOMByteIO(2) <= P2_12_nCOMByteIO2;
+nCOMByteIO(3) <= P2_11_nCOMByteIO3;
+nCOMByteIO(4) <= P2_10_nCOMByteIO4;
+nCOMByteIO(5) <= P2_9_nCOMByteIO5;
+nCOMByteIO(6) <= P2_8_nCOMByteIO6;
+nCOMByteIO(7) <= P2_7_nCOMByteIO7;
 
-nCOPdata(0) <= P2_73_nCOPdata0;
-nCOPdata(1) <= P2_72_nCOPdata1;
-nCOPdata(2) <= P2_71_nCOPdata2;
-nCOPdata(3) <= P2_70_nCOPdata3;
-nCOPdata(4) <= P2_69_nCOPdata4;
-nCOPdata(5) <= P2_68_nCOPdata5;
-nCOPdata(6) <= P2_67_nCOPdata6;
-nCOPdata(7) <= P2_66_nCOPdata7;
+nCOPData(0) <= P2_73_nCOPData0;
+nCOPData(1) <= P2_72_nCOPData1;
+nCOPData(2) <= P2_71_nCOPData2;
+nCOPData(3) <= P2_70_nCOPData3;
+nCOPData(4) <= P2_69_nCOPData4;
+nCOPData(5) <= P2_68_nCOPData5;
+nCOPData(6) <= P2_67_nCOPData6;
+nCOPData(7) <= P2_66_nCOPData7;
 
   
 CE_SEL_ROM_IC38: TTL7442 port map (
@@ -477,9 +813,9 @@ IC47: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(0),
+  pin12_d7 => nCOPData(0),
   pin13_d6 => nDIMO(0),
-  pin14_d5 => nCOMbyteIO(0),
+  pin14_d5 => nCOMByteIO(0),
   pin15_d4 => IC60_7);
   
 IC73: TTL74151 port map (
@@ -493,9 +829,9 @@ IC73: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(1),
+  pin12_d7 => nCOPData(1),
   pin13_d6 => nDIMO(1),
-  pin14_d5 => nCOMbyteIO(1),
+  pin14_d5 => nCOMByteIO(1),
   pin15_d4 => IC60_10);
   
 
@@ -509,7 +845,7 @@ IC60: PARAM1 port map (
   pin7_o5 => IC60_7,
   pin10_o6 => IC60_10,
   pin11_o7 => IC60_11,
-  pin12_i3 => MEMA(0),
+  pin12_i3 => ROMAddress(0),
   pin13_i4 => IC59_4,
   pin14_o8 => IC60_14,
   pin15_o9 => IC60_15,
@@ -526,9 +862,9 @@ IC48: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(2),
+  pin12_d7 => nCOPData(2),
   pin13_d6 => nDIMO(2),
-  pin14_d5 => nCOMbyteIO(2),
+  pin14_d5 => nCOMByteIO(2),
   pin15_d4 => IC61_7);
   
 IC74: TTL74151 port map (
@@ -542,9 +878,9 @@ IC74: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(3),
+  pin12_d7 => nCOPData(3),
   pin13_d6 => nDIMO(3),
-  pin14_d5 => nCOMbyteIO(3),
+  pin14_d5 => nCOMByteIO(3),
   pin15_d4 => IC61_10);
   
 
@@ -558,7 +894,7 @@ IC61: PARAM1 port map (
   pin7_o5 => IC61_7,
   pin10_o6 => IC61_10,
   pin11_o7 => IC61_11,
-  pin12_i3 => MEMA(0),
+  pin12_i3 => ROMAddress(0),
   pin13_i4 => IC59_4,
   pin14_o8 => IC61_14,
   pin15_o9 => IC61_15,
@@ -575,9 +911,9 @@ IC49: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(4),
+  pin12_d7 => nCOPData(4),
   pin13_d6 => nDIMO(4),
-  pin14_d5 => nCOMbyteIO(4),
+  pin14_d5 => nCOMByteIO(4),
   pin15_d4 => IC62_7);
   
 IC75: TTL74151 port map (
@@ -591,9 +927,9 @@ IC75: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(5),
+  pin12_d7 => nCOPData(5),
   pin13_d6 => nDIMO(5),
-  pin14_d5 => nCOMbyteIO(5),
+  pin14_d5 => nCOMByteIO(5),
   pin15_d4 => IC62_10);
   
 
@@ -607,7 +943,7 @@ IC62: PARAM1 port map (
   pin7_o5 => IC62_7,
   pin10_o6 => IC62_10,
   pin11_o7 => IC62_11,
-  pin12_i3 => MEMA(0),
+  pin12_i3 => ROMAddress(0),
   pin13_i4 => IC59_4,
   pin14_o8 => IC62_14,
   pin15_o9 => IC62_15,
@@ -624,9 +960,9 @@ IC50: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(6),
+  pin12_d7 => nCOPData(6),
   pin13_d6 => nDIMO(6),
-  pin14_d5 => nCOMbyteIO(6),
+  pin14_d5 => nCOMByteIO(6),
   pin15_d4 => IC63_7);
   
 IC76: TTL74151 port map (
@@ -640,9 +976,9 @@ IC76: TTL74151 port map (
   pin9_c => IC59_12,
   pin10_b => IC59_10,
   pin11_a => IC59_8,
-  pin12_d7 => nCOPdata(7),
+  pin12_d7 => nCOPData(7),
   pin13_d6 => nDIMO(7),
-  pin14_d5 => nCOMbyteIO(7),
+  pin14_d5 => nCOMByteIO(7),
   pin15_d4 => IC63_10);
   
 
@@ -656,14 +992,836 @@ IC63: PARAM1 port map (
   pin7_o5 => IC63_7,
   pin10_o6 => IC63_10,
   pin11_o7 => IC63_11,
-  pin12_i3 => MEMA(0),
+  pin12_i3 => ROMAddress(0),
   pin13_i4 => IC59_4,
   pin14_o8 => IC63_14,
   pin15_o9 => IC63_15,
   pin16_o10 => IC63_16);
 
+IC8:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(0),
+  pin12_x => RWMDataOut(0),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+  
+IC16:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(1),
+  pin12_x => RWMDataOut(1),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC24:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(2),
+  pin12_x => RWMDataOut(2),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC32:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(3),
+  pin12_x => RWMDataOut(3),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC45:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(4),
+  pin12_x => RWMDataOut(4),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC58:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(5),
+  pin12_x => RWMDataOut(5),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC71:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(6),
+  pin12_x => RWMDataOut(6),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC84:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(7),
+  pin12_x => RWMDataOut(7),    
+  pin13_nce => IC54_5,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC7:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(0),
+  pin12_x => RWMDataOut(0),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+  
+IC15:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(1),
+  pin12_x => RWMDataOut(1),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC23:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(2),
+  pin12_x => RWMDataOut(2),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC31:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(3),
+  pin12_x => RWMDataOut(3),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC44:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(4),
+  pin12_x => RWMDataOut(4),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC57:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(5),
+  pin12_x => RWMDataOut(5),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC70:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(6),
+  pin12_x => RWMDataOut(6),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC83:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(7),
+  pin12_x => RWMDataOut(7),    
+  pin13_nce => IC54_6,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC6:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(0),
+  pin12_x => RWMDataOut(0),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+  
+IC14:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(1),
+  pin12_x => RWMDataOut(1),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC22:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(2),
+  pin12_x => RWMDataOut(2),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC30:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(3),
+  pin12_x => RWMDataOut(3),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC43:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(4),
+  pin12_x => RWMDataOut(4),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC56:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(5),
+  pin12_x => RWMDataOut(5),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC69:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(6),
+  pin12_x => RWMDataOut(6),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC82:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(7),
+  pin12_x => RWMDataOut(7),    
+  pin13_nce => IC54_7,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC5:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(0),
+  pin12_x => RWMDataOut(0),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+  
+IC13:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(1),
+  pin12_x => RWMDataOut(1),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC21:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(2),
+  pin12_x => RWMDataOut(2),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC29:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(3),
+  pin12_x => RWMDataOut(3),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC42:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(4),
+  pin12_x => RWMDataOut(4),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC55:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(5),
+  pin12_x => RWMDataOut(5),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC68:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(6),
+  pin12_x => RWMDataOut(6),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
+
+IC81:  RAM2102 port map(
+  pin1_a6 => RWMAddress(6),
+  pin2_a5 => RWMAddress(5),
+  pin3_nw => IC66_11,
+  pin4_a1 => RWMAddress(1),
+  pin5_a2 => RWMAddress(2),
+  pin6_a3 => RWMAddress(3),
+  pin7_a4 => RWMAddress(4),
+  pin8_a0 => RWMAddress(0),
+  pin11_d => RWMDataIn(7),
+  pin12_x => RWMDataOut(7),    
+  pin13_nce => IC54_9,
+  pin14_a9 => RWMAddress(9),
+  pin15_a8 => RWMAddress(8),
+  pin16_a7 => RWMAddress(7));
 
 
+IC1:  MEM1_IC1_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_4,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+
+IC2:  MEM1_IC2_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_9,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC3:  MEM1_IC3_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_4,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC4:  MEM1_IC4_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_9,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+
+IC9:  MEM1_IC9_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_3,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+
+IC10:  MEM1_IC10_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_7,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC11:  MEM1_IC11_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_3,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC12:  MEM1_IC12_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_7,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+
+IC17:  MEM1_IC17_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_2,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+
+IC18:  MEM1_IC18_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_6,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC19:  MEM1_IC19_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_2,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC20:  MEM1_IC20_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_6,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+
+IC25:  MEM1_IC25_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_1,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+
+IC26:  MEM1_IC26_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC37_5,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC27:  MEM1_IC27_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_1,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
+IC28:  MEM1_IC28_1702 port map(
+  pin1_a2 => ROMAddress(2),
+  pin2_a1 => ROMAddress(1),
+  pin3_a0 => ROMAddress(0),
+  pin4_d0 => ROMData(0),
+  pin5_d1 => ROMData(1),
+  pin6_d2 => ROMData(2),
+  pin7_d3 => ROMData(3),
+  pin8_d4 => ROMData(4),
+  pin9_d5 => ROMData(5),
+  pin10_d6 => ROMData(6),
+  pin11_d7 => ROMData(7),
+  pin14_nce => IC38_5,
+  pin17_a7 => ROMAddress(7),
+  pin18_a6 => ROMAddress(6),
+  pin19_a5 => ROMAddress(5),
+  pin20_a4 => ROMAddress(4),
+  pin21_a3 => ROMAddress(3));
+  
   
 -- IC36 7438 quad 2 input nand OC output
   IC36_3 <= nMEMA(5) nand '1';
@@ -671,10 +1829,10 @@ IC63: PARAM1 port map (
   IC36_8 <= nMEMA(6) nand '1';
   IC36_11 <= nMEMA(7) nand '1';
 
-  ROMaddress(4) <= IC36_6;
-  ROMaddress(5) <= IC36_3;
-  ROMaddress(6) <= IC36_8;
-  ROMaddress(7) <= IC36_11;
+  ROMAddress(4) <= IC36_6;
+  ROMAddress(5) <= IC36_3;
+  ROMAddress(6) <= IC36_8;
+  ROMAddress(7) <= IC36_11;
 
 -- IC39 7408 quad 2 input and
   IC39_3 <= IC77_3 and IC39_6;
@@ -684,9 +1842,9 @@ IC63: PARAM1 port map (
     
 -- IC41 7402 quad 2 input nor 
   IC41_1 <= IC65_6 nor IC77_8;
-  IC41_4 <= ARdata(0) nor ARdata(0);
-  IC41_10 <= ARdata(2) nor ARdata(2);
-  IC41_13 <= ARdata(1) nor ARdata(1);
+  IC41_4 <= ARData(0) nor ARData(0);
+  IC41_10 <= ARData(2) nor ARData(2);
+  IC41_13 <= ARData(1) nor ARData(1);
 
   RWMDataIn(0) <= IC41_4;
   RWMDataIn(1) <= IC41_13;
@@ -698,10 +1856,10 @@ IC63: PARAM1 port map (
   IC46_8  <= nMEMA(3) nand '1';
   IC46_11 <= nMEMA(0) nand '1';
   
-  ROMaddress(0) <= IC46_11;
-  ROMaddress(1) <= IC46_3;
-  ROMaddress(2) <= IC46_6;
-  ROMaddress(3) <= IC46_8;
+  ROMAddress(0) <= IC46_11;
+  ROMAddress(1) <= IC46_3;
+  ROMAddress(2) <= IC46_6;
+  ROMAddress(3) <= IC46_8;
   
 --IC51 7420 dual 4 input nand
 
@@ -714,10 +1872,10 @@ IC63: PARAM1 port map (
   IC52_8 <= nMEMA(2) nand '1';
   IC52_11 <= nMEMA(3) nand '1';
 
-  RWMaddress(0) <= IC52_3;
-  RWMaddress(1) <= IC52_6;
-  RWMaddress(2) <= IC52_8;
-  RWMaddress(3) <= IC52_11;
+  RWMAddress(0) <= IC52_3;
+  RWMAddress(1) <= IC52_6;
+  RWMAddress(2) <= IC52_8;
+  RWMAddress(3) <= IC52_11;
 
 -- IC59 7404 hex inverter
   IC59_2 <= not nMEMA(14);
@@ -739,17 +1897,19 @@ IC63: PARAM1 port map (
   IC66_8 <= P1_31_nWriteMEM nand '1';
   IC66_11 <= IC66_8 nand '1';
   
-  
+  RWMAddress(8) <= IC66_3;
+  RWMAddress(9) <= IC66_6;
+
 -- IC67 7437 quad 2 input nand
   IC67_3 <= nMEMA(6) nand '1';
   IC67_6 <= nMEMA(7) nand '1';
   IC67_8 <= nMEMA(4) nand '1';
   IC67_11 <= nMEMA(5) nand '1';
 
-  RWMaddress(4) <= IC67_8;
-  RWMaddress(5) <= IC67_11;
-  RWMaddress(6) <= IC67_3;
-  RWMaddress(7) <= IC67_6; 
+  RWMAddress(4) <= IC67_8;
+  RWMAddress(5) <= IC67_11;
+  RWMAddress(6) <= IC67_3;
+  RWMAddress(7) <= IC67_6; 
   
 -- IC77 7400 quad 2 input nand
 
@@ -768,12 +1928,12 @@ IC63: PARAM1 port map (
   IC78_12 <= not IC65_8;
   
 -- IC80 7404 hex inverter
-  IC80_2 <= not ARdata(4);
-  IC80_4 <= not ARdata(3);
+  IC80_2 <= not ARData(4);
+  IC80_4 <= not ARData(3);
   IC80_6 <= not PCBPositionInfo1;
-  IC80_8 <= not ARdata(7);
-  IC80_10 <= not ARdata(6);
-  IC80_12 <= not ARdata(5);
+  IC80_8 <= not ARData(7);
+  IC80_10 <= not ARData(6);
+  IC80_12 <= not ARData(5);
 
   RWMDataIn(3) <= IC80_4;
   RWMDataIn(4) <= IC80_2;
