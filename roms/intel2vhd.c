@@ -137,9 +137,9 @@ int print1702Prolog (char * entity) {
   printf("\n");
   printf("entity %s is\n", entity);
   printf("port(\n");
-  printf("  pin1_a2  : out std_logic;\n");
-  printf("  pin2_a1  : out std_logic;\n");
-  printf("  pin3_a0  : out std_logic;\n");
+  printf("  pin1_a2  : in std_logic;\n");
+  printf("  pin2_a1  : in std_logic;\n");
+  printf("  pin3_a0  : in std_logic;\n");
   printf("  pin4_d0  : out std_logic;\n");
   printf("  pin5_d1  : out std_logic;\n");
   printf("  pin6_d2  : out std_logic;\n");
@@ -185,7 +185,7 @@ int print1702Epilog () {
   printf ("pin9_d5 <= data(5);\n");
   printf ("pin10_d6 <= data(6);\n");
   printf ("pin11_d7 <= data(7);\n");
-  printf ("data <= rom(to_integer(unsigned(address)))  when pin14_nce = '0' else x\"FF\"; \n");
+  printf ("data <= rom(to_integer(unsigned(address)))  when pin14_nce = '0' else x\"ZZ\"; \n");
   printf ("\n");
   printf ("end logic;\n");  
 }

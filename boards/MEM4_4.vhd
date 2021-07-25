@@ -57,15 +57,15 @@ port(
     P2_19_nMEMO4 : out std_logic;
     P2_18_nMEMO5 : out std_logic;
     P2_17_nMEMO6 : out std_logic;
-    P2_31_nMEMO7 : out std_logic;
-    P1_89_DIMO0 : inout std_logic;
-    P1_88_DIMO1 : inout std_logic;
-    P1_87_DIMO2 : inout std_logic;
-    P1_86_DIMO3 : inout std_logic;
-    P1_85_DIMO4 : inout std_logic;
-    P1_84_DIMO5 : inout std_logic;
-    P1_83_DIMO6 : inout std_logic;
-    P1_82_DIMO7 : inout std_logic);
+    P2_16_nMEMO7 : out std_logic;
+    P1_89_DIMO0 : out std_logic;
+    P1_88_DIMO1 : out std_logic;
+    P1_87_DIMO2 : out std_logic;
+    P1_86_DIMO3 : out std_logic;
+    P1_85_DIMO4 : out std_logic;
+    P1_84_DIMO5 : out std_logic;
+    P1_83_DIMO6 : out std_logic;
+    P1_82_DIMO7 : out std_logic);
 
     
 end MEM4_4;
@@ -263,9 +263,9 @@ end component;
 
 component MEM1_IC1_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -284,9 +284,9 @@ end component;
 
 component MEM1_IC2_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -304,9 +304,9 @@ port(
 end component;
 component MEM1_IC3_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -324,9 +324,9 @@ port(
 end component;
 component MEM1_IC4_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -344,9 +344,9 @@ port(
 end component;
 component MEM1_IC9_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -364,9 +364,9 @@ port(
 end component;
 component MEM1_IC10_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -384,9 +384,9 @@ port(
 end component;
 component MEM1_IC11_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -404,9 +404,9 @@ port(
 end component;
 component MEM1_IC12_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -424,9 +424,9 @@ port(
 end component;
 component MEM1_IC17_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -444,9 +444,9 @@ port(
 end component;
 component MEM1_IC18_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -464,9 +464,9 @@ port(
 end component;
 component MEM1_IC19_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -484,9 +484,9 @@ port(
 end component;
 component MEM1_IC20_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -504,9 +504,9 @@ port(
 end component;
 component MEM1_IC25_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -524,9 +524,9 @@ port(
 end component;
 component MEM1_IC26_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -544,9 +544,9 @@ port(
 end component;
 component MEM1_IC27_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -564,9 +564,9 @@ port(
 end component;
 component MEM1_IC28_1702 is
 port(
-  pin1_a2  : out std_logic;
-  pin2_a1  : out std_logic;
-  pin3_a0  : out std_logic;
+  pin1_a2  : in std_logic;
+  pin2_a1  : in std_logic;
+  pin3_a0  : in std_logic;
   pin4_d0  : out std_logic;
   pin5_d1  : out std_logic;
   pin6_d2  : out std_logic;
@@ -586,7 +586,7 @@ end component;
 signal nMEMA  : std_logic_vector (15 downto 0);
 signal nMEMO, ARData, ROMAddress, RWMDataOut, ROMData, RWMDataIn : std_logic_vector (7 downto 0);
 signal nCOPData, nDIMO : std_logic_vector (7 downto 0);
-signal nCOMByteIO ,ROMDataOut : std_logic_vector (7 downto 0);
+signal nCOMByteIO : std_logic_vector (7 downto 0);
 signal RWMaddress : std_logic_vector (9 downto 0);
 signal IC38_1, IC38_2, IC38_3, IC38_5, IC38_6, IC38_7, IC38_9, IC51_6, IC51_8, IC78_10: std_logic;
 signal IC38_4, IC66_6, IC37_1, IC37_2, IC37_3, IC37_4, IC37_5, IC37_6, IC37_9 : std_logic;
@@ -645,19 +645,27 @@ begin
   P2_19_nMEMO4 <= nMEMO(4);
   P2_18_nMEMO5 <= nMEMO(5);
   P2_17_nMEMO6 <= nMEMO(6);
-  P2_31_nMEMO7 <= nMEMO(7);
+  P2_16_nMEMO7 <= nMEMO(7);
+--  P2_23_nMEMO0 <= '1';
+--  P2_22_nMEMO1 <= '1';
+--  P2_21_nMEMO2 <= '1';
+--  P2_20_nMEMO3 <= '1';
+--  P2_19_nMEMO4 <= '1';
+--  P2_18_nMEMO5 <= '1';
+--  P2_17_nMEMO6 <= '1';
+--  P2_16_nMEMO7 <= '1';
 
-  nDIMO <= "HHHHHHHH"; -- pull up for nDIMO bus. IC85 - optional only one in
+--  nDIMO <= "HHHHHHHH"; -- pull up for nDIMO bus. IC85 - optional only one in
                        -- the system
 
-nDIMO(0) <= P1_89_DIMO0;
-nDIMO(1) <= P1_88_DIMO1;
-nDIMO(2) <= P1_87_DIMO2;
-nDIMO(3) <= P1_86_DIMO3;
-nDIMO(4) <= P1_85_DIMO4;
-nDIMO(5) <= P1_84_DIMO5;
-nDIMO(6) <= P1_83_DIMO6;
-nDIMO(7) <= P1_82_DIMO7;
+--nDIMO(0) <= P1_89_DIMO0;
+--nDIMO(1) <= P1_88_DIMO1;
+--nDIMO(2) <= P1_87_DIMO2;
+--nDIMO(3) <= P1_86_DIMO3;
+--nDIMO(4) <= P1_85_DIMO4;
+--nDIMO(5) <= P1_84_DIMO5;
+--nDIMO(6) <= P1_83_DIMO6;
+--nDIMO(7) <= P1_82_DIMO7;
 
 nCOMByteIO(0) <= P2_14_nCOMByteIO0;
 nCOMByteIO(1) <= P2_13_nCOMByteIO1;
@@ -755,32 +763,32 @@ AddressModified_IC79: TTL74153 port map (
 RWM_ROM_DATA_SEL_IC53: TTLDM8123 port map(
   pin1_select => IC77_3,
   pin2_1a => RWMDataOut(0),
-  pin3_1b => ROMDataOut(0),
-  pin4_1y => nMEMO(0),
+  pin3_1b => ROMData(0),
+  pin4_1y => nDIMO(0),
   pin5_2a => RWMDataOut(1),
-  pin6_2b => ROMDataOut(1),
-  pin7_2y => nMEMO(1),
-  pin9_3y  => nMEMO(2),
-  pin10_3b => ROMDataOut(2),
+  pin6_2b => ROMData(1),
+  pin7_2y => nDIMO(1),
+  pin9_3y  => nDIMO(2),
+  pin10_3b => ROMData(2),
   pin11_3a => RWMDataOut(2),
-  pin12_4y => nMEMO(3), 
-  pin13_4b => ROMDataOut(3),
+  pin12_4y => nDIMO(3), 
+  pin13_4b => ROMData(3),
   pin14_4a => RWMDataOut(3),
   pin15_strobe => IC39_3); 
 
 RWM_ROM_DATA_SEL_IC40: TTLDM8123 port map(
   pin1_select => IC77_3,
   pin2_1a => RWMDataOut(4),
-  pin3_1b => ROMDataOut(4),
-  pin4_1y => nMEMO(4),
+  pin3_1b => ROMData(4),
+  pin4_1y => nDIMO(4),
   pin5_2a => RWMDataOut(5),
-  pin6_2b => ROMDataOut(5),
-  pin7_2y => nMEMO(5),
-  pin9_3y  => nMEMO(6),
-  pin10_3b => ROMDataOut(6),
+  pin6_2b => ROMData(5),
+  pin7_2y => nDIMO(5),
+  pin9_3y  => nDIMO(6),
+  pin10_3b => ROMData(6),
   pin11_3a => RWMDataOut(6),
-  pin12_4y => nMEMO(7), 
-  pin13_4b => ROMDataOut(7),
+  pin12_4y => nDIMO(7), 
+  pin13_4b => ROMData(7),
   pin14_4a => RWMDataOut(7),
   pin15_strobe => IC39_3);
 
@@ -798,7 +806,7 @@ OS_CONTROL_CIRCUI_IC72: TTL74157 port map(
   pin12_4y => IC72_12,
   pin13_4b => '1',
   pin14_4a => nMEMA(1),
-  pin15_strobe => IC59_8
+  pin15_strobe => IC59_6
 );
 
 

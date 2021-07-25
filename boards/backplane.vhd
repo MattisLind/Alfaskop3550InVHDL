@@ -339,15 +339,15 @@ port(
     P2_19_nMEMO4 : out std_logic;
     P2_18_nMEMO5 : out std_logic;
     P2_17_nMEMO6 : out std_logic;
-    P2_31_nMEMO7 : out std_logic;
-    P1_89_DIMO0 : inout std_logic;
-    P1_88_DIMO1 : inout std_logic;
-    P1_87_DIMO2 : inout std_logic;
-    P1_86_DIMO3 : inout std_logic;
-    P1_85_DIMO4 : inout std_logic;
-    P1_84_DIMO5 : inout std_logic;
-    P1_83_DIMO6 : inout std_logic;
-    P1_82_DIMO7 : inout std_logic);
+    P2_16_nMEMO7 : out std_logic;
+    P1_89_DIMO0 : out std_logic;
+    P1_88_DIMO1 : out std_logic;
+    P1_87_DIMO2 : out std_logic;
+    P1_86_DIMO3 : out std_logic;
+    P1_85_DIMO4 : out std_logic;
+    P1_84_DIMO5 : out std_logic;
+    P1_83_DIMO6 : out std_logic;
+    P1_82_DIMO7 : out std_logic);
 end component;
 
 
@@ -655,7 +655,7 @@ MEM1board: MEM4_4 port map (
     P2_25_nMEMA14 => nMEMA(14),
     P2_24_nMEMA15 => nMEMA(15),
     P2_62_PCBPositionInfo => '1', 
-    P2_63_PCBPositionInfo => '1',
+    P2_63_PCBPositionInfo => '0',
     P2_65_COPReadOrder => '1',
     P2_14_nCOMbyteIO0 => nCOMByte(0),
     P2_13_nCOMbyteIO1 => nCOMByte(1),
@@ -674,13 +674,13 @@ MEM1board: MEM4_4 port map (
     P2_67_nCOPdata6 => '1',
     P2_66_nCOPdata7 => '1',
     P2_23_nMEMO0 => nMEMO(0),
-    P2_22_nMEMO1 => nMEMO(0),
-    P2_21_nMEMO2 => nMEMO(0),
-    P2_20_nMEMO3 => nMEMO(0),
-    P2_19_nMEMO4 => nMEMO(0),
-    P2_18_nMEMO5 => nMEMO(0),
-    P2_17_nMEMO6 => nMEMO(0),
-    P2_31_nMEMO7 => nMEMO(0),
+    P2_22_nMEMO1 => nMEMO(1),
+    P2_21_nMEMO2 => nMEMO(2),
+    P2_20_nMEMO3 => nMEMO(3),
+    P2_19_nMEMO4 => nMEMO(4),
+    P2_18_nMEMO5 => nMEMO(5),
+    P2_17_nMEMO6 => nMEMO(6),
+    P2_16_nMEMO7 => nMEMO(7),
     P1_89_DIMO0 => open,
     P1_88_DIMO1 => open,
     P1_87_DIMO2 => open,
@@ -689,7 +689,8 @@ MEM1board: MEM4_4 port map (
     P1_84_DIMO5 => open,
     P1_83_DIMO6 => open,
     P1_82_DIMO7 => open);
-  
+
+
   cp_end <= nEnd;
 --  IOData <= "HHHHHHHH";
 end logic;

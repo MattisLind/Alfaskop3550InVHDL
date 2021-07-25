@@ -71,7 +71,7 @@ alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  roms/MEM1/PARAM3.vhd
 	ghdl -a --std=08  roms/MEM1/PARAM4.vhd
 	ghdl -e --std=08  testbench
-#	ghdl -r --std=08  testbench
+	ghdl -r --std=08  testbench
 
 clean:
 	$(MAKE) -C STD_TTL_LIB clean

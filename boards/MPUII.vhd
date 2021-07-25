@@ -446,7 +446,7 @@ signal Mi : std_logic_vector (7 downto 0);
 signal nALUdata : std_logic_vector (7 downto 0);
 signal IC34_6, IC34_3 : std_logic;
 signal NewIC12, IC17_5, IC17_6, IC17_8, IC18_6, IC18_8 : std_logic;
-signal IC16_5, IC16_6, IC16_8, IC16_9, IC3_3, IC3_6 : std_logic;
+signal IC16_5, IC16_6, IC16_8, IC16_9 : std_logic;
 signal IncrICM, DecrICM,LoadICM, IC26_13, IC2_13, IC2_12, LoadICL, nICLcarry : std_logic;
 signal IncrICL, IC65_6, IC8_4, IC8_5, IC8_11, IC41_4 : std_logic;
 
@@ -1101,7 +1101,7 @@ IC16: TTL7474 port map (
   pin8_n2q => IC16_8,
   pin9_2q => IC16_9,
   pin10_n2pre => Mie(4),
-  pin11_2clk => IC3_3,
+  pin11_2clk => Mitd(2),
   pin12_2d => '0',
   pin13_n2clr => P1_18_nGeneralReset
 ); 
@@ -1119,7 +1119,7 @@ MARM_IC25: TTL74198 port map (
   pin8_qC => MAR(13) ,
   pin9_d => nALUdata(4),
   pin10_qD => MAR(12) ,
-  pin11_clk => IC3_6,
+  pin11_clk => Mitd(5),
   pin13_clear => IC27_8,
   pin14_qE => MAR(11) ,
   pin15_e => nALUdata(3),
