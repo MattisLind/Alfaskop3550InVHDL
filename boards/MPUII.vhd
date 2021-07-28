@@ -1172,7 +1172,7 @@ IC_IC26: TTL74193 port map (
   pin11_nLoad => LoadICM,
   pin12_nCO => open,
   pin13_nBO => IC26_13,
-  pin14_clr => P2_33_nMie3,
+  pin14_clr => IC38_12,
   pin15_a => nALUdata(0)
 );
 
