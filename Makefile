@@ -58,7 +58,7 @@ alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  boards/backplane.vhd
 	ghdl -a --std=08  boards/MPUI.vhd
 	ghdl -a --std=08  boards/MPUII.vhd
-	ghdl -a --std=08  boards/MEM4_4.vhd
+	ghdl -a --std=08  boards/MEM4_4_1.vhd
 	ghdl -a --std=08  RAM2102.vhd
 	ghdl -a --std=08  $(symlinks)
 	ghdl -a --std=08  $(specialsymlinks)
@@ -77,10 +77,12 @@ clean:
 	$(MAKE) -C STD_TTL_LIB clean
 	rm -f *.o
 	rm -f *.cf
-	rm -f $(symlinks)
+	rm -f $(symlinks) $(specialsymlinks)
 	rm -f testbench
 	rm -f $(memroms)
 	rm -f RAM2102.vhd
+	rm -f intel2vhd
+	rm -f roms/MPUI/*.vhd
 
 .PHONEY: clean all
 
