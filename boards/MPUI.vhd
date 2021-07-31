@@ -9,7 +9,7 @@ port(
 -- Clk is to be generated externally    
     clkInput : in std_logic;
     nReset : in std_logic;
-    
+    nCP1 : out std_logic;
 -- Signals from the connector
     P1_38_MEMAChanged : in std_logic;
     P1_69_ReadMEMO : in std_logic;
@@ -562,7 +562,7 @@ signal clkToggle : std_logic;
 signal IC59_6 : std_logic;
 signal IC59_9 : std_logic;
 signal memoryTimingStartCount, memoryTimingCarry,memoryTimingLoad : std_logic;
-signal IntRegOut: std_logic_vector (7 downto 0);
+signal IntRegOut, IR: std_logic_vector (7 downto 0);
 signal nIntRegOut : std_logic_vector (7 downto 0);
 
 signal GRIntern: std_logic;
@@ -574,7 +574,7 @@ signal Interrupt, nInterrupt : std_logic;
 
 signal IC50_5, IC50_6,IC50_8, IC50_9, IC76_11, IC53_6 , IC3_6 :std_logic;
 signal IC3_8, CPend, IC63_6,nZero,nCarry : std_logic;
-signal nARCParity,Clk6144MHz, CP1, nCP1,CP2, CK_10T, CK_4T, CK_80T, CK_76kHz, CK_1280T : std_logic;
+signal nARCParity,Clk6144MHz, CP1,CP2, CK_10T, CK_4T, CK_80T, CK_76kHz, CK_1280T : std_logic;
 signal IC35_12, CK_1200Hz, IC35_11, CK_300Hz, CK37Hz, CK_4_8Hz, CK_9_2Hz, CK_2_3Hz, CK_1_2Hz, CK_0_6Hz : std_logic;
 signal IC48_9, IC77_12, IC77_4, IC79_9, IC48_8, Mia, IC71_14, IC71_6, IC71_3 : std_logic;
 signal IC72_12, IC47_13 : std_logic;
@@ -665,6 +665,14 @@ P2_26_nArg3 <= nArg(3);
 P2_62_OP3 <= OP(3);
 P2_63_OP2 <= OP(2);
 
+IR(0) <= not nArg(0);
+IR(1) <= not nArg(1);
+IR(2) <= not nArg(2);
+IR(3) <= not nArg(3);
+IR(4) <= not OP(0);
+IR(5) <= not OP(1);
+IR(6) <= not OP(2);
+IR(7) <= not OP(3);
 
  SEL1_IC30: TTL74157 port map(
  	pin1_select => SelectOP,

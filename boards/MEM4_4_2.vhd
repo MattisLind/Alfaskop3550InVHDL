@@ -3,7 +3,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 
-entity MEM4_4 is
+entity MEM4_4_2 is
 port(
 -- Signals from the connector
     P1_31_nWriteMEM : in std_logic;
@@ -68,11 +68,11 @@ port(
     P1_82_DIMO7 : out std_logic);
 
     
-end MEM4_4;
+end MEM4_4_2;
 
 
 
-architecture logic of MEM4_4 is
+architecture logic of MEM4_4_2 is
 
 component RAM2102 is
 port(
@@ -261,7 +261,7 @@ port(
   pin16_o10 : out std_logic);
 end component;
 
-component MEM1_IC1_1702 is
+component MEM2_IC1_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -282,7 +282,7 @@ port(
   pin21_a3  : in std_logic);
 end component;
 
-component MEM1_IC2_1702 is
+component MEM2_IC2_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -302,7 +302,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC3_1702 is
+component MEM2_IC3_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -322,7 +322,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC4_1702 is
+component MEM2_IC4_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -342,7 +342,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC9_1702 is
+component MEM2_IC9_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -362,7 +362,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC10_1702 is
+component MEM2_IC10_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -382,7 +382,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC11_1702 is
+component MEM2_IC11_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -402,7 +402,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC12_1702 is
+component MEM2_IC12_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -422,7 +422,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC17_1702 is
+component MEM2_IC17_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -442,7 +442,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC18_1702 is
+component MEM2_IC18_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -462,7 +462,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC19_1702 is
+component MEM2_IC19_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -482,7 +482,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC20_1702 is
+component MEM2_IC20_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -502,7 +502,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC25_1702 is
+component MEM2_IC25_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -522,7 +522,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC26_1702 is
+component MEM2_IC26_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -542,7 +542,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC27_1702 is
+component MEM2_IC27_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -562,7 +562,7 @@ port(
   pin20_a4  : in std_logic;
   pin21_a3  : in std_logic);
 end component;
-component MEM1_IC28_1702 is
+component MEM2_IC28_1702 is
 port(
   pin1_a2  : in std_logic;
   pin2_a1  : in std_logic;
@@ -658,14 +658,14 @@ begin
 --  nDIMO <= "HHHHHHHH"; -- pull up for nDIMO bus. IC85 - optional only one in
                        -- the system
 
---nDIMO(0) <= P1_89_DIMO0;
---nDIMO(1) <= P1_88_DIMO1;
---nDIMO(2) <= P1_87_DIMO2;
---nDIMO(3) <= P1_86_DIMO3;
---nDIMO(4) <= P1_85_DIMO4;
---nDIMO(5) <= P1_84_DIMO5;
---nDIMO(6) <= P1_83_DIMO6;
---nDIMO(7) <= P1_82_DIMO7;
+P1_89_DIMO0 <= nDIMO(0);
+P1_88_DIMO1 <= nDIMO(1);
+P1_87_DIMO2 <= nDIMO(2);
+P1_86_DIMO3 <= nDIMO(3);
+P1_85_DIMO4 <= nDIMO(4);
+P1_84_DIMO5 <= nDIMO(5);
+P1_83_DIMO6 <= nDIMO(6);
+P1_82_DIMO7 <= nDIMO(7);
 
 nCOMByteIO(0) <= P2_14_nCOMByteIO0;
 nCOMByteIO(1) <= P2_13_nCOMByteIO1;
@@ -675,6 +675,8 @@ nCOMByteIO(4) <= P2_10_nCOMByteIO4;
 nCOMByteIO(5) <= P2_9_nCOMByteIO5;
 nCOMByteIO(6) <= P2_8_nCOMByteIO6;
 nCOMByteIO(7) <= P2_7_nCOMByteIO7;
+
+nCOMByteIO <= "HHHHHHHH"; -- pull ups
 
 nCOPData(0) <= P2_73_nCOPData0;
 nCOPData(1) <= P2_72_nCOPData1;
@@ -1523,7 +1525,7 @@ IC81:  RAM2102 port map(
   pin16_a7 => RWMAddress(7));
 
 
-IC1:  MEM1_IC1_1702 port map(
+IC1:  MEM2_IC1_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1542,7 +1544,7 @@ IC1:  MEM1_IC1_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
 
-IC2:  MEM1_IC2_1702 port map(
+IC2:  MEM2_IC2_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1561,7 +1563,7 @@ IC2:  MEM1_IC2_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC3:  MEM1_IC3_1702 port map(
+IC3:  MEM2_IC3_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1580,7 +1582,7 @@ IC3:  MEM1_IC3_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC4:  MEM1_IC4_1702 port map(
+IC4:  MEM2_IC4_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1600,7 +1602,7 @@ IC4:  MEM1_IC4_1702 port map(
   pin21_a3 => ROMAddress(3));
   
 
-IC9:  MEM1_IC9_1702 port map(
+IC9:  MEM2_IC9_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1619,7 +1621,7 @@ IC9:  MEM1_IC9_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
 
-IC10:  MEM1_IC10_1702 port map(
+IC10:  MEM2_IC10_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1638,7 +1640,7 @@ IC10:  MEM1_IC10_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC11:  MEM1_IC11_1702 port map(
+IC11:  MEM2_IC11_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1657,7 +1659,7 @@ IC11:  MEM1_IC11_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC12:  MEM1_IC12_1702 port map(
+IC12:  MEM2_IC12_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1677,7 +1679,7 @@ IC12:  MEM1_IC12_1702 port map(
   pin21_a3 => ROMAddress(3));
   
 
-IC17:  MEM1_IC17_1702 port map(
+IC17:  MEM2_IC17_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1696,7 +1698,7 @@ IC17:  MEM1_IC17_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
 
-IC18:  MEM1_IC18_1702 port map(
+IC18:  MEM2_IC18_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1715,7 +1717,7 @@ IC18:  MEM1_IC18_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC19:  MEM1_IC19_1702 port map(
+IC19:  MEM2_IC19_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1734,7 +1736,7 @@ IC19:  MEM1_IC19_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC20:  MEM1_IC20_1702 port map(
+IC20:  MEM2_IC20_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1754,7 +1756,7 @@ IC20:  MEM1_IC20_1702 port map(
   pin21_a3 => ROMAddress(3));
   
 
-IC25:  MEM1_IC25_1702 port map(
+IC25:  MEM2_IC25_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1773,7 +1775,7 @@ IC25:  MEM1_IC25_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
 
-IC26:  MEM1_IC26_1702 port map(
+IC26:  MEM2_IC26_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1792,7 +1794,7 @@ IC26:  MEM1_IC26_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC27:  MEM1_IC27_1702 port map(
+IC27:  MEM2_IC27_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),
@@ -1811,7 +1813,7 @@ IC27:  MEM1_IC27_1702 port map(
   pin20_a4 => ROMAddress(4),
   pin21_a3 => ROMAddress(3));
   
-IC28:  MEM1_IC28_1702 port map(
+IC28:  MEM2_IC28_1702 port map(
   pin1_a2 => ROMAddress(2),
   pin2_a1 => ROMAddress(1),
   pin3_a0 => ROMAddress(0),

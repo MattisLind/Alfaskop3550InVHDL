@@ -3,7 +3,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 
-entity MEM4_4 is
+entity MEM4_4_1 is
 port(
 -- Signals from the connector
     P1_31_nWriteMEM : in std_logic;
@@ -58,21 +58,21 @@ port(
     P2_18_nMEMO5 : out std_logic;
     P2_17_nMEMO6 : out std_logic;
     P2_16_nMEMO7 : out std_logic;
-    P1_89_DIMO0 : out std_logic;
-    P1_88_DIMO1 : out std_logic;
-    P1_87_DIMO2 : out std_logic;
-    P1_86_DIMO3 : out std_logic;
-    P1_85_DIMO4 : out std_logic;
-    P1_84_DIMO5 : out std_logic;
-    P1_83_DIMO6 : out std_logic;
-    P1_82_DIMO7 : out std_logic);
+    P1_89_DIMO0 : in std_logic;
+    P1_88_DIMO1 : in std_logic;
+    P1_87_DIMO2 : in std_logic;
+    P1_86_DIMO3 : in std_logic;
+    P1_85_DIMO4 : in std_logic;
+    P1_84_DIMO5 : in std_logic;
+    P1_83_DIMO6 : in std_logic;
+    P1_82_DIMO7 : in std_logic);
 
     
-end MEM4_4;
+end MEM4_4_1;
 
 
 
-architecture logic of MEM4_4 is
+architecture logic of MEM4_4_1 is
 
 component RAM2102 is
 port(
@@ -655,17 +655,17 @@ begin
 --  P2_17_nMEMO6 <= '1';
 --  P2_16_nMEMO7 <= '1';
 
---  nDIMO <= "HHHHHHHH"; -- pull up for nDIMO bus. IC85 - optional only one in
+  nDIMO <= "HHHHHHHH"; -- pull up for nDIMO bus. IC85 - optional only one in
                        -- the system
 
---nDIMO(0) <= P1_89_DIMO0;
---nDIMO(1) <= P1_88_DIMO1;
---nDIMO(2) <= P1_87_DIMO2;
---nDIMO(3) <= P1_86_DIMO3;
---nDIMO(4) <= P1_85_DIMO4;
---nDIMO(5) <= P1_84_DIMO5;
---nDIMO(6) <= P1_83_DIMO6;
---nDIMO(7) <= P1_82_DIMO7;
+nDIMO(0) <= P1_89_DIMO0;
+nDIMO(1) <= P1_88_DIMO1;
+nDIMO(2) <= P1_87_DIMO2;
+nDIMO(3) <= P1_86_DIMO3;
+nDIMO(4) <= P1_85_DIMO4;
+nDIMO(5) <= P1_84_DIMO5;
+nDIMO(6) <= P1_83_DIMO6;
+nDIMO(7) <= P1_82_DIMO7;
 
 nCOMByteIO(0) <= P2_14_nCOMByteIO0;
 nCOMByteIO(1) <= P2_13_nCOMByteIO1;
@@ -676,6 +676,8 @@ nCOMByteIO(5) <= P2_9_nCOMByteIO5;
 nCOMByteIO(6) <= P2_8_nCOMByteIO6;
 nCOMByteIO(7) <= P2_7_nCOMByteIO7;
 
+nCOMByteIO <= "HHHHHHHH"; -- pull ups
+  
 nCOPData(0) <= P2_73_nCOPData0;
 nCOPData(1) <= P2_72_nCOPData1;
 nCOPData(2) <= P2_71_nCOPData2;

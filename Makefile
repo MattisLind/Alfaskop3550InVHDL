@@ -15,10 +15,13 @@ vhds:=roms/MPUI/IC18_32x8_PROM.vhd roms/MPUI/IC19_32x8_PROM.vhd roms/MPUI/IC27_2
 
 memroms := $(subst .hex,.vhd,$(wildcard roms/MEM1/*.hex)) $(subst .hex,.vhd,$(wildcard roms/MEM2/*.hex))
 
+MEMROMS: intel2vhd $(memroms) 
+
+
 intel2vhd: roms/intel2vhd.c
 	$(CC) roms/intel2vhd.c -o intel2vhd
 
-MEMROMS: $(memroms) intel2vhd
+
 
 %.vhd: %.hex
 	./intel2vhd --type 1702 --entity $(word 2,$(subst /, ,$(dir $<)))_$(shell echo $< | sed 's/^.*\(IC[0-9]*\).*/\1/')_1702 < $<  > $@
@@ -59,6 +62,7 @@ alfaskop: createsymlinks $(vhds) MEMROMS
 	ghdl -a --std=08  boards/MPUI.vhd
 	ghdl -a --std=08  boards/MPUII.vhd
 	ghdl -a --std=08  boards/MEM4_4_1.vhd
+	ghdl -a --std=08  boards/MEM4_4_2.vhd
 	ghdl -a --std=08  RAM2102.vhd
 	ghdl -a --std=08  $(symlinks)
 	ghdl -a --std=08  $(specialsymlinks)
