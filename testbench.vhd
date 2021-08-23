@@ -54,14 +54,17 @@ begin
 --  singlestep: process
 --  begin
 --     stop <= '0';
---     wait for 10 ns;
+--     wait for 800 ns;
 --     stop <= '1';
---     wait for 300 ns;
+--     wait for 3000 ns;
 --  end process;  
   stopCPCounter <= '1';
 -- Simulated single stepping. Basically a 7474 with D input connected to GND.
 -- nCP1 connected via an inverter to the CLK input.
 -- stop connected to PRE input.
+-- stop signal has to be short. Less max 200 ns or so.
+-- Use a differentiator circuit.
+-- A capacitor  and a resistor to ground and two inverters. 
 --  step: process (nCP1, stopCPCounter, stop)
 --  begin
 --    if (nCP1'EVENT and nCP1 = '0' and stopCPCounter = '1') then
