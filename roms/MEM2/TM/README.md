@@ -5,4 +5,6 @@ the Alfaskop 3550 and dump the ROMs in it. A meeting with the very nice people o
 
 ![MEM2 Board](https://github.com/MattisLind/Alfaskop3550InVHDL/raw/main/roms/MEM2/TM/MEM2.JPG)
 
-The ROMs on this board seems to be an older version of what is in the "STOFFE" terminal. ROMs marked SS with a version number following. A few ROMs had identical markings and also hade the same contents.
+ROMs marked SS followed by a two hexadecimal digit base address of the ROM and then a two digit revision of the ROM. For example SS 1020. This ROM has the base address 1000 in the address space of the Alfaskop 3550 CPU. Each ROM is individually revision-handled. The reason is probably to make it easier for field-service personnel. A change in the fimrware may just involve change one ROM rather then the full set which would be very timeconsuming.  
+
+The ROMs on this board seems to be an older version of what is in the "STOFFE" terminal. A few ROMs had identical markings and also hade the same contents.
